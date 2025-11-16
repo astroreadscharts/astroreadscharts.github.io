@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroReadsCharts - Professional Astrology Consultations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:wght=700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom colors and configuration */
+        :root {
+            --color-navy: #1A2F4F;
+            --color-beige: #F4F0E4;
+            --color-accent: #E5B80B; /* A subtle gold for highlights */
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-beige);
+            color: var(--color-navy);
+        }
+        .bg-navy { background-color: var(--color-navy); }
+        .text-navy { color: var(--color-navy); }
+        .border-navy { border-color: var(--color-navy); }
+        .text-accent { color: var(--color-accent); }
+        .bg-accent { background-color: var(--color-accent); }
+        .hero-title {
+            font-family: 'Playfair Display', serif; 
+            font-weight: 700;
+        }
+        .stylish-button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        /* Consultation Section Transition */
+        #consultation-section.hidden {
+            display: none;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+        }
+        #consultation-section {
+            transition: opacity 0.5s ease-in-out, max-height 0.7s ease-in-out;
+            max-height: 2000px;
+        }
+        /* Slideshow styles (retained for context) */
+        .slideshow-container {
+            position: relative; max-width: 900px; margin: auto; overflow: hidden; height: 180px; border-radius: 1rem; box-shadow: 0 8px 25px rgba(26, 47, 79, 0.1); border: 1px solid #c9d5e3;
+        }
+        .mySlides {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(160deg, var(--color-beige) 0%, #e8eaf0 100%); padding: 1.5rem 1rem; text-align: center; transition: transform 1.0s ease-in-out; opacity: 1;
+        }
+
+        /* CHECK MARK ANIMATION CSS */
+        .checkmark-circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: #4CAF50;
+            fill: none;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .checkmark-check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            stroke: #4CAF50;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+        @keyframes stroke {
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+        .icon-success {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto 20px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation Bar --><header class="sticky top-0 z-50 bg-navy shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="#home" class="text-2xl font-black text-white nav-link tracking-wider rounded-md p-1">
+                    ASTROREADSCHARTS
+                </a>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#home" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Home</a>
+                    <a id="consultation-menu-link" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Book A Consultation</a>
+                    <a href="#about" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">About</a>
+                    <a href="#contact" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Contact</a>
+                    <a href="#donation" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Donation</a>
+                </nav>
+                <button id="mobile-menu-button" class="md:hidden text-white hover:text-accent p-2 rounded-md">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-navy/95 border-t border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block nav-link text-white hover:bg-navy/70 hover:text-accent px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a id="consultation-menu-link-mobile" class="block nav-link text-white hover:bg-navy/70 hover:text-accent px-3 py-2 rounded-md text-base font-medium">Book A Consultation</a>
+                <a href="#about" class="block nav-link text-white hover:bg-navy/70 hover:text-accent px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="#contact" class="block nav-link text-white hover:bg-navy/70 hover:text-accent px-3 py-2 rounded-md text-base font-medium">Contact</a>
+                <a href="#donation" class="block nav-link text-white hover:bg-navy/70 hover:text-accent px-3 py-2 rounded-md text-base font-medium">Donation</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto">
+        
+        <!-- Home Section (Hero) --><section id="home" class="min-h-[80vh] flex flex-col justify-center items-center py-24 px-4 text-center">
+            <h1 class="text-5xl md:text-7xl hero-title mb-4 text-navy">
+                Illuminating Your Path
+            </h1>
+            <p class="text-xl md:text-2xl text-navy/70 mb-8 max-w-3xl font-sans">
+                Unlock profound self-knowledge and foresight through professional chart readings and ancient wisdom.
+            </p>
+            <button onclick="showConsultationForm()" class="stylish-button bg-accent text-navy font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all">
+                Book Your Reading Today
+            </button>
+        </section>
+
+        <!-- Services Section (Sliding Animation) --><section class="py-16 px-4 bg-beige">
+            <h2 class="text-4xl font-bold text-center mb-12 text-navy">Our Specialized Readings</h2>
+            
+            <div class="slideshow-container">
+                <!-- Slides... (Content is functional, kept for brevity) -->
+                <div class="mySlides"><h3 class="slide-title">Birthchart Reading</h3><p class="slide-description">A deep dive into your cosmic blueprint...</p></div>
+                <div class="mySlides"><h3 class="slide-title">Tarot Reading</h3><p class="slide-description">Gain clarity on current situations...</p></div>
+                <div class="mySlides"><h3 class="slide-title">Transit Forecast</h3><p class="slide-description">Understand how current planetary movements...</p></div>
+                <div class="mySlides"><h3 class="slide-title">Numerology Reading</h3><p class="slide-description">Discover the profound influence of numbers...</p></div>
+            </div>
+        </section>
+
+        <!-- Book A Consultation Section (CONDITIONAL DISPLAY) --><section id="consultation-section" class="py-20 px-4 bg-navy text-white hidden">
+            <h2 class="text-4xl font-bold text-center mb-12 text-accent">Book Your Consultation</h2>
+            
+            <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-xl shadow-2xl text-navy">
+                <form id="consultation-form"> 
+                    
+                    <!-- Step 1: Input Details -->
+                    <div id="step-1">
+                        <h3 class="text-2xl font-semibold mb-6 border-b pb-2 border-navy/20">Step 1: Personal Details & Questions</h3>
+
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium mb-1">Full Name *</label>
+                                <input type="text" id="name" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
+                            </div>
+                            <div>
+                                <label for="dob" class="block text-sm font-medium mb-1">Birth Date *</label>
+                                <input type="date" id="dob" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
+                            </div>
+                            <div>
+                                <label for="time" class="block text-sm font-medium mb-1">Birth Time (Approx OK) *</label>
+                                <input type="time" id="time" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
+                            </div>
+                            <div>
+                                <label for="place" class="block text-sm font-medium mb-1">Birth Place (City, Country) *</label>
+                                <input type="text" id="place" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="email" class="block text-sm font-medium mb-1">Email for Communication *</label>
+                                <input type="email" id="email" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
+                            </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <label for="questions" class="block text-sm font-medium mb-1">Your Specific Questions (Optional, but helpful)</label>
+                            <textarea id="questions" rows="4" class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30"></textarea>
+                        </div>
+
+                        <button type="button" onclick="nextStep()" class="stylish-button bg-navy text-white font-bold py-3 px-8 rounded-full w-full">
+                            Proceed to Payment (Step 2)
+                        </button>
+                    </div>
+
+                    <!-- Step 2: Payment & Confirmation -->
+                    <div id="step-2" class="hidden">
+                        <h3 class="text-2xl font-semibold mb-6 border-b pb-2 border-navy/20">Step 2: Select Readings & Payment</h3>
+                        
+                        <p class="mb-6 text-sm text-center text-red-600 font-medium">
+                            * Please pay the calculated amount first via PayPal, then submit your details below.
+                        </p>
+
+                        <!-- Reading Type Selection (Checkboxes for multiple choice) -->
+                        <div class="mb-8">
+                            <h4 class="text-xl font-semibold mb-4">Select Your Reading(s) * (USD $20 per reading)</h4>
+                            <div id="reading-options" class="grid sm:grid-cols-2 gap-4 text-sm">
+                                <!-- Reading Checkboxes -->
+                                <label class="p-3 border border-navy/30 rounded-lg shadow-sm cursor-pointer hover:border-accent has-[:checked]:bg-accent/10 transition-all flex items-center">
+                                    <input type="checkbox" name="reading_type" value="Birthchart Reading" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent w-4 h-4">
+                                    <span class="font-bold">Birthchart Reading</span>
+                                </label>
+                                <label class="p-3 border border-navy/30 rounded-lg shadow-sm cursor-pointer hover:border-accent has-[:checked]:bg-accent/10 transition-all flex items-center">
+                                    <input type="checkbox" name="reading_type" value="Tarot Reading" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent w-4 h-4">
+                                    <span class="font-bold">Tarot Reading</span>
+                                </label>
+                                <label class="p-3 border border-navy/30 rounded-lg shadow-sm cursor-pointer hover:border-accent has-[:checked]:bg-accent/10 transition-all flex items-center">
+                                    <input type="checkbox" name="reading_type" value="Transit Forecast" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent w-4 h-4">
+                                    <span class="font-bold">Transit Forecast</span>
+                                </label>
+                                <label class="p-3 border border-navy/30 rounded-lg shadow-sm cursor-pointer hover:border-accent has-[:checked]:bg-accent/10 transition-all flex items-center">
+                                    <input type="checkbox" name="reading_type" value="Numerology Reading" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent w-4 h-4">
+                                    <span class="font-bold">Numerology Reading</span>
+                                </label>
+                                <label class="p-3 border border-navy/30 rounded-lg shadow-sm cursor-pointer hover:border-accent has-[:checked]:bg-accent/10 transition-all flex items-center">
+                                    <input type="checkbox" name="reading_type" value="Synastry Reading" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent w-4 h-4">
+                                    <span class="font-bold">Synastry Reading</span>
+                                </label>
+                                <label class="p-3 border border-navy/30 rounded-lg shadow-sm cursor-pointer hover:border-accent has-[:checked]:bg-accent/10 transition-all flex items-center">
+                                    <input type="checkbox" name="reading_type" value="Spiritual Guidance" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent w-4 h-4">
+                                    <span class="font-bold">Spiritual Guidance</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Price Calculation Summary -->
+                        <div id="price-summary" class="mb-6 p-4 rounded-lg bg-navy/5 border border-navy/20 hidden">
+                            <!-- Content generated by calculateTotal() -->
+                        </div>
+
+                        <!-- PayPal Button (target="_blank" added) -->
+                        <a href="https://www.paypal.com/paypalme/mvmahesh888" target="_blank" class="block stylish-button bg-accent text-navy font-bold text-lg py-4 px-8 rounded-full shadow-xl text-center mb-6">
+                            PAY NOW via PayPal (Opens in New Tab)
+                        </a>
+
+                        <!-- Confirmation Field -->
+                        <div class="mb-8">
+                            <label for="payment-account" class="block text-sm font-medium mb-1">Compulsory: Name/ID of the account you paid from *</label>
+                            <input type="text" id="payment-account" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
+                        </div>
+
+                        <button type="button" id="submit-button" onclick="submitConsultation()" class="stylish-button bg-navy text-white font-bold py-3 px-8 rounded-full w-full">
+                            Submit Details
+                        </button>
+                    </div>
+
+                    <!-- Success Message with Animated Tick Mark -->
+                    <div id="success-message" class="hidden text-center p-8 bg-green-50 rounded-xl">
+                        <svg class="icon-success" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                        <h3 class="text-2xl font-bold text-green-700 mb-4">Submission Successful!</h3>
+                        <p class="text-green-800">Thank you for your booking. We have received your details and will contact you shortly to confirm your reading(s).</p>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+
+        <!-- Other sections (About, Contact, Donation) remain the same... -->
+        <section id="about" class="py-16 px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-navy">About</h2>
+            <div class="max-w-4xl mx-auto text-lg leading-relaxed space-y-6">
+                <p>Astroreadscharts was founded on the principle that ancient astrological and metaphysical knowledge should be accessible, practical, and delivered with professional precision. We believe the stars offer more than just prediction they provide a powerful framework for self-understanding and conscious decision-making.</p>
+                <p>Our mission is to help you navigate life's cycles, clarify your purpose, and harness your innate potential. We blend traditional techniques with modern, empathetic guidance to ensure every consultation is not only insightful but deeply empowering. Trust us to be your dedicated guide on your journey through the cosmos.</p>
+            </div>
+        </section>
+
+        <section id="contact" class="py-16 px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-navy">Get In Touch</h2>
+            <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10">
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-semibold mb-4 text-navy">Our Location (Vijayawada)</h3>
+                    <div class="w-full aspect-video rounded-xl overflow-hidden shadow-lg border border-navy/20">
+                        <iframe 
+                            src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Vijayawada,%20Andhra%20Pradesh,%20India&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" 
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    <div class="flex justify-start space-x-6 pt-4">
+                        <a href="https://www.facebook.com/astroreadscharts" target="_blank" class="text-navy hover:text-accent transition duration-300">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.04c-5.54 0-10 4.46-10 10 0 5.54 4.46 10 10 10 5.54 0 10-4.46 10-10 0-5.54-4.46-10-10-10zm2.22 6.64h-1.89c-.19 0-.32.06-.32.4v1.51h2.24l-.3 2.15h-1.94v6.2h-2.22v-6.2h-1.7v-2.15h1.7v-1.28c0-1.87 1.14-2.88 2.81-2.88h1.86v2.15z"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/astroreadscharts/" target="_blank" class="text-navy hover:text-accent transition duration-300">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M7.8 2c-2.71 0-4.8 2.1-4.8 4.8v10.4c0 2.7 2.09 4.8 4.8 4.8h8.4c2.7 0 4.8-2.1 4.8-4.8V6.8c0-2.7-2.1-4.8-4.8-4.8H7.8zm0 2h8.4c1.65 0 2.8 1.15 2.8 2.8v10.4c0 1.65-1.15 2.8-2.8 2.8H7.8c-1.65 0-2.8-1.15-2.8-2.8V6.8c0-1.65 1.15-2.8 2.8-2.8zm8.6 2.4c-.66 0-1.2.54-1.2 1.2s.54 1.2 1.2 1.2 1.2-.54 1.2-1.2-.54-1.2-1.2-1.2zM12 9.2c-2.64 0-4.8 2.16-4.8 4.8s2.16 4.8 4.8 4.8 4.8-2.16 4.8-4.8-2.16-4.8-4.8-4.8zm0 2c1.54 0 2.8 1.26 2.8 2.8s-1.26 2.8-2.8 2.8-2.8-1.26-2.8-2.8 1.26-2.8 2.8-2.8z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-accent">
+                    <h3 class="text-2xl font-semibold mb-4 text-navy">Send Us a Message</h3>
+                    <form onsubmit="event.preventDefault(); alertCustom('Thank you for contacting us! We will respond to your message shortly.'); this.reset();">
+                        <div class="mb-4">
+                            <label for="c-name" class="block text-sm font-medium mb-1">Name</label>
+                            <input type="text" id="c-name" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
+                        </div>
+                        <div class="mb-4">
+                            <label for="c-email" class="block text-sm font-medium mb-1">Email *</label>
+                            <input type="email" id="c-email" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
+                        </div>
+                        <div class="mb-6">
+                            <label for="c-purpose" class="block text-sm font-medium mb-1">Purpose of Contact</label>
+                            <textarea id="c-purpose" rows="4" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30"></textarea>
+                        </div>
+                        <button type="submit" class="stylish-button bg-navy text-white font-bold py-3 px-8 rounded-full w-full">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="donation" class="py-16 px-4 text-center">
+            <h2 class="text-4xl font-bold mb-6 text-navy">Support Our Work</h2>
+            <p class="text-lg text-navy/80 max-w-2xl mx-auto mb-8">
+                If you have found value in our free content and guidance, your generous support allows us to continue providing high-quality astrological insights and maintaining this platform.
+            </p>
+            <a href="https://www.paypal.com/paypalme/mvmahesh888" target="_blank" class="stylish-button bg-accent text-navy font-bold text-lg py-3 px-12 rounded-full shadow-lg hover:shadow-xl transition-all inline-block">
+                Donate Now
+            </a>
+        </section>
+
+    </main>
+
+    <!-- Footer --><footer class="bg-navy mt-16 py-8 px-4 text-center text-white/70">
+        <p>&copy; 2025 AstroReadsCharts. All rights reserved.</p>
+        <p class="text-sm mt-2">Designed with professionalism and precision.</p>
+    </footer>
+
+    <!-- Custom Modal for Alerts (replacing alert()) --><div id="custom-modal" class="fixed inset-0 bg-black bg-opacity-50 z-[9999] hidden items-center justify-center p-4">
+        <div class="bg-white rounded-xl p-6 w-full max-w-md shadow-2xl border-t-4 border-accent text-navy">
+            <h3 class="text-xl font-bold mb-4">Notification</h3>
+            <p id="modal-message" class="mb-6"></p>
+            <button onclick="document.getElementById('custom-modal').classList.add('hidden'); document.getElementById('custom-modal').classList.remove('flex');" class="bg-navy text-white font-medium py-2 px-4 rounded-full float-right">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const consultationSection = document.getElementById('consultation-section');
+        const step1 = document.getElementById('step-1');
+        const step2 = document.getElementById('step-2');
+        const successMessage = document.getElementById('success-message');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const priceSummaryDiv = document.getElementById('price-summary');
+        
+        const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xnnlbrak';
+        const DISCOUNT_THRESHOLD = 2; // Number of items required to get the discount
+        const DISCOUNT_RATE = 0.5; // 50% discount
+
+        // Reading prices defined for use in calculation
+        const READING_PRICES = {
+            'Birthchart Reading': 20,
+            'Tarot Reading': 20,
+            'Transit Forecast': 20,
+            'Numerology Reading': 20,
+            'Synastry Reading': 20,
+            'Spiritual Guidance': 20,
+        };
+
+        let consultationData = {}; // Store Step 1 data temporarily
+        let finalPrice = 0; // Store the calculated final price
+
+        // Function to replace alert() with a custom modal
+        function alertCustom(message) {
+            document.getElementById('modal-message').innerText = message;
+            document.getElementById('custom-modal').classList.remove('hidden');
+            document.getElementById('custom-modal').classList.add('flex');
+        }
+
+        // --- Step Transition and Visibility ---
+        function showConsultationForm() {
+            if (consultationSection.classList.contains('hidden')) {
+                consultationSection.classList.remove('hidden');
+                // Ensure initial total calculation runs if user scrolls here directly
+                setTimeout(() => {
+                    calculateTotal();
+                    consultationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 50);
+            } else {
+                consultationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Attach function to menu links
+        document.getElementById('consultation-menu-link').addEventListener('click', showConsultationForm);
+        document.getElementById('consultation-menu-link-mobile').addEventListener('click', () => {
+             mobileMenu.classList.add('hidden');
+             showConsultationForm();
+        });
+
+        function nextStep() {
+            const nameInput = document.getElementById('name');
+            const dobInput = document.getElementById('dob');
+            const timeInput = document.getElementById('time');
+            const placeInput = document.getElementById('place');
+            const emailInput = document.getElementById('email');
+            const questionsInput = document.getElementById('questions');
+
+            if (!nameInput.value || !dobInput.value || !timeInput.value || !placeInput.value || !emailInput.value) {
+                alertCustom('Please fill in all mandatory fields in Step 1 before proceeding to payment.');
+                return;
+            }
+            
+            // Store data from Step 1
+            consultationData = { 
+                name: nameInput.value, 
+                dob: dobInput.value, 
+                time: timeInput.value, 
+                place: placeInput.value,
+                email: emailInput.value,
+                questions: questionsInput.value 
+            };
+
+            // Transition to Step 2
+            step1.classList.add('hidden');
+            step2.classList.remove('hidden');
+            calculateTotal(); // Run calculation immediately on step transition
+            
+            consultationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        // --- Dynamic Pricing Logic ---
+        function calculateTotal() {
+            const checkboxes = document.querySelectorAll('input[name="reading_type"]:checked');
+            const selectedCount = checkboxes.length;
+            let subtotal = 0;
+            let discountApplied = false;
+
+            if (selectedCount === 0) {
+                finalPrice = 0;
+                priceSummaryDiv.classList.add('hidden');
+                priceSummaryDiv.innerHTML = '';
+                return;
+            }
+
+            // Calculate subtotal
+            checkboxes.forEach(checkbox => {
+                // Use the data-price attribute for calculation
+                subtotal += parseFloat(checkbox.getAttribute('data-price'));
+            });
+
+            let discount = 0;
+            if (selectedCount > DISCOUNT_THRESHOLD) {
+                discount = subtotal * DISCOUNT_RATE;
+                finalPrice = subtotal - discount;
+                discountApplied = true;
+            } else {
+                finalPrice = subtotal;
+            }
+            
+            // Format to 2 decimal places
+            const formattedSubtotal = subtotal.toFixed(2);
+            const formattedDiscount = discount.toFixed(2);
+            const formattedFinalPrice = finalPrice.toFixed(2);
+            
+            // Build the dynamic message HTML
+            let htmlContent = `
+                <div class="space-y-2">
+                    <p class="flex justify-between items-center text-lg font-bold border-b pb-2">
+                        <span>Selected Readings (${selectedCount}):</span>
+                        <span>$${formattedSubtotal}</span>
+                    </p>
+            `;
+
+            if (discountApplied) {
+                htmlContent += `
+                    <p class="flex justify-between text-green-700 font-semibold">
+                        <span class="text-sm">50% Multi-Reading Discount (${selectedCount} readings)</span>
+                        <span class="text-sm">-$${formattedDiscount}</span>
+                    </p>
+                `;
+            }
+
+            htmlContent += `
+                    <p class="flex justify-between items-center text-xl font-extrabold pt-2 border-t border-navy/30">
+                        <span>TOTAL AMOUNT DUE:</span>
+                        <span class="text-navy text-2xl">$${formattedFinalPrice}</span>
+                    </p>
+                    <p class="text-xs text-center text-gray-500 pt-2">
+                        Please pay this exact amount via the PayPal link above.
+                    </p>
+                </div>
+            `;
+
+            priceSummaryDiv.innerHTML = htmlContent;
+            priceSummaryDiv.classList.remove('hidden');
+        }
+
+        // --- Submission Logic ---
+        async function submitConsultation() {
+            const submitButton = document.getElementById('submit-button');
+            const paymentAccount = document.getElementById('payment-account').value;
+            const selectedCheckboxes = document.querySelectorAll('input[name="reading_type"]:checked');
+            
+            if (selectedCheckboxes.length === 0) {
+                alertCustom('Please select at least one Reading Type before submitting your details.');
+                return;
+            }
+            
+            if (finalPrice === 0) {
+                 alertCustom('The total amount is $0.00. Please select a reading type.');
+                return;
+            }
+
+            if (!paymentAccount) {
+                alertCustom('The name/ID of the payment account is compulsory for cross-checking. Please enter it.');
+                return;
+            }
+
+            // Get selected readings list
+            const selectedReadings = Array.from(selectedCheckboxes).map(cb => cb.value);
+            const discountApplied = selectedReadings.length > DISCOUNT_THRESHOLD;
+
+            // Compile the data payload for Formspree
+            const finalData = {
+                _subject: `New Consultation Booking (${selectedReadings.length} Readings) - Total: $${finalPrice.toFixed(2)}`,
+                
+                // Step 1 Details
+                '1_Full Name': consultationData.name,
+                '1_Email': consultationData.email,
+                '1_Birth Date': consultationData.dob,
+                '1_Birth Time': consultationData.time,
+                '1_Birth Place': consultationData.place,
+                '1_Specific Questions': consultationData.questions || "No specific questions provided.",
+
+                // Step 2 Details
+                '2_Readings Selected': selectedReadings.join(', '),
+                '2_Total Readings Count': selectedReadings.length,
+                '2_Discount Applied (50% OFF)': discountApplied ? 'YES' : 'NO',
+                '2_Total Amount Due (USD)': finalPrice.toFixed(2),
+                '2_Payment Account Name': paymentAccount,
+                '2_Submission Time': new Date().toLocaleString(),
+            };
+
+            // Add loading indicator and disable button
+            submitButton.innerHTML = '<span class="animate-pulse">Sending...</span>';
+            submitButton.disabled = true;
+
+            try {
+                let response;
+                const maxRetries = 3;
+                let delay = 1000;
+                
+                for (let i = 0; i < maxRetries; i++) {
+                    try {
+                        response = await fetch(FORMSPREE_ENDPOINT, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                            body: JSON.stringify(finalData)
+                        });
+
+                        if (response.ok) { break; } 
+                        else if (response.status === 429 && i < maxRetries - 1) {
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                            delay *= 2; 
+                            continue;
+                        } else {
+                            throw new Error(`Formspree error: ${response.status} ${response.statusText}`);
+                        }
+                    } catch (error) {
+                        if (i === maxRetries - 1) throw error; 
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2;
+                    }
+                }
+
+                if (response && response.ok) {
+                    // Success: Show animation and redirect
+                    step2.classList.add('hidden');
+                    successMessage.classList.remove('hidden');
+                    
+                    // Start the checkmark animation
+                    document.querySelector('.checkmark-circle').style.animation = 'stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards';
+                    document.querySelector('.checkmark-check').style.animation = 'stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards';
+
+                    // Wait 3 seconds, then redirect to home
+                    setTimeout(() => {
+                        window.location.hash = '#home'; // Scrolls to home section
+                        resetForm(); // Reset form data
+                    }, 3000); 
+
+                } else {
+                    alertCustom('Submission failed after multiple attempts. Please check your internet connection or try again later.');
+                }
+            } catch (error) {
+                console.error('Final Submission Error:', error);
+                alertCustom('A critical error occurred during submission. Please check the console for details.');
+            } finally {
+                submitButton.innerHTML = 'Submit Details';
+                submitButton.disabled = false;
+            }
+        }
+
+        function resetForm() {
+            consultationData = {};
+            finalPrice = 0;
+            document.getElementById('consultation-form').reset();
+            priceSummaryDiv.classList.add('hidden');
+            successMessage.classList.add('hidden');
+            step1.classList.remove('hidden');
+            step2.classList.add('hidden');
+            // Hide the consultation section again for a clean look
+            consultationSection.classList.add('hidden');
+        }
+
+        // --- Initializers and Listeners ---
+        // Mobile Menu Toggle
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth Scrolling for all links (retained)
+        document.querySelectorAll('.nav-link[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.id !== 'consultation-menu-link' && this.id !== 'consultation-menu-link-mobile') {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Slideshow Logic (retained)
+        let slideIndex = 0; 
+        let slideshowTimer;
+        const SLIDE_INTERVAL = 5000; 
+        const slides = document.getElementsByClassName("mySlides");
+
+        function showSlides() {
+            if (slides.length < 2) return; 
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.transform = `translateX(${(i - slideIndex) * 100}%)`;
+            }
+            slideIndex = (slideIndex + 1) % slides.length;
+            clearTimeout(slideshowTimer);
+            slideshowTimer = setTimeout(showSlides, SLIDE_INTERVAL);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (slides.length > 0) {
+                for (let i = 0; i < slides.length; i++) {
+                    slides[i].style.transform = `translateX(${i * 100}%)`;
+                }
+                slides[0].style.transform = 'translateX(0%)';
+                slideIndex = 1;
+                slideshowTimer = setTimeout(showSlides, SLIDE_INTERVAL);
+            }
+        });
+    </script>
+</body>
+</html>
