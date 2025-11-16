@@ -675,6 +675,73 @@
                 slideshowTimer = setTimeout(showSlides, SLIDE_INTERVAL);
             }
         });
+
+
+
+
+
+
+
+
+
+
+// --- 1. BLOCK KEYBOARD SHORTCUTS (Ctrl+U, Ctrl+A, Copy, Cut, Paste) ---
+    document.addEventListener('keydown', function(event) {
+        
+        // Block Ctrl+U (View Source)
+        if (event.ctrlKey && (event.key === 'u' || event.keyCode === 85)) {
+            event.preventDefault(); 
+            event.stopPropagation();
+        }
+        
+        // Block Ctrl+A (Select All)
+        // 'a' has a keyCode of 65
+        if (event.ctrlKey && (event.key === 'a' || event.keyCode === 65)) {
+            event.preventDefault(); 
+            event.stopPropagation();
+        }
+        
+        // Note: Copy/Cut/Paste keyboard shortcuts are primarily blocked by the clipboard events below, 
+        // but can be added here as an extra layer if needed.
+    });
+
+    // --- 2. BLOCK RIGHT-CLICK CONTEXT MENU ---
+    document.addEventListener('contextmenu', function(event) {
+        // Blocks Right-Click
+        event.preventDefault();
+    });
+
+    // --- 3. BLOCK CLIPBOARD EVENTS ---
+    document.addEventListener('copy', function(event) {
+        // Blocks the 'copy' action
+        event.preventDefault();
+    });
+
+    document.addEventListener('cut', function(event) {
+        // Blocks the 'cut' action
+        event.preventDefault();
+    });
+
+    document.addEventListener('paste', function(event) {
+        // Blocks the 'paste' action
+        event.preventDefault();
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     </script>
 </body>
 </html>
