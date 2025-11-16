@@ -293,26 +293,79 @@
                         </a>
                     </div>
                 </div>
-                <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-accent">
+                 <div class="pt-10 border-t border-gray-200 mt-10">
+
+                <div class="bg-white p-8 rounded-xl shadow-2xl border-t-4 border-navy">
+
                     <h3 class="text-2xl font-semibold mb-4 text-navy">Send Us a Message</h3>
-                    <form onsubmit="event.preventDefault(); alertCustom('Thank you for contacting us! We will respond to your message shortly.'); this.reset();">
+
+                    
+
+                    <form action="https://api.web3forms.com/submit" method="POST">
+
+
+
+                        <!-- Web3Forms Access Key: c3f24206-b0fb-4cfd-8fda-b3e275001b4d -->
+
+                        <input type="hidden" name="access_key" value="c3f24206-b0fb-4cfd-8fda-b3e275001b4d">
+
+
+
+                        <!-- Web3Forms Subject line -->
+
+                        <input type="hidden" name="subject" value="New Website Contact Message from Astroreadscharts">
+
+                        
+
+                        <!-- Redirect set to your exact live URL for success message display -->
+
+                        <input type="hidden" name="redirect" value="https://astroreadscharts.github.io/?submitted=true">
+
+                        
+
+                        <!-- Disable reCAPTCHA (optional) -->
+
+                        <input type="hidden" name="_captcha" value="false">
+
+
+
                         <div class="mb-4">
-                            <label for="c-name" class="block text-sm font-medium mb-1">Name</label>
-                            <input type="text" id="c-name" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
+
+                            <label for="c-name" class="block text-sm font-medium mb-1 text-navy">Name</label>
+
+                            <input type="text" id="c-name" name="Name" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
+
                         </div>
+
                         <div class="mb-4">
-                            <label for="c-email" class="block text-sm font-medium mb-1">Email *</label>
-                            <input type="email" id="c-email" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
+
+                            <label for="c-email" class="block text-sm font-medium mb-1 text-navy">Email *</label>
+
+                            <input type="email" id="c-email" name="Email" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
+
                         </div>
+
                         <div class="mb-6">
-                            <label for="c-purpose" class="block text-sm font-medium mb-1">Purpose of Contact</label>
-                            <textarea id="c-purpose" rows="4" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30"></textarea>
+
+                            <label for="c-purpose" class="block text-sm font-medium mb-1 text-navy">Purpose of Contact</label>
+
+                            <textarea id="c-purpose" name="Message" rows="4" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30"></textarea>
+
                         </div>
-                        <button type="submit" class="stylish-button bg-navy text-white font-bold py-3 px-8 rounded-full w-full">
+
+                        <button type="submit" class="stylish-button bg-navy text-white font-bold py-3 px-8 rounded-full w-full hover:bg-navy/90">
+
                             Send Message
+
                         </button>
+
                     </form>
+
                 </div>
+
+            </div>
+
+            <!-- END CONTACT FORM -->
             </div>
         </section>
 
