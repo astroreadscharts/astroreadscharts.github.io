@@ -24,6 +24,11 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--color-beige);
             color: var(--color-navy);
+            /* Prevents text from being selected by dragging the mouse */
+            user-select: none;
+            -webkit-user-select: none; 
+            -moz-user-select: none;    
+            -ms-user-select: none;
         }
         .bg-navy { background-color: var(--color-navy); }
         .text-navy { color: var(--color-navy); }
