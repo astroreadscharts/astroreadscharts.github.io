@@ -17,6 +17,14 @@
             --color-beige: #F4F0E4;
             --color-accent: #E5B80B; /* A subtle gold for highlights */
         }
+
+
+
+	.nav-link {
+        cursor: pointer;
+    }
+
+
         html {
             scroll-behavior: smooth;
         }
@@ -151,122 +159,124 @@
             </div>
         </section>
 
-        <!-- Book A Consultation Section (CONDITIONAL DISPLAY) --><section id="consultation-section" class="py-20 px-4 bg-navy text-white hidden">
-            <h2 class="text-4xl font-bold text-center mb-12 text-accent">Book Your Consultation</h2>
+        <!-- Book A Consultation Section (CONDITIONAL DISPLAY) -->
+
+
+
+
+
+
+
+
+
+
+<section id="consultation-section" class="py-20 px-4 bg-navy text-white hidden">
+    <h2 class="text-4xl font-bold text-center mb-12 text-accent">Begin Your Journey</h2>
+    
+    <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-xl shadow-2xl text-navy">
+        <div id="step-1">
+            <h3 class="text-2xl font-semibold mb-6 border-b pb-2 border-navy/20">Step 1: Birth Details & Services</h3>
             
-            <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-xl shadow-2xl text-navy">
-                <form id="consultation-form"> 
-                    
-                    <!-- Step 1: Input Details -->
-                    <div id="step-1">
-                        <h3 class="text-2xl font-semibold mb-6 border-b pb-2 border-navy/20">Step 1: Personal Details & Questions</h3>
-
-                        <div class="grid md:grid-cols-2 gap-6 mb-6">
-                            <div>
-                                <label for="name" class="block text-sm font-medium mb-1">Full Name *</label>
-                                <input type="text" id="name" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
-                            </div>
-                            <div>
-                                <label for="dob" class="block text-sm font-medium mb-1">Birth Date *</label>
-                                <input type="date" id="dob" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
-                            </div>
-                            <div>
-                                <label for="time" class="block text-sm font-medium mb-1">Birth Time (Approx OK) *</label>
-                                <input type="time" id="time" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
-                            </div>
-                            <div>
-                                <label for="place" class="block text-sm font-medium mb-1">Birth Place (City, Country) *</label>
-                                <input type="text" id="place" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
-                            </div>
-                            <div class="md:col-span-2">
-                                <label for="email" class="block text-sm font-medium mb-1">Email for Communication *</label>
-                                <input type="email" id="email" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
-                            </div>
+            <div class="mb-8">
+                <h4 class="text-lg font-bold mb-4">Select Your Readings</h4>
+                <div class="grid sm:grid-cols-2 gap-4 text-sm">
+                    <label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+                        <input type="checkbox" name="reading_type" value="Birthchart" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+                        <span class="font-bold">Birthchart Reading ($20)</span>
+                    </label>
+                    <label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+                        <input type="checkbox" name="reading_type" value="Tarot" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+                        <span class="font-bold">Tarot Reading ($20)</span>
+                    </label>
+                    <label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+                        <input type="checkbox" name="reading_type" value="Transit" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+                        <span class="font-bold">Transit Forecast ($20)</span>
+                    </label>
+                    <label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+                        <input type="checkbox" name="reading_type" value="Numerology" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+                        <span class="font-bold">Numerology Reading ($20)</span>
+                    </label>
+                    <label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+                        <input type="checkbox" name="reading_type" value="Spiritual Guidance" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+                        <span class="font-bold">Spiritual Guidance ($20)</span>
+                    </label>
+                    <label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+                        <input type="checkbox" name="reading_type" value="Synastry" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+                        <span class="font-bold">Synastry Reading ($20)</span>
+                    </label>
+                    <label class="p-3 border-2 border-accent rounded-lg flex items-center cursor-pointer bg-accent/5 md:col-span-2">
+                        <input type="checkbox" name="reading_type" value="Detailed Report" data-price="33" onchange="calculateTotal()" class="mr-3 accent-accent">
+                        <div>
+                            <span class="font-bold block text-navy">Detailed Written Report ($33)</span>
+                            <span class="text-xs text-gray-600 italic">Vedic, Western, Jaimini Analysis + 1yr Forecast</span>
                         </div>
-
-                        <div class="mb-8">
-                            <label for="questions" class="block text-sm font-medium mb-1">Your Specific Questions (Optional, but helpful)</label>
-                            <textarea id="questions" rows="4" class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30"></textarea>
-                        </div>
-
-                        <button type="button" onclick="nextStep()" class="stylish-button bg-navy text-white font-bold py-3 px-8 rounded-full w-full">
-                            Proceed to Payment (Step 2)
-                        </button>
-                    </div>
-
-                    <!-- Step 2: Payment & Confirmation -->
-                    <div id="step-2" class="hidden">
-                        <h3 class="text-2xl font-semibold mb-6 border-b pb-2 border-navy/20">Step 2: Select Readings & Payment</h3>
-                        
-                        <p class="mb-6 text-sm text-center text-red-600 font-medium">
-                            * Please pay the calculated amount first via PayPal, then submit your details below.
-                        </p>
-
-                        <!-- Reading Type Selection (Checkboxes for multiple choice) -->
-                        <div class="mb-8">
-                            <h4 class="text-xl font-semibold mb-4">Select Your Reading(s) * (USD $20 per reading)</h4>
-                            <div id="reading-options" class="grid sm:grid-cols-2 gap-4 text-sm">
-                                <!-- Reading Checkboxes -->
-                                <label class="p-3 border border-navy/30 rounded-lg shadow-sm cursor-pointer hover:border-accent has-[:checked]:bg-accent/10 transition-all flex items-center">
-                                    <input type="checkbox" name="reading_type" value="Birthchart Reading" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent w-4 h-4">
-                                    <span class="font-bold">Birthchart Reading</span>
-                                </label>
-                                <label class="p-3 border border-navy/30 rounded-lg shadow-sm cursor-pointer hover:border-accent has-[:checked]:bg-accent/10 transition-all flex items-center">
-                                    <input type="checkbox" name="reading_type" value="Tarot Reading" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent w-4 h-4">
-                                    <span class="font-bold">Tarot Reading</span>
-                                </label>
-                                <label class="p-3 border border-navy/30 rounded-lg shadow-sm cursor-pointer hover:border-accent has-[:checked]:bg-accent/10 transition-all flex items-center">
-                                    <input type="checkbox" name="reading_type" value="Transit Forecast" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent w-4 h-4">
-                                    <span class="font-bold">Transit Forecast</span>
-                                </label>
-                                <label class="p-3 border border-navy/30 rounded-lg shadow-sm cursor-pointer hover:border-accent has-[:checked]:bg-accent/10 transition-all flex items-center">
-                                    <input type="checkbox" name="reading_type" value="Numerology Reading" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent w-4 h-4">
-                                    <span class="font-bold">Numerology Reading</span>
-                                </label>
-                                <label class="p-3 border border-navy/30 rounded-lg shadow-sm cursor-pointer hover:border-accent has-[:checked]:bg-accent/10 transition-all flex items-center">
-                                    <input type="checkbox" name="reading_type" value="Synastry Reading" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent w-4 h-4">
-                                    <span class="font-bold">Synastry Reading</span>
-                                </label>
-                                <label class="p-3 border border-navy/30 rounded-lg shadow-sm cursor-pointer hover:border-accent has-[:checked]:bg-accent/10 transition-all flex items-center">
-                                    <input type="checkbox" name="reading_type" value="Spiritual Guidance" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent w-4 h-4">
-                                    <span class="font-bold">Spiritual Guidance</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Price Calculation Summary -->
-                        <div id="price-summary" class="mb-6 p-4 rounded-lg bg-navy/5 border border-navy/20 hidden">
-                            <!-- Content generated by calculateTotal() -->
-                        </div>
-
-                        <!-- PayPal Button (target="_blank" added) -->
-                        <a href="https://www.paypal.com/paypalme/mvmahesh888" target="_blank" class="block stylish-button bg-accent text-navy font-bold text-lg py-4 px-8 rounded-full shadow-xl text-center mb-6">
-                            PAY NOW via PayPal (Opens in New Tab)
-                        </a>
-
-                        <!-- Confirmation Field -->
-                        <div class="mb-8">
-                            <label for="payment-account" class="block text-sm font-medium mb-1">Compulsory: Name/ID of the account you paid from *</label>
-                            <input type="text" id="payment-account" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
-                        </div>
-
-                        <button type="button" id="submit-button" onclick="submitConsultation()" class="stylish-button bg-navy text-white font-bold py-3 px-8 rounded-full w-full">
-                            Submit Details
-                        </button>
-                    </div>
-
-                    <!-- Success Message with Animated Tick Mark -->
-                    <div id="success-message" class="hidden text-center p-8 bg-green-50 rounded-xl">
-                        <svg class="icon-success" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
-                            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
-                            <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-                        </svg>
-                        <h3 class="text-2xl font-bold text-green-700 mb-4">Submission Successful!</h3>
-                        <p class="text-green-800">Thank you for your booking. We have received your details and will contact you shortly to confirm your reading(s).</p>
-                    </div>
-
-                </form>
+                    </label>
+                </div>
+                <div id="price-summary" class="mt-4 hidden"></div>
             </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium mb-1">Full Name *</label>
+                    <input type="text" id="name" required class="w-full p-3 border rounded-lg border-navy/30">
+                </div>
+                <div><label class="block text-sm font-medium mb-1">Birth Date *</label><input type="date" id="dob" class="w-full p-3 border rounded-lg border-navy/30"></div>
+                <div><label class="block text-sm font-medium mb-1">Birth Time *</label><input type="time" id="time" class="w-full p-3 border rounded-lg border-navy/30"></div>
+                <div class="md:col-span-2"><label class="block text-sm font-medium mb-1">Birth Place *</label><input type="text" id="place" class="w-full p-3 border rounded-lg border-navy/30"></div>
+                <div class="md:col-span-2"><label class="block text-sm font-medium mb-1">Email *</label><input type="email" id="email" class="w-full p-3 border rounded-lg border-navy/30"></div>
+                <div class="md:col-span-2"><label class="block text-sm font-medium mb-1">Specific Questions</label><textarea id="questions" rows="2" class="w-full p-3 border rounded-lg border-navy/30"></textarea></div>
+            </div>
+
+            <button type="button" id="proceed-button" onclick="submitAndProceed()" class="stylish-button bg-navy text-white font-bold py-4 px-8 rounded-full w-full shadow-lg hover:bg-opacity-90 transition-all">
+                Submit Details & Proceed to Payment
+            </button>
+        </div>
+
+        <div id="step-2" class="hidden animate-fade-in">
+    <div class="text-center">
+        <div class="inline-block p-3 bg-green-100 text-green-700 rounded-full mb-4">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+        </div>
+        <h3 class="text-3xl font-bold mb-2 text-navy">Thank you, <span id="display-user-name" class="text-accent"></span>!</h3>
+        
+        <p class="text-gray-600 mb-8 px-4 font-medium" id="personalized-message"></p>
+
+        <div class="bg-beige/30 p-6 rounded-2xl border border-navy/10 mb-8">
+            <p class="text-sm uppercase tracking-widest text-gray-500 mb-2">Final Amount</p>
+            <p class="text-4xl font-extrabold text-navy mb-6" id="final-amount-display">$0.00</p>
+            
+            <div class="flex flex-col items-center justify-center space-y-6">
+                <div class="p-4 bg-white rounded-xl shadow-md border-t-4 border-navy w-48">
+                    <img src="src/astroreadscharts.png" alt="Payment QR" class="w-full h-auto">
+                </div><br>or<br>
+                <a id="dynamic-paypal-link" href="#" target="_blank" class="bg-accent text-navy font-bold py-4 px-10 rounded-full shadow-xl hover:scale-105 transition-transform">
+                    Pay with PayPal Link
+                </a>
+            </div>
+        </div>
+        </div>
+</div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </section>
 
         <!-- Other sections (About, Contact, Donation) remain the same... -->
@@ -368,43 +378,30 @@
     </div>
 
     <script>
+        
+
+// --- 1. GLOBALS & SELECTORS ---
         const consultationSection = document.getElementById('consultation-section');
         const step1 = document.getElementById('step-1');
         const step2 = document.getElementById('step-2');
-        const successMessage = document.getElementById('success-message');
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const priceSummaryDiv = document.getElementById('price-summary');
         
         const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xnnlbrak';
-        const DISCOUNT_THRESHOLD = 2; // Number of items required to get the discount
-        const DISCOUNT_RATE = 0.5; // 50% discount
+        let finalPrice = 0; 
 
-        // Reading prices defined for use in calculation
-        const READING_PRICES = {
-            'Birthchart Reading': 20,
-            'Tarot Reading': 20,
-            'Transit Forecast': 20,
-            'Numerology Reading': 20,
-            'Synastry Reading': 20,
-            'Spiritual Guidance': 20,
-        };
-
-        let consultationData = {}; // Store Step 1 data temporarily
-        let finalPrice = 0; // Store the calculated final price
-
-        // Function to replace alert() with a custom modal
+        // Custom Modal Alert
         function alertCustom(message) {
             document.getElementById('modal-message').innerText = message;
             document.getElementById('custom-modal').classList.remove('hidden');
             document.getElementById('custom-modal').classList.add('flex');
         }
 
-        // --- Step Transition and Visibility ---
+        // --- 2. NAVIGATION & VISIBILITY ---
         function showConsultationForm() {
             if (consultationSection.classList.contains('hidden')) {
                 consultationSection.classList.remove('hidden');
-                // Ensure initial total calculation runs if user scrolls here directly
                 setTimeout(() => {
                     calculateTotal();
                     consultationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -414,338 +411,139 @@
             }
         }
 
-        // Attach function to menu links
         document.getElementById('consultation-menu-link').addEventListener('click', showConsultationForm);
         document.getElementById('consultation-menu-link-mobile').addEventListener('click', () => {
              mobileMenu.classList.add('hidden');
              showConsultationForm();
         });
 
-        function nextStep() {
-            const nameInput = document.getElementById('name');
-            const dobInput = document.getElementById('dob');
-            const timeInput = document.getElementById('time');
-            const placeInput = document.getElementById('place');
-            const emailInput = document.getElementById('email');
-            const questionsInput = document.getElementById('questions');
+        // --- 3. DYNAMIC PRICING LOGIC ---
+        function calculateTotal() {
+            const checkboxes = document.querySelectorAll('input[name="reading_type"]:checked');
+            let subtotal = 0;
 
-            if (!nameInput.value || !dobInput.value || !timeInput.value || !placeInput.value || !emailInput.value) {
-                alertCustom('Please fill in all mandatory fields in Step 1 before proceeding to payment.');
+            if (checkboxes.length === 0) {
+                finalPrice = 0;
+                priceSummaryDiv.classList.add('hidden');
                 return;
             }
+
+            checkboxes.forEach(cb => {
+                subtotal += parseFloat(cb.getAttribute('data-price'));
+            });
+
+            // 50% discount if more than 2 items are selected
+            let discount = (checkboxes.length > 2) ? (subtotal * 0.5) : 0;
+            finalPrice = subtotal - discount;
             
-            // Store data from Step 1
-            consultationData = { 
-                name: nameInput.value, 
-                dob: dobInput.value, 
-                time: timeInput.value, 
-                place: placeInput.value,
-                email: emailInput.value,
-                questions: questionsInput.value 
-            };
+            priceSummaryDiv.innerHTML = `
+                <div class="p-3 bg-navy/5 rounded border border-navy/10 text-xs">
+                    <div class="flex justify-between"><span>Subtotal:</span> <span>$${subtotal.toFixed(2)}</span></div>
+                    ${discount > 0 ? `<div class="flex justify-between text-green-600 font-bold"><span>50% Discount Applied!</span> <span>-$${discount.toFixed(2)}</span></div>` : ''}
+                    <div class="flex justify-between font-bold text-sm mt-1 border-t pt-1 text-navy"><span>Total Amount Due:</span> <span>$${finalPrice.toFixed(2)}</span></div>
+                </div>`;
+            priceSummaryDiv.classList.remove('hidden');
+        }
+
+        // --- 4. CORE SUBMISSION & TRANSITION ---
+        async function submitAndProceed() {
+    const nameInput = document.getElementById('name').value.trim();
+    const fields = ['name', 'dob', 'time', 'place', 'email'];
+    const allFilled = fields.every(id => document.getElementById(id).value.trim() !== "");
+    const selectedReadings = Array.from(document.querySelectorAll('input[name="reading_type"]:checked'));
+
+    if (!allFilled) return alertCustom('Please provide your full birth details.');
+    if (selectedReadings.length === 0) return alertCustom('Please select at least one reading type.');
+
+    const btn = document.getElementById('proceed-button');
+    btn.disabled = true;
+    btn.innerText = "Securing your path...";
+
+    const readingList = selectedReadings.map(c => c.value);
+    const hasReport = readingList.includes('Detailed Report');
+
+    const payload = {
+        'Full Name': nameInput,
+        'Email': document.getElementById('email').value,
+        'Birth Info': `${document.getElementById('dob').value} at ${document.getElementById('time').value} (${document.getElementById('place').value})`,
+        'Selected Services': readingList.join(', '),
+        'Total Amount': `$${finalPrice.toFixed(2)}`,
+        'Questions': document.getElementById('questions').value || "No specific questions"
+    };
+
+    try {
+        const response = await fetch(FORMSPREE_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            // Update Step 2 UI
+            document.getElementById('display-user-name').innerText = nameInput;
+            document.getElementById('final-amount-display').innerText = `$${finalPrice.toFixed(2)}`;
+            document.getElementById('dynamic-paypal-link').href = `https://www.paypal.com/paypalme/mvmahesh888/${finalPrice.toFixed(2)}`;
+
+            // Set the new requested message logic
+            const msgEl = document.getElementById('personalized-message');
+            if (hasReport) {
+                msgEl.innerText = "Once payment is received, your reading will be blocked in and our experts will begin crafting your celestial analysis.";
+            } else {
+                msgEl.innerHTML = `Once payment is received, your reading will be blocked in. Please message us on the FB Profile - <a href="https://www.facebook.com/vardhan.astro" target="_blank" class="text-accent underline font-bold">Vardhan Astro</a> profile to finalize your session time.`;            }
 
             // Transition to Step 2
             step1.classList.add('hidden');
             step2.classList.remove('hidden');
-            calculateTotal(); // Run calculation immediately on step transition
-            
             consultationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            throw new Error();
         }
-        
-        // --- Dynamic Pricing Logic ---
-        function calculateTotal() {
-            const checkboxes = document.querySelectorAll('input[name="reading_type"]:checked');
-            const selectedCount = checkboxes.length;
-            let subtotal = 0;
-            let discountApplied = false;
+    } catch (error) {
+        alertCustom('There was an error sending your details. Please try again.');
+        btn.disabled = false;
+        btn.innerText = "Submit Details & Proceed to Payment";
+    }
+}
 
-            if (selectedCount === 0) {
-                finalPrice = 0;
-                priceSummaryDiv.classList.add('hidden');
-                priceSummaryDiv.innerHTML = '';
-                return;
+        // --- 5. SECURITY & UI HELPERS ---
+        // Block Keyboard Shortcuts (Ctrl+U, Ctrl+A) and Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 'a' || e.key === 'A')) {
+                e.preventDefault();
             }
+        });
+        // Block Copy/Paste/Cut
+        ['copy', 'cut', 'paste'].forEach(evt => {
+            document.addEventListener(evt, e => e.preventDefault());
+        });
 
-            // Calculate subtotal
-            checkboxes.forEach(checkbox => {
-                // Use the data-price attribute for calculation
-                subtotal += parseFloat(checkbox.getAttribute('data-price'));
-            });
-
-            let discount = 0;
-            if (selectedCount > DISCOUNT_THRESHOLD) {
-                discount = subtotal * DISCOUNT_RATE;
-                finalPrice = subtotal - discount;
-                discountApplied = true;
-            } else {
-                finalPrice = subtotal;
-            }
-            
-            // Format to 2 decimal places
-            const formattedSubtotal = subtotal.toFixed(2);
-            const formattedDiscount = discount.toFixed(2);
-            const formattedFinalPrice = finalPrice.toFixed(2);
-            
-            // Build the dynamic message HTML
-            let htmlContent = `
-                <div class="space-y-2">
-                    <p class="flex justify-between items-center text-lg font-bold border-b pb-2">
-                        <span>Selected Readings (${selectedCount}):</span>
-                        <span>$${formattedSubtotal}</span>
-                    </p>
-            `;
-
-            if (discountApplied) {
-                htmlContent += `
-                    <p class="flex justify-between text-green-700 font-semibold">
-                        <span class="text-sm">50% Multi-Reading Discount (${selectedCount} readings)</span>
-                        <span class="text-sm">-$${formattedDiscount}</span>
-                    </p>
-                `;
-            }
-
-            htmlContent += `
-                    <p class="flex justify-between items-center text-xl font-extrabold pt-2 border-t border-navy/30">
-                        <span>TOTAL AMOUNT DUE:</span>
-                        <span class="text-navy text-2xl">$${formattedFinalPrice}</span>
-                    </p>
-                    <p class="text-xs text-center text-gray-500 pt-2">
-                        Please pay this exact amount via the PayPal link above.
-                    </p>
-                </div>
-            `;
-
-            priceSummaryDiv.innerHTML = htmlContent;
-            priceSummaryDiv.classList.remove('hidden');
-        }
-
-        // --- Submission Logic ---
-        async function submitConsultation() {
-            const submitButton = document.getElementById('submit-button');
-            const paymentAccount = document.getElementById('payment-account').value;
-            const selectedCheckboxes = document.querySelectorAll('input[name="reading_type"]:checked');
-            
-            if (selectedCheckboxes.length === 0) {
-                alertCustom('Please select at least one Reading Type before submitting your details.');
-                return;
-            }
-            
-            if (finalPrice === 0) {
-                 alertCustom('The total amount is $0.00. Please select a reading type.');
-                return;
-            }
-
-            if (!paymentAccount) {
-                alertCustom('The name/ID of the payment account is compulsory for cross-checking. Please enter it.');
-                return;
-            }
-
-            // Get selected readings list
-            const selectedReadings = Array.from(selectedCheckboxes).map(cb => cb.value);
-            const discountApplied = selectedReadings.length > DISCOUNT_THRESHOLD;
-
-            // Compile the data payload for Formspree
-            const finalData = {
-                _subject: `New Consultation Booking (${selectedReadings.length} Readings) - Total: $${finalPrice.toFixed(2)}`,
-                
-                // Step 1 Details
-                '1_Full Name': consultationData.name,
-                '1_Email': consultationData.email,
-                '1_Birth Date': consultationData.dob,
-                '1_Birth Time': consultationData.time,
-                '1_Birth Place': consultationData.place,
-                '1_Specific Questions': consultationData.questions || "No specific questions provided.",
-
-                // Step 2 Details
-                '2_Readings Selected': selectedReadings.join(', '),
-                '2_Total Readings Count': selectedReadings.length,
-                '2_Discount Applied (50% OFF)': discountApplied ? 'YES' : 'NO',
-                '2_Total Amount Due (USD)': finalPrice.toFixed(2),
-                '2_Payment Account Name': paymentAccount,
-                '2_Submission Time': new Date().toLocaleString(),
-            };
-
-            // Add loading indicator and disable button
-            submitButton.innerHTML = '<span class="animate-pulse">Sending...</span>';
-            submitButton.disabled = true;
-
-            try {
-                let response;
-                const maxRetries = 3;
-                let delay = 1000;
-                
-                for (let i = 0; i < maxRetries; i++) {
-                    try {
-                        response = await fetch(FORMSPREE_ENDPOINT, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                            body: JSON.stringify(finalData)
-                        });
-
-                        if (response.ok) { break; } 
-                        else if (response.status === 429 && i < maxRetries - 1) {
-                            await new Promise(resolve => setTimeout(resolve, delay));
-                            delay *= 2; 
-                            continue;
-                        } else {
-                            throw new Error(`Formspree error: ${response.status} ${response.statusText}`);
-                        }
-                    } catch (error) {
-                        if (i === maxRetries - 1) throw error; 
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        delay *= 2;
-                    }
-                }
-
-                if (response && response.ok) {
-                    // Success: Show animation and redirect
-                    step2.classList.add('hidden');
-                    successMessage.classList.remove('hidden');
-                    
-                    // Start the checkmark animation
-                    document.querySelector('.checkmark-circle').style.animation = 'stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards';
-                    document.querySelector('.checkmark-check').style.animation = 'stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards';
-
-                    // Wait 3 seconds, then redirect to home
-                    setTimeout(() => {
-                        window.location.hash = '#home'; // Scrolls to home section
-                        resetForm(); // Reset form data
-                    }, 3000); 
-
-                } else {
-                    alertCustom('Submission failed after multiple attempts. Please check your internet connection or try again later.');
-                }
-            } catch (error) {
-                console.error('Final Submission Error:', error);
-                alertCustom('A critical error occurred during submission. Please check the console for details.');
-            } finally {
-                submitButton.innerHTML = 'Submit Details';
-                submitButton.disabled = false;
-            }
-        }
-
-        function resetForm() {
-            consultationData = {};
-            finalPrice = 0;
-            document.getElementById('consultation-form').reset();
-            priceSummaryDiv.classList.add('hidden');
-            successMessage.classList.add('hidden');
-            step1.classList.remove('hidden');
-            step2.classList.add('hidden');
-            // Hide the consultation section again for a clean look
-            consultationSection.classList.add('hidden');
-        }
-
-        // --- Initializers and Listeners ---
         // Mobile Menu Toggle
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
 
-        // Smooth Scrolling for all links (retained)
-        document.querySelectorAll('.nav-link[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                if (this.id !== 'consultation-menu-link' && this.id !== 'consultation-menu-link-mobile') {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Slideshow Logic (retained)
+        // Slideshow Logic
         let slideIndex = 0; 
-        let slideshowTimer;
-        const SLIDE_INTERVAL = 5000; 
         const slides = document.getElementsByClassName("mySlides");
-
         function showSlides() {
             if (slides.length < 2) return; 
             for (let i = 0; i < slides.length; i++) {
                 slides[i].style.transform = `translateX(${(i - slideIndex) * 100}%)`;
             }
             slideIndex = (slideIndex + 1) % slides.length;
-            clearTimeout(slideshowTimer);
-            slideshowTimer = setTimeout(showSlides, SLIDE_INTERVAL);
+            setTimeout(showSlides, 5000);
         }
 
+        // Initializer
         document.addEventListener('DOMContentLoaded', () => {
             if (slides.length > 0) {
                 for (let i = 0; i < slides.length; i++) {
                     slides[i].style.transform = `translateX(${i * 100}%)`;
                 }
-                slides[0].style.transform = 'translateX(0%)';
-                slideIndex = 1;
-                slideshowTimer = setTimeout(showSlides, SLIDE_INTERVAL);
+                showSlides();
             }
         });
-
-
-
-
-
-
-
-
-
-
-// --- 1. BLOCK KEYBOARD SHORTCUTS (Ctrl+U, Ctrl+A, Copy, Cut, Paste) ---
-    document.addEventListener('keydown', function(event) {
-        
-        // Block Ctrl+U (View Source)
-        if (event.ctrlKey && (event.key === 'u' || event.keyCode === 85)) {
-            event.preventDefault(); 
-            event.stopPropagation();
-        }
-        
-        // Block Ctrl+A (Select All)
-        // 'a' has a keyCode of 65
-        if (event.ctrlKey && (event.key === 'a' || event.keyCode === 65)) {
-            event.preventDefault(); 
-            event.stopPropagation();
-        }
-        
-        // Note: Copy/Cut/Paste keyboard shortcuts are primarily blocked by the clipboard events below, 
-        // but can be added here as an extra layer if needed.
-    });
-
-    // --- 2. BLOCK RIGHT-CLICK CONTEXT MENU ---
-    document.addEventListener('contextmenu', function(event) {
-        // Blocks Right-Click
-        event.preventDefault();
-    });
-
-    // --- 3. BLOCK CLIPBOARD EVENTS ---
-    document.addEventListener('copy', function(event) {
-        // Blocks the 'copy' action
-        event.preventDefault();
-    });
-
-    document.addEventListener('cut', function(event) {
-        // Blocks the 'cut' action
-        event.preventDefault();
-    });
-
-    document.addEventListener('paste', function(event) {
-        // Blocks the 'paste' action
-        event.preventDefault();
-    });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         
     </script>
 </body>
