@@ -541,33 +541,44 @@
             document.addEventListener(evt, e => e.preventDefault());
         });
 
-        // Mobile Menu Toggle
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+       // Mobile Menu Toggle - FIXED
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Close mobile menu when a link is clicked - Essential for mobile
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (mobileMenu) mobileMenu.classList.add('hidden');
+            });
         });
 
-        // Slideshow Logic
+        // Slideshow Logic - Hardware Accelerated for Mobile Chrome
         let slideIndex = 0; 
         const slides = document.getElementsByClassName("mySlides");
+        
         function showSlides() {
-            if (slides.length < 2) return; 
+            if (!slides || slides.length < 2) return; 
             for (let i = 0; i < slides.length; i++) {
-                slides[i].style.transform = `translateX(${(i - slideIndex) * 100}%)`;
+                // translate3d uses the phone's GPU for smoother movement
+                slides[i].style.transform = `translate3d(${(i - slideIndex) * 100}%, 0, 0)`;
             }
             slideIndex = (slideIndex + 1) % slides.length;
             setTimeout(showSlides, 5000);
         }
 
-        // Initializer
-        document.addEventListener('DOMContentLoaded', () => {
+        // Initialize only when the page is fully ready
+        window.addEventListener('load', function() {
             if (slides.length > 0) {
+                // Set initial positioning
                 for (let i = 0; i < slides.length; i++) {
-                    slides[i].style.transform = `translateX(${i * 100}%)`;
+                    slides[i].style.transform = `translate3d(${i * 100}%, 0, 0)`;
                 }
                 showSlides();
             }
         });
-        
     </script>
 </body>
 </html>
