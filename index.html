@@ -6,8 +6,8 @@
     <title>Astroreadscharts</title>
 
  <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-   <script>
+ <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<script>
         // Use the proper Tailwind Play CDN configuration format
         tailwind.config = {
             theme: {
@@ -400,48 +400,56 @@
         </div>
     </div>
 
-    <script>
-        
-
-// --- 1. GLOBALS & SELECTORS ---
+   
+<script>
+        // --- 1. GLOBALS & SELECTORS ---
         const consultationSection = document.getElementById('consultation-section');
         const step1 = document.getElementById('step-1');
         const step2 = document.getElementById('step-2');
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const priceSummaryDiv = document.getElementById('price-summary');
+        const contactForm = document.getElementById('contactForm');
         
         const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xnnlbrak';
         let finalPrice = 0; 
 
         // Custom Modal Alert
         function alertCustom(message) {
-            document.getElementById('modal-message').innerText = message;
-            document.getElementById('custom-modal').classList.remove('hidden');
-            document.getElementById('custom-modal').classList.add('flex');
+            const modal = document.getElementById('custom-modal');
+            const msgEl = document.getElementById('modal-message');
+            if (modal && msgEl) {
+                msgEl.innerText = message;
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
         }
 
         // --- 2. NAVIGATION & VISIBILITY ---
         function showConsultationForm() {
-            if (consultationSection.classList.contains('hidden')) {
-                consultationSection.classList.remove('hidden');
-                setTimeout(() => {
-                    calculateTotal();
-                    consultationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 50);
-            } else {
+            if (!consultationSection) return;
+            consultationSection.classList.remove('hidden');
+            setTimeout(() => {
+                calculateTotal();
                 consultationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+            }, 50);
         }
 
-        document.getElementById('consultation-menu-link').addEventListener('click', showConsultationForm);
-        document.getElementById('consultation-menu-link-mobile').addEventListener('click', () => {
-             mobileMenu.classList.add('hidden');
-             showConsultationForm();
-        });
+        // Event Listeners for Nav
+        const consultLink = document.getElementById('consultation-menu-link');
+        const consultLinkMobile = document.getElementById('consultation-menu-link-mobile');
+        
+        if (consultLink) consultLink.addEventListener('click', showConsultationForm);
+        if (consultLinkMobile) {
+            consultLinkMobile.addEventListener('click', () => {
+                if (mobileMenu) mobileMenu.classList.add('hidden');
+                showConsultationForm();
+            });
+        }
 
         // --- 3. DYNAMIC PRICING LOGIC ---
         function calculateTotal() {
+            if (!priceSummaryDiv) return;
             const checkboxes = document.querySelectorAll('input[name="reading_type"]:checked');
             let subtotal = 0;
 
@@ -455,130 +463,135 @@
                 subtotal += parseFloat(cb.getAttribute('data-price'));
             });
 
-            // 50% discount if more than 2 items are selected
             let discount = (checkboxes.length > 2) ? (subtotal * 0.5) : 0;
             finalPrice = subtotal - discount;
             
             priceSummaryDiv.innerHTML = `
-                <div class="p-3 bg-navy/5 rounded border border-navy/10 text-xs">
+                <div class="p-3 bg-navy/5 rounded border border-navy/10 text-xs text-navy">
                     <div class="flex justify-between"><span>Subtotal:</span> <span>$${subtotal.toFixed(2)}</span></div>
                     ${discount > 0 ? `<div class="flex justify-between text-green-600 font-bold"><span>50% Discount Applied!</span> <span>-$${discount.toFixed(2)}</span></div>` : ''}
-                    <div class="flex justify-between font-bold text-sm mt-1 border-t pt-1 text-navy"><span>Total Amount Due:</span> <span>$${finalPrice.toFixed(2)}</span></div>
+                    <div class="flex justify-between font-bold text-sm mt-1 border-t pt-1 border-navy/10"><span>Total Due:</span> <span>$${finalPrice.toFixed(2)}</span></div>
                 </div>`;
             priceSummaryDiv.classList.remove('hidden');
         }
 
         // --- 4. CORE SUBMISSION & TRANSITION ---
         async function submitAndProceed() {
-    const nameInput = document.getElementById('name').value.trim();
-    const fields = ['name', 'dob', 'time', 'place', 'email'];
-    const allFilled = fields.every(id => document.getElementById(id).value.trim() !== "");
-    const selectedReadings = Array.from(document.querySelectorAll('input[name="reading_type"]:checked'));
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const fields = ['name', 'dob', 'time', 'place', 'email'];
+            const allFilled = fields.every(id => document.getElementById(id).value.trim() !== "");
+            const selectedReadings = Array.from(document.querySelectorAll('input[name="reading_type"]:checked'));
 
-    if (!allFilled) return alertCustom('Please provide your full birth details.');
-    if (selectedReadings.length === 0) return alertCustom('Please select at least one reading type.');
+            if (!allFilled) return alertCustom('Please provide your full birth details.');
+            if (selectedReadings.length === 0) return alertCustom('Please select at least one reading.');
 
-    const btn = document.getElementById('proceed-button');
-    btn.disabled = true;
-    btn.innerText = "Securing your path...";
+            const btn = document.getElementById('proceed-button');
+            btn.disabled = true;
+            btn.innerText = "Securing your path...";
 
-    const readingList = selectedReadings.map(c => c.value);
-    const hasReport = readingList.includes('Detailed Report');
+            const payload = {
+                'Full Name': nameInput.value,
+                'Email': emailInput.value,
+                'Birth Info': `${document.getElementById('dob').value} at ${document.getElementById('time').value} (${document.getElementById('place').value})`,
+                'Services': selectedReadings.map(c => c.value).join(', '),
+                'Total': `$${finalPrice.toFixed(2)}`,
+                'Questions': document.getElementById('questions').value || "None"
+            };
 
-    const payload = {
-        'Full Name': nameInput,
-        'Email': document.getElementById('email').value,
-        'Birth Info': `${document.getElementById('dob').value} at ${document.getElementById('time').value} (${document.getElementById('place').value})`,
-        'Selected Services': readingList.join(', '),
-        'Total Amount': `$${finalPrice.toFixed(2)}`,
-        'Questions': document.getElementById('questions').value || "No specific questions"
-    };
+            try {
+                const response = await fetch(FORMSPREE_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
 
-    try {
-        const response = await fetch(FORMSPREE_ENDPOINT, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
+                if (response.ok) {
+                    document.getElementById('display-user-name').innerText = nameInput.value;
+                    document.getElementById('final-amount-display').innerText = `$${finalPrice.toFixed(2)}`;
+                    document.getElementById('dynamic-paypal-link').href = `https://www.paypal.com/paypalme/mvmahesh888/${finalPrice.toFixed(2)}`;
 
-        if (response.ok) {
-            // Update Step 2 UI
-            document.getElementById('display-user-name').innerText = nameInput;
-            document.getElementById('final-amount-display').innerText = `$${finalPrice.toFixed(2)}`;
-            document.getElementById('dynamic-paypal-link').href = `https://www.paypal.com/paypalme/mvmahesh888/${finalPrice.toFixed(2)}`;
+                    const msgEl = document.getElementById('personalized-message');
+                    const hasReport = selectedReadings.some(c => c.value === 'Detailed Report');
+                    
+                    if (hasReport) {
+                        msgEl.innerText = "Once payment is received, our experts will begin crafting your celestial analysis.";
+                    } else {
+                        msgEl.innerHTML = `Once payment is received, please message us on the <a href="https://www.facebook.com/vardhan.astro" target="_blank" class="text-accent underline font-bold">Vardhan Astro</a> profile to finalize your session.`;
+                    }
 
-            // Set the new requested message logic
-            const msgEl = document.getElementById('personalized-message');
-            if (hasReport) {
-                msgEl.innerText = "Once payment is received, your reading will be blocked in and our experts will begin crafting your celestial analysis.";
-            } else {
-                msgEl.innerHTML = `Once payment is received, your reading will be blocked in. Please message us on the FB Profile - <a href="https://www.facebook.com/vardhan.astro" target="_blank" class="text-accent underline font-bold">Vardhan Astro</a> profile to finalize your session time.`;            }
-
-            // Transition to Step 2
-            step1.classList.add('hidden');
-            step2.classList.remove('hidden');
-            consultationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-            throw new Error();
+                    step1.classList.add('hidden');
+                    step2.classList.remove('hidden');
+                    consultationSection.scrollIntoView({ behavior: 'smooth' });
+                } else { throw new Error(); }
+            } catch (error) {
+                alertCustom('Submission error. Please try again.');
+                btn.disabled = false;
+                btn.innerText = "Submit Details & Proceed";
+            }
         }
-    } catch (error) {
-        alertCustom('There was an error sending your details. Please try again.');
-        btn.disabled = false;
-        btn.innerText = "Submit Details & Proceed to Payment";
-    }
-}
 
-        // --- 5. SECURITY & UI HELPERS ---
-        // Block Keyboard Shortcuts (Ctrl+U, Ctrl+A) and Right-Click
+        // --- 5. CONTACT FORM AJAX (Prevents Redirection) ---
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const submitBtn = document.getElementById('submitButton');
+                submitBtn.disabled = true;
+                submitBtn.innerText = "Sending...";
+                
+                try {
+                    const formData = new FormData(contactForm);
+                    const response = await fetch("https://api.web3forms.com/submit", {
+                        method: "POST",
+                        body: formData
+                    });
+                    if (response.ok) {
+                        alertCustom("Message sent successfully!");
+                        contactForm.reset();
+                    } else { throw new Error(); }
+                } catch (err) {
+                    alertCustom("Failed to send message.");
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "Send Message";
+                }
+            });
+        }
+
+        // --- 6. SECURITY & SLIDESHOW ---
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('keydown', e => {
-            if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 'a' || e.key === 'A')) {
-                e.preventDefault();
-            }
-        });
-        // Block Copy/Paste/Cut
-        ['copy', 'cut', 'paste'].forEach(evt => {
-            document.addEventListener(evt, e => e.preventDefault());
+            if (e.ctrlKey && ['u','a','s','c'].includes(e.key.toLowerCase())) e.preventDefault();
         });
 
-       // Mobile Menu Toggle - FIXED
         if (mobileMenuButton) {
-            mobileMenuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-            });
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
         }
 
-        // Close mobile menu when a link is clicked - Essential for mobile
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                if (mobileMenu) mobileMenu.classList.add('hidden');
-            });
-        });
-
-        // Slideshow Logic - Hardware Accelerated for Mobile Chrome
         let slideIndex = 0; 
         const slides = document.getElementsByClassName("mySlides");
         
-        function showSlides() {
+        function rotateSlides() {
             if (!slides || slides.length < 2) return; 
             for (let i = 0; i < slides.length; i++) {
-                // translate3d uses the phone's GPU for smoother movement
                 slides[i].style.transform = `translate3d(${(i - slideIndex) * 100}%, 0, 0)`;
             }
             slideIndex = (slideIndex + 1) % slides.length;
-            setTimeout(showSlides, 5000);
+            setTimeout(rotateSlides, 5000);
         }
 
-        // Initialize only when the page is fully ready
-        window.addEventListener('load', function() {
+        window.addEventListener('load', () => {
             if (slides.length > 0) {
-                // Set initial positioning
                 for (let i = 0; i < slides.length; i++) {
                     slides[i].style.transform = `translate3d(${i * 100}%, 0, 0)`;
                 }
-                showSlides();
+                rotateSlides();
             }
         });
     </script>
+
+
+
+	
 </body>
 </html>
