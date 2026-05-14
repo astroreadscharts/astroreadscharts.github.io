@@ -66,12 +66,32 @@
             max-height: 2000px;
         }
         /* Slideshow styles (retained for context) */
-        .slideshow-container {
-            position: relative; max-width: 900px; margin: auto; overflow: hidden; height: 180px; border-radius: 1rem; box-shadow: 0 8px 25px rgba(26, 47, 79, 0.1); border: 1px solid #c9d5e3;
-        }
-        .mySlides {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(160deg, var(--color-beige) 0%, #e8eaf0 100%); padding: 1.5rem 1rem; text-align: center; transition: transform 1.0s ease-in-out; opacity: 1;
-        }
+       .slideshow-container {
+    position: relative; 
+    max-width: 900px; 
+    margin: auto; 
+    overflow: hidden; 
+    height: 250px; 
+    border-radius: 1rem; 
+    box-shadow: 0 8px 25px rgba(26, 47, 79, 0.1); 
+    border: 1px solid #c9d5e3;
+}
+
+.mySlides {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: linear-gradient(160deg, var(--color-beige) 0%, #e8eaf0 100%); 
+    padding: 1.5rem 1rem; 
+    text-align: center; 
+    transition: transform 0.8s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
         /* CHECK MARK ANIMATION CSS */
         .checkmark-circle {
@@ -106,7 +126,7 @@
 </head>
 <body class="antialiased">
 
-    <!-- Navigation Bar --><header class="sticky top-0 z-50 bg-navy shadow-lg">
+    <!-- Navigation Bar --><header class="fixed top-0 left-0 w-full z-[100] bg-[#1A2F4F] shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <a href="#home" class="text-2xl font-black text-white nav-link tracking-wider rounded-md p-1">
@@ -524,29 +544,54 @@
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
+		// Close mobile menu when a link is clicked
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
 
-        // Slideshow Logic
+        // Close mobile menu when a link is clicked
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Slideshow Logic - OPTIMIZED FOR MOBILE
         let slideIndex = 0; 
         const slides = document.getElementsByClassName("mySlides");
+        
         function showSlides() {
-            if (slides.length < 2) return; 
+            if (!slides || slides.length < 2) return; 
             for (let i = 0; i < slides.length; i++) {
-                slides[i].style.transform = `translateX(${(i - slideIndex) * 100}%)`;
+                // translate3d uses the phone's GPU for smoother movement
+                slides[i].style.transform = `translate3d(${(i - slideIndex) * 100}%, 0, 0)`;
             }
             slideIndex = (slideIndex + 1) % slides.length;
             setTimeout(showSlides, 5000);
         }
 
-        // Initializer
-        document.addEventListener('DOMContentLoaded', () => {
+        // Initialize only when the page is fully ready
+        window.addEventListener('load', () => {
             if (slides.length > 0) {
+                // Set initial positioning
                 for (let i = 0; i < slides.length; i++) {
-                    slides[i].style.transform = `translateX(${i * 100}%)`;
+                    slides[i].style.transform = `translate3d(${i * 100}%, 0, 0)`;
                 }
                 showSlides();
             }
         });
-        
+
+        // Security protections as requested
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && (['u', 'a', 's', 'c'].includes(e.key.toLowerCase()))) {
+                e.preventDefault();
+            }
+        });
     </script>
 </body>
 </html>
