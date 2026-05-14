@@ -4,6 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astroreadscharts</title>
+
+ <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Explicitly configure Tailwind to recognize your custom colors natively
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#1A2F4F',
+                        beige: '#F4F0E4',
+                        accent: '#E5B80B',
+                    }
+                }
+            }
+        }
+    </script>
+
+	
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
