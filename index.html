@@ -1,129 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="p:domain_verify" content="a0d508969e69dcd37d315d8e0d41331b"/>
     <title>Astroreadscharts</title>
-
- <!-- Tailwind CSS -->
- <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-	<script>
-        // Use the proper Tailwind Play CDN configuration format
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'navy': '#1A2F4F',
-                        'beige': '#F4F0E4',
-                        'accent': '#E5B80B',
-                    }
-                }
-            }
-        }
-    </script>
-
-	
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:wght=700&display=swap" rel="stylesheet">
+   
+    <link href="googleapis.com" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="src/favicon.ico">
 
-   
-<style>
-    /* 1. ROOT VARIABLES */
-    :root {
-        --color-navy: #1A2F4F;
-        --color-beige: #F4F0E4;
-        --color-accent: #E5B80B;
+    <style>
+        /* Custom colors and configuration */
+        :root {
+            --color-navy: #1A2F4F;
+            --color-beige: #F4F0E4;
+            --color-accent: #E5B80B; /* A subtle gold for highlights */
+        }
+
+
+
+	.nav-link {
+        cursor: pointer;
     }
 
-    /* 2. BASE RESET - Forces colors even if JS fails */
-    html {
-        scroll-behavior: smooth;
-    }
-    body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        background-color: #F4F0E4 !important; /* Hardcoded beige fallback */
-        color: #1A2F4F !important; /* Hardcoded navy fallback */
-        margin: 0;
-        padding: 0;
-        user-select: none;
-        -webkit-user-select: none;
-        overflow-x: hidden;
-    }
 
-    /* 3. HEADER FIX - High Z-index to stay on top */
-    header {
-        background-color: #1A2F4F !important;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 9999;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-beige);
+            color: var(--color-navy);
+            /* Prevents text from being selected by dragging the mouse */
+            user-select: none;
+            -webkit-user-select: none; 
+            -moz-user-select: none;    
+            -ms-user-select: none;
+        }
+        .bg-navy { background-color: var(--color-navy); }
+        .text-navy { color: var(--color-navy); }
+        .border-navy { border-color: var(--color-navy); }
+        .text-accent { color: var(--color-accent); }
+        .bg-accent { background-color: var(--color-accent); }
+        .hero-title {
+            font-family: 'Playfair Display', serif; 
+            font-weight: 700;
+        }
+        .stylish-button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        /* Consultation Section Transition */
+        #consultation-section.hidden {
+            display: none;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+        }
+        #consultation-section {
+            transition: opacity 0.5s ease-in-out, max-height 0.7s ease-in-out;
+            max-height: 2000px;
+        }
+        /* Slideshow styles (retained for context) */
+        .slideshow-container {
+            position: relative; max-width: 900px; margin: auto; overflow: hidden; height: 180px; border-radius: 1rem; box-shadow: 0 8px 25px rgba(26, 47, 79, 0.1); border: 1px solid #c9d5e3;
+        }
+        .mySlides {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(160deg, var(--color-beige) 0%, #e8eaf0 100%); padding: 1.5rem 1rem; text-align: center; transition: transform 1.0s ease-in-out; opacity: 1;
+        }
 
-    /* 4. UTILITY CLASSES - Replaces Tailwind for key elements */
-    .bg-navy { background-color: var(--color-navy) !important; }
-    .text-navy { color: var(--color-navy) !important; }
-    .text-accent { color: var(--color-accent) !important; }
-    .bg-accent { background-color: var(--color-accent) !important; }
-    
-    .hero-title {
-        font-family: 'Playfair Display', serif;
-        font-weight: 700;
-    }
-
-    /* 5. SLIDESHOW - Optimized height for mobile */
-    .slideshow-container {
-        position: relative;
-        max-width: 900px;
-        margin: 20px auto;
-        overflow: hidden;
-        height: 250px; /* Increased for mobile text */
-        border-radius: 1rem;
-        background: #fff;
-        border: 1px solid #c9d5e3;
-    }
-
-    .mySlides {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-        text-align: center;
-        transition: transform 0.6s ease-in-out;
-        box-sizing: border-box;
-    }
-
-    /* 6. ANIMATIONS */
-    @keyframes stroke {
-        100% { stroke-dashoffset: 0; }
-    }
-
-    .checkmark-circle {
-        stroke-dasharray: 166;
-        stroke-dashoffset: 166;
-        stroke-width: 2;
-        stroke: #4CAF50;
-        fill: none;
-        animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
-    }
-
-    .checkmark-check {
-        stroke-dasharray: 48;
-        stroke-dashoffset: 48;
-        stroke: #4CAF50;
-        animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
-    }
-</style>
-
-	
+        /* CHECK MARK ANIMATION CSS */
+        .checkmark-circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: #4CAF50;
+            fill: none;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .checkmark-check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            stroke: #4CAF50;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+        @keyframes stroke {
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+        .icon-success {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto 20px;
+        }
+    </style>
 </head>
 <body class="antialiased">
 
@@ -135,7 +114,7 @@
                 </a>
                 <nav class="hidden md:flex space-x-6">
                     <a href="#home" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Home</a>
-                    <a onclick="showConsultationForm()" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors cursor-pointer">Book A Consultation</a>
+                    <a id="consultation-menu-link" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Book A Consultation</a>
                     <a href="#about" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">About</a>
                     <a href="#contact" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Contact</a>
                     <a href="#donation" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Donation</a>
@@ -400,56 +379,48 @@
         </div>
     </div>
 
-   
-<script>
-        // --- 1. GLOBALS & SELECTORS ---
+    <script>
+        
+
+// --- 1. GLOBALS & SELECTORS ---
         const consultationSection = document.getElementById('consultation-section');
         const step1 = document.getElementById('step-1');
         const step2 = document.getElementById('step-2');
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const priceSummaryDiv = document.getElementById('price-summary');
-        const contactForm = document.getElementById('contactForm');
         
         const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xnnlbrak';
         let finalPrice = 0; 
 
         // Custom Modal Alert
         function alertCustom(message) {
-            const modal = document.getElementById('custom-modal');
-            const msgEl = document.getElementById('modal-message');
-            if (modal && msgEl) {
-                msgEl.innerText = message;
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
-            }
+            document.getElementById('modal-message').innerText = message;
+            document.getElementById('custom-modal').classList.remove('hidden');
+            document.getElementById('custom-modal').classList.add('flex');
         }
 
         // --- 2. NAVIGATION & VISIBILITY ---
         function showConsultationForm() {
-            if (!consultationSection) return;
-            consultationSection.classList.remove('hidden');
-            setTimeout(() => {
-                calculateTotal();
+            if (consultationSection.classList.contains('hidden')) {
+                consultationSection.classList.remove('hidden');
+                setTimeout(() => {
+                    calculateTotal();
+                    consultationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 50);
+            } else {
                 consultationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 50);
+            }
         }
 
-        // Event Listeners for Nav
-        const consultLink = document.getElementById('consultation-menu-link');
-        const consultLinkMobile = document.getElementById('consultation-menu-link-mobile');
-        
-        if (consultLink) consultLink.addEventListener('click', showConsultationForm);
-        if (consultLinkMobile) {
-            consultLinkMobile.addEventListener('click', () => {
-                if (mobileMenu) mobileMenu.classList.add('hidden');
-                showConsultationForm();
-            });
-        }
+        document.getElementById('consultation-menu-link').addEventListener('click', showConsultationForm);
+        document.getElementById('consultation-menu-link-mobile').addEventListener('click', () => {
+             mobileMenu.classList.add('hidden');
+             showConsultationForm();
+        });
 
         // --- 3. DYNAMIC PRICING LOGIC ---
         function calculateTotal() {
-            if (!priceSummaryDiv) return;
             const checkboxes = document.querySelectorAll('input[name="reading_type"]:checked');
             let subtotal = 0;
 
@@ -463,135 +434,119 @@
                 subtotal += parseFloat(cb.getAttribute('data-price'));
             });
 
+            // 50% discount if more than 2 items are selected
             let discount = (checkboxes.length > 2) ? (subtotal * 0.5) : 0;
             finalPrice = subtotal - discount;
             
             priceSummaryDiv.innerHTML = `
-                <div class="p-3 bg-navy/5 rounded border border-navy/10 text-xs text-navy">
+                <div class="p-3 bg-navy/5 rounded border border-navy/10 text-xs">
                     <div class="flex justify-between"><span>Subtotal:</span> <span>$${subtotal.toFixed(2)}</span></div>
                     ${discount > 0 ? `<div class="flex justify-between text-green-600 font-bold"><span>50% Discount Applied!</span> <span>-$${discount.toFixed(2)}</span></div>` : ''}
-                    <div class="flex justify-between font-bold text-sm mt-1 border-t pt-1 border-navy/10"><span>Total Due:</span> <span>$${finalPrice.toFixed(2)}</span></div>
+                    <div class="flex justify-between font-bold text-sm mt-1 border-t pt-1 text-navy"><span>Total Amount Due:</span> <span>$${finalPrice.toFixed(2)}</span></div>
                 </div>`;
             priceSummaryDiv.classList.remove('hidden');
         }
 
         // --- 4. CORE SUBMISSION & TRANSITION ---
         async function submitAndProceed() {
-            const nameInput = document.getElementById('name');
-            const emailInput = document.getElementById('email');
-            const fields = ['name', 'dob', 'time', 'place', 'email'];
-            const allFilled = fields.every(id => document.getElementById(id).value.trim() !== "");
-            const selectedReadings = Array.from(document.querySelectorAll('input[name="reading_type"]:checked'));
+    const nameInput = document.getElementById('name').value.trim();
+    const fields = ['name', 'dob', 'time', 'place', 'email'];
+    const allFilled = fields.every(id => document.getElementById(id).value.trim() !== "");
+    const selectedReadings = Array.from(document.querySelectorAll('input[name="reading_type"]:checked'));
 
-            if (!allFilled) return alertCustom('Please provide your full birth details.');
-            if (selectedReadings.length === 0) return alertCustom('Please select at least one reading.');
+    if (!allFilled) return alertCustom('Please provide your full birth details.');
+    if (selectedReadings.length === 0) return alertCustom('Please select at least one reading type.');
 
-            const btn = document.getElementById('proceed-button');
-            btn.disabled = true;
-            btn.innerText = "Securing your path...";
+    const btn = document.getElementById('proceed-button');
+    btn.disabled = true;
+    btn.innerText = "Securing your path...";
 
-            const payload = {
-                'Full Name': nameInput.value,
-                'Email': emailInput.value,
-                'Birth Info': `${document.getElementById('dob').value} at ${document.getElementById('time').value} (${document.getElementById('place').value})`,
-                'Services': selectedReadings.map(c => c.value).join(', '),
-                'Total': `$${finalPrice.toFixed(2)}`,
-                'Questions': document.getElementById('questions').value || "None"
-            };
+    const readingList = selectedReadings.map(c => c.value);
+    const hasReport = readingList.includes('Detailed Report');
 
-            try {
-                const response = await fetch(FORMSPREE_ENDPOINT, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+    const payload = {
+        'Full Name': nameInput,
+        'Email': document.getElementById('email').value,
+        'Birth Info': `${document.getElementById('dob').value} at ${document.getElementById('time').value} (${document.getElementById('place').value})`,
+        'Selected Services': readingList.join(', '),
+        'Total Amount': `$${finalPrice.toFixed(2)}`,
+        'Questions': document.getElementById('questions').value || "No specific questions"
+    };
 
-                if (response.ok) {
-                    document.getElementById('display-user-name').innerText = nameInput.value;
-                    document.getElementById('final-amount-display').innerText = `$${finalPrice.toFixed(2)}`;
-                    document.getElementById('dynamic-paypal-link').href = `https://www.paypal.com/paypalme/mvmahesh888/${finalPrice.toFixed(2)}`;
+    try {
+        const response = await fetch(FORMSPREE_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
 
-                    const msgEl = document.getElementById('personalized-message');
-                    const hasReport = selectedReadings.some(c => c.value === 'Detailed Report');
-                    
-                    if (hasReport) {
-                        msgEl.innerText = "Once payment is received, our experts will begin crafting your celestial analysis.";
-                    } else {
-                        msgEl.innerHTML = `Once payment is received, please message us on the <a href="https://www.facebook.com/vardhan.astro" target="_blank" class="text-accent underline font-bold">Vardhan Astro</a> profile to finalize your session.`;
-                    }
+        if (response.ok) {
+            // Update Step 2 UI
+            document.getElementById('display-user-name').innerText = nameInput;
+            document.getElementById('final-amount-display').innerText = `$${finalPrice.toFixed(2)}`;
+            document.getElementById('dynamic-paypal-link').href = `https://www.paypal.com/paypalme/mvmahesh888/${finalPrice.toFixed(2)}`;
 
-                    step1.classList.add('hidden');
-                    step2.classList.remove('hidden');
-                    consultationSection.scrollIntoView({ behavior: 'smooth' });
-                } else { throw new Error(); }
-            } catch (error) {
-                alertCustom('Submission error. Please try again.');
-                btn.disabled = false;
-                btn.innerText = "Submit Details & Proceed";
-            }
+            // Set the new requested message logic
+            const msgEl = document.getElementById('personalized-message');
+            if (hasReport) {
+                msgEl.innerText = "Once payment is received, your reading will be blocked in and our experts will begin crafting your celestial analysis.";
+            } else {
+                msgEl.innerHTML = `Once payment is received, your reading will be blocked in. Please message us on the FB Profile - <a href="https://www.facebook.com/vardhan.astro" target="_blank" class="text-accent underline font-bold">Vardhan Astro</a> profile to finalize your session time.`;            }
+
+            // Transition to Step 2
+            step1.classList.add('hidden');
+            step2.classList.remove('hidden');
+            consultationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            throw new Error();
         }
+    } catch (error) {
+        alertCustom('There was an error sending your details. Please try again.');
+        btn.disabled = false;
+        btn.innerText = "Submit Details & Proceed to Payment";
+    }
+}
 
-        // --- 5. CONTACT FORM AJAX (Prevents Redirection) ---
-        if (contactForm) {
-            contactForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const submitBtn = document.getElementById('submitButton');
-                submitBtn.disabled = true;
-                submitBtn.innerText = "Sending...";
-                
-                try {
-                    const formData = new FormData(contactForm);
-                    const response = await fetch("https://api.web3forms.com/submit", {
-                        method: "POST",
-                        body: formData
-                    });
-                    if (response.ok) {
-                        alertCustom("Message sent successfully!");
-                        contactForm.reset();
-                    } else { throw new Error(); }
-                } catch (err) {
-                    alertCustom("Failed to send message.");
-                } finally {
-                    submitBtn.disabled = false;
-                    submitBtn.innerText = "Send Message";
-                }
-            });
-        }
-
-        // --- 6. SECURITY & SLIDESHOW ---
+        // --- 5. SECURITY & UI HELPERS ---
+        // Block Keyboard Shortcuts (Ctrl+U, Ctrl+A) and Right-Click
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('keydown', e => {
-            if (e.ctrlKey && ['u','a','s','c'].includes(e.key.toLowerCase())) e.preventDefault();
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 'a' || e.key === 'A')) {
+                e.preventDefault();
+            }
+        });
+        // Block Copy/Paste/Cut
+        ['copy', 'cut', 'paste'].forEach(evt => {
+            document.addEventListener(evt, e => e.preventDefault());
         });
 
-        if (mobileMenuButton) {
-            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-        }
+        // Mobile Menu Toggle
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
 
+        // Slideshow Logic
         let slideIndex = 0; 
         const slides = document.getElementsByClassName("mySlides");
-        
-        function rotateSlides() {
-            if (!slides || slides.length < 2) return; 
+        function showSlides() {
+            if (slides.length < 2) return; 
             for (let i = 0; i < slides.length; i++) {
-                slides[i].style.transform = `translate3d(${(i - slideIndex) * 100}%, 0, 0)`;
+                slides[i].style.transform = `translateX(${(i - slideIndex) * 100}%)`;
             }
             slideIndex = (slideIndex + 1) % slides.length;
-            setTimeout(rotateSlides, 5000);
+            setTimeout(showSlides, 5000);
         }
 
-        window.addEventListener('load', () => {
+        // Initializer
+        document.addEventListener('DOMContentLoaded', () => {
             if (slides.length > 0) {
                 for (let i = 0; i < slides.length; i++) {
-                    slides[i].style.transform = `translate3d(${i * 100}%, 0, 0)`;
+                    slides[i].style.transform = `translateX(${i * 100}%)`;
                 }
-                rotateSlides();
+                showSlides();
             }
         });
+        
     </script>
-
-
-
-	
 </body>
 </html>
