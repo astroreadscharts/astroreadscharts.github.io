@@ -474,33 +474,80 @@
              showConsultationForm();
         });
 
-        // --- 3. DYNAMIC PRICING LOGIC ---
-        function calculateTotal() {
-            const checkboxes = document.querySelectorAll('input[name="reading_type"]:checked');
-            let subtotal = 0;
+       // --- 3. DYNAMIC PRICING LOGIC ---
+function calculateTotal() {
+    const checkboxes = document.querySelectorAll('input[name="reading_type"]:checked');
+    let subtotal = 0;
+    let discount = 0;
 
-            if (checkboxes.length === 0) {
-                finalPrice = 0;
-                priceSummaryDiv.classList.add('hidden');
-                return;
-            }
+    if (checkboxes.length === 0) {
+        finalPrice = 0;
+        priceSummaryDiv.classList.add('hidden');
+        return;
+    }
 
-            checkboxes.forEach(cb => {
-                subtotal += parseFloat(cb.getAttribute('data-price'));
-            });
+    checkboxes.forEach(cb => {
+        subtotal += parseFloat(cb.getAttribute('data-price'));
+    });
 
-            // 50% discount if more than 2 items are selected
-            let discount = (checkboxes.length > 2) ? (subtotal * 0.5) : 0;
-            finalPrice = subtotal - discount;
-            
-            priceSummaryDiv.innerHTML = `
-                <div class="p-3 bg-navy/5 rounded border border-navy/10 text-xs">
-                    <div class="flex justify-between"><span>Subtotal:</span> <span>$${subtotal.toFixed(2)}</span></div>
-                    ${discount > 0 ? `<div class="flex justify-between text-green-600 font-bold"><span>50% Discount Applied!</span> <span>-$${discount.toFixed(2)}</span></div>` : ''}
-                    <div class="flex justify-between font-bold text-sm mt-1 border-t pt-1 text-navy"><span>Total Amount Due:</span> <span>$${finalPrice.toFixed(2)}</span></div>
-                </div>`;
-            priceSummaryDiv.classList.remove('hidden');
+    const blueprintSelected = Array.from(checkboxes).some(
+        cb => parseFloat(cb.getAttribute('data-price')) === 125
+    );
+
+    let discountText = '';
+
+    if (blueprintSelected) {
+
+        const additionalAmount = subtotal - 125;
+        const additionalReadings = checkboxes.length - 1;
+
+        if (additionalReadings >= 6) {
+            discount = additionalAmount * 0.50;
+            discountText = '50% Off Additional Readings';
+        } else if (additionalReadings >= 1) {
+            discount = additionalAmount * 0.25;
+            discountText = '25% Off Additional Readings';
         }
+
+    } else {
+
+        const totalReadings = checkboxes.length;
+
+        if (totalReadings >= 6) {
+            discount = subtotal * 0.50;
+            discountText = '50% Bundle Discount';
+        } else if (totalReadings >= 3) {
+            discount = subtotal * 0.25;
+            discountText = '25% Bundle Discount';
+        }
+
+    }
+
+    finalPrice = subtotal - discount;
+
+    priceSummaryDiv.innerHTML = `
+        <div class="p-3 bg-navy/5 rounded border border-navy/10 text-xs">
+            <div class="flex justify-between">
+                <span>Subtotal:</span>
+                <span>$${subtotal.toFixed(2)}</span>
+            </div>
+
+            ${discount > 0 ? `
+                <div class="flex justify-between text-green-600 font-bold">
+                    <span>${discountText}</span>
+                    <span>-$${discount.toFixed(2)}</span>
+                </div>
+            ` : ''}
+
+            <div class="flex justify-between font-bold text-sm mt-1 border-t pt-1 text-navy">
+                <span>Total Amount Due:</span>
+                <span>$${finalPrice.toFixed(2)}</span>
+            </div>
+        </div>`;
+
+    priceSummaryDiv.classList.remove('hidden');
+}
+
 
         // --- 4. CORE SUBMISSION & TRANSITION ---
         async function submitAndProceed() {
