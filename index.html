@@ -112,11 +112,37 @@
                     ASTROREADSCHARTS
                 </a>
                 <nav class="hidden md:flex space-x-6">
-                    <a href="#home" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Home</a>
-                    <a id="consultation-menu-link" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Book A Consultation</a>
-                    <a href="#about" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">About</a>
-                    <a href="#contact" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Contact</a>
-                    <a href="#donation" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Donation</a>
+                <a href="#home" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Home</a>
+
+<div class="relative inline-block group">
+    <button class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors flex items-center">
+        Services
+        <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+    </button>
+
+    <div class="absolute left-0 mt-2 w-80 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+        <a href="javascript:void(0)" onclick="currentSlide(1)" class="block px-5 py-3 text-gray-700 hover:bg-gray-100 hover:text-accent">Birthchart Reading</a>
+        <a href="javascript:void(0)" onclick="currentSlide(2)" class="block px-5 py-3 text-gray-700 hover:bg-gray-100 hover:text-accent">Tarot Reading</a>
+        <a href="javascript:void(0)" onclick="currentSlide(3)" class="block px-5 py-3 text-gray-700 hover:bg-gray-100 hover:text-accent">Transit Forecast</a>
+        <a href="javascript:void(0)" onclick="currentSlide(4)" class="block px-5 py-3 text-gray-700 hover:bg-gray-100 hover:text-accent">Numerology Reading</a>
+        <a href="javascript:void(0)" onclick="currentSlide(5)" class="block px-5 py-3 text-gray-700 hover:bg-gray-100 hover:text-accent">Spiritual Guidance</a>
+        <a href="javascript:void(0)" onclick="currentSlide(6)" class="block px-5 py-3 text-gray-700 hover:bg-gray-100 hover:text-accent">Synastry & Compatibility</a>
+        <a href="javascript:void(0)" onclick="currentSlide(7)" class="block px-5 py-3 text-gray-700 hover:bg-gray-100 hover:text-accent">Jaimini Astrology</a>
+        <a href="javascript:void(0)" onclick="currentSlide(8)" class="block px-5 py-3 text-gray-700 hover:bg-gray-100 hover:text-accent">Premium Strategic Blueprint</a>
+        <a href="javascript:void(0)" onclick="currentSlide(9)" class="block px-5 py-3 text-gray-700 hover:bg-gray-100 hover:text-accent">Personal Life Strategy Masterplan</a>
+        <a href="javascript:void(0)" onclick="currentSlide(10)" class="block px-5 py-3 text-gray-700 hover:bg-gray-100 hover:text-accent">Astrocartography Life Alignment Report</a>
+    </div>
+</div>
+
+<a id="consultation-menu-link" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Book A Consultation</a>
+
+<a href="#about" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">About</a>
+
+<a href="#contact" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Contact</a>
+
+<a href="#donation" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Donation</a>
                 </nav>
                 <button id="mobile-menu-button" class="md:hidden text-white hover:text-accent p-2 rounded-md">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
