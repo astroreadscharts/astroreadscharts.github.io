@@ -254,53 +254,63 @@
 
 
 
+
+
 <label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="Tarot" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+    <input type="checkbox" name="reading_type" value="1 Question Reading" data-price="25" onchange="calculateTotal()" class="mr-3 accent-accent">
     <div>
-        <span class="font-bold block text-navy">Tarot Reading ($20)</span>
+        <span class="font-bold block text-navy">1 Question Reading ($25)</span>
+        <span class="text-xs text-gray-600 italic">Receive a detailed, personalized answer to one specific question. Thoughtfully written and delivered directly to your email within 24 hours.</span>
+    </div>
+</label>
+
+
+
+<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+    <input type="checkbox" name="reading_type" value="5 Question Reading" data-price="60" onchange="calculateTotal()" class="mr-3 accent-accent">
+    <div>
+        <span class="font-bold block text-navy">5 Question Reading ($60)</span>
+        <span class="text-xs text-gray-600 italic">Comprehensive written guidance answering up to five personal questions with in-depth astrological insights. Delivered directly to your email within 24 hours.</span>
+    </div>
+</label>
+
+
+
+<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+    <input type="checkbox" name="reading_type" value="1 Hour Consultation" data-price="90" onchange="calculateTotal()" class="mr-3 accent-accent">
+    <div>
+        <span class="font-bold block text-navy">1 Hour Live Consultation ($90)</span>
+        <span class="text-xs text-gray-600 italic">A private one-on-one consultation to explore your questions in depth through astrology and intuitive guidance. Conducted via Google Meet or Zoom by appointment.</span>
+    </div>
+</label>
+
+
+
+<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+    <input type="checkbox" name="reading_type" value="Tarot" data-price="45" onchange="calculateTotal()" class="mr-3 accent-accent">
+    <div>
+        <span class="font-bold block text-navy">Tarot Reading ($45)</span>
         <span class="text-xs text-gray-600 italic">Clear, elite perspective for your most important questions. Delivered directly to your email within 24 hours.</span>
     </div>
 </label>
 
 <label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="Focused_Inquiry" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+    <input type="checkbox" name="reading_type" value="Focused_Inquiry" data-price="35" onchange="calculateTotal()" class="mr-3 accent-accent">
     <div>
-        <span class="font-bold block text-navy">The Personalized Astrological Inquiry ($20)</span>
+        <span class="font-bold block text-navy">The Personalized Astrological Inquiry ($35)</span>
         <span class="text-xs text-gray-600 italic">Get clear answers directly from your birth chart regarding your specific life questions. Your detailed report will be mailed within 24 hours.</span>
     </div>
 </label>
 
 <label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="Synastry_Profile" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+    <input type="checkbox" name="reading_type" value="Synastry_Profile" data-price="95" onchange="calculateTotal()" class="mr-3 accent-accent">
     <div>
-        <span class="font-bold block text-navy">Relationship Synastry Profile ($20)</span>
+        <span class="font-bold block text-navy">Relationship Synastry Profile ($95)</span>
         <span class="text-xs text-gray-600 italic">A refined comparison of two birth charts to answer your specific connection questions and map your shared energetic dynamics. Delivered via email within 24 hours.</span>
     </div>
 </label>
 
-<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="Transit_Forecast_Solo" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">1-Year Transit Forecast ($20)</span>
-        <span class="text-xs text-gray-600 italic">An exceptional timeline mapping out your most supportive and favourable cosmic periods over the next 12 months. Delivered within 24 hours.</span>
-    </div>
-</label>
 
-<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="Solar_Return" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">Solar Return Forecast ($20)</span>
-        <span class="text-xs text-gray-600 italic">Your personal year-ahead birthday map, highlighting major energetic themes and your most aligned areas of growth. Delivered within 24 hours.</span>
-    </div>
-</label>
-
-<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="Ultimate_Three_In_One_Combo" data-price="45" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">The All-In-One Cosmic Bundle ($45)</span>
-        <span class="text-xs text-gray-600 italic">A complete, high-level overview featuring your Natal Chart, a 1-Year Transit Forecast of favourable times, a Numerology Profile and Tarot Alignment. Delivered within 24 hours.</span>
-    </div>
-</label>
 
 <label class="p-3 border-2 border-accent rounded-lg flex items-center cursor-pointer bg-accent/5 md:col-span-2">
     <input type="checkbox" name="reading_type" value="Premium_Blueprint" data-price="125" onchange="calculateTotal()" class="mr-3 accent-accent">
@@ -310,13 +320,6 @@
     </div>
 </label>
 
-<label class="p-3 border-2 border-accent rounded-lg flex items-center cursor-pointer bg-accent/5 md:col-span-2">
-    <input type="checkbox" name="reading_type" value="Personal_Life_Strategy_Masterplan" data-price="150" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">🌟 Personal Life Strategy Masterplan: The Complete Destiny Framework ($150)</span>
-        <span class="text-xs text-gray-600 italic">The ultimate lifetime guidance experience, designed for those seeking exceptional clarity, strategic direction, and profound spiritual understanding. This comprehensive masterplan combines advanced Vedic and Jaimini astrology with an extensive analysis of Argala, Virodhargala, Latta, Sarvatobhadra Chakra, Panchanga, Ashtabhairava, and Ashtamatruka Shakti to reveal the hidden influences shaping your destiny. Receive personalized remedies, energy balancing recommendations, spiritual guidance, karmic insights, and practical life strategies tailored specifically to your birth chart. The report includes an in-depth assessment of career, finances, relationships, marriage, family, health, higher purpose, hidden strengths, karmic challenges, ideal timing for major life decisions, and a detailed 5-year transit forecast highlighting opportunities, caution periods, and long-term planning. Every recommendation is thoughtfully explained with clear interpretations and actionable guidance to help you align with your highest potential. Includes one complimentary private consultation and one complimentary tarot consultation, which may be used for yourself or gifted to one of your dear ones. Delivered within 5 to 7 business days.</span>
-    </div>
-</label>
 
 <label class="p-3 border-2 border-accent rounded-lg flex items-center cursor-pointer bg-accent/5 md:col-span-2">
     <input type="checkbox" name="reading_type" value="Astrocartography_Report" data-price="50" onchange="calculateTotal()" class="mr-3 accent-accent">
