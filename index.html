@@ -19,12 +19,9 @@
             --color-accent: #E5B80B; /* A subtle gold for highlights */
         }
 
-
-
 	.nav-link {
         cursor: pointer;
     }
-
 
         html {
             scroll-behavior: smooth;
@@ -61,10 +58,10 @@
             overflow: hidden;
         }
         #consultation-section {
-            transition: opacity 0.5s ease-in-out, max-height 0.7s ease-in-out;
+            transition: opacity 0.5s ease-in-out, max-height 2000px ease-in-out;
             max-height: 2000px;
         }
-        /* Slideshow styles (retained for context) */
+        /* Slideshow styles */
         .slideshow-container {
             position: relative; max-width: 900px; margin: auto; overflow: hidden; height: 180px; border-radius: 1rem; box-shadow: 0 8px 25px rgba(26, 47, 79, 0.1); border: 1px solid #c9d5e3;
         }
@@ -105,24 +102,19 @@
 </head>
 <body class="antialiased">
 
-    <!-- Navigation Bar --><header class="sticky top-0 z-50 bg-navy shadow-lg">
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-navy shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <a href="#home" class="text-2xl font-black text-white nav-link tracking-wider rounded-md p-1">
                     ASTROREADSCHARTS
                 </a>
                 <nav class="hidden md:flex space-x-6">
-                <a href="#home" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Home</a>
-
-
-
-<a id="consultation-menu-link" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Book A Consultation</a>
-
-<a href="#about" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">About</a>
-
-<a href="#contact" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Contact</a>
-
-<a href="#donation" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Donation</a>
+                    <a href="#home" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Home</a>
+                    <a id="consultation-menu-link" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Book A Consultation</a>
+                    <a href="#about" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">About</a>
+                    <a href="#contact" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Contact</a>
+                    <a href="#donation" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Donation</a>
                 </nav>
                 <button id="mobile-menu-button" class="md:hidden text-white hover:text-accent p-2 rounded-md">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -142,7 +134,8 @@
 
     <main class="max-w-7xl mx-auto">
         
-        <!-- Home Section (Hero) --><section id="home" class="min-h-[80vh] flex flex-col justify-center items-center py-24 px-4 text-center">
+        <!-- Home Section (Hero) -->
+        <section id="home" class="min-h-[80vh] flex flex-col justify-center items-center py-24 px-4 text-center">
             <h1 class="text-5xl md:text-7xl hero-title mb-4 text-navy">
                 Illuminating Your Path
             </h1>
@@ -154,229 +147,255 @@
             </button>
         </section>
 
-
-
 		<div class="flex justify-center py-8">
   			  <img src="src/Astroreadscharts.jpg" alt="Astroreadscharts" class="max-w-full md:max-w-2xl rounded-xl shadow-lg border border-navy/20">
 		</div>
 		
       <!-- Services Section (Sliding Animation) -->
+      <section class="py-16 px-4 bg-beige">
+          <h2 class="text-4xl font-bold text-center mb-12 text-navy">Our Specialized Readings</h2>
 
+          <div class="slideshow-container">
+              <div class="mySlides">
+                  <h2 style="font-size: x-large" class="slide-title">BIRTHCHART READING</h2>
+                  <p class="slide-description">Discover your unique cosmic blueprint through a detailed birth chart analysis. Understand your personality, strengths, relationships, career potential, life purpose and karmic lessons while receiving practical guidance to align with your highest potential.</p>
+              </div>
+              <div class="mySlides">
+                  <h2 style="font-size: x-large" class="slide-title">TAROT READING</h2>
+                  <p class="slide-description">Receive intuitive guidance for your current situation using the wisdom of the Tarot. Gain clarity on love, career, finances, relationships and important decisions with practical insights to help you move forward confidently.</p>
+              </div>
+              <div class="mySlides">
+                  <h2 style="font-size: x-large" class="slide-title">TRANSIT FORECAST</h2>
+                  <p class="slide-description">Understand how current and upcoming planetary movements influence your life. Discover favorable periods for career, relationships, finances and personal growth while preparing confidently for important opportunities and challenges.</p>
+              </div>
+              <div class="mySlides">
+                  <h2 style="font-size: x-large" class="slide-title">NUMEROLOGY READING</h2>
+                  <p class="slide-description">Explore the hidden meaning behind your birth date and name through Numerology. Learn your Life Path, Destiny and Soul Urge numbers to better understand your strengths, purpose and natural abilities.</p>
+              </div>
+              <div class="mySlides">
+                  <h2 style="font-size: x-large" class="slide-title">SPIRITUAL GUIDANCE</h2>
+                  <p class="slide-description">Reconnect with your higher self through personalized spiritual guidance. Receive insights into your soul purpose, current challenges, energy blocks and practical direction for healing, growth and inner peace.</p>
+              </div>
+              <div class="mySlides">
+                  <h2 style="font-size: x-large" class="slide-title">SYNASTRY & COMPATIBILITY</h2>
+                  <p class="slide-description">Understand the unique dynamics between two birth charts. Discover relationship strengths, challenges, emotional compatibility and karmic connections to improve communication and build stronger relationships.</p>
+              </div>
+              <div class="mySlides">
+                  <h2 style="font-size: x-large" class="slide-title">JAIMINI ASTROLOGY</h2>
+                  <p class="slide-description">Gain deeper insight into your destiny using advanced Jaimini astrology techniques. Explore your soul purpose, career direction, important life events and karmic lessons through specialized chart analysis.</p>
+              </div>
+              <div class="mySlides">
+                  <h2 style="font-size: x-large" class="slide-title">THE PREMIUM STRATEGIC BLUEPRINT</h2>
+                  <p class="slide-description">Receive an extensive report combining Vedic and Jaimini astrology, your Solar Return chart and a detailed 2 year transit forecast. Includes one complimentary tarot reading and one private consultation.</p>
+              </div>
+              <div class="mySlides">
+                  <h2 style="font-size: x-large" class="slide-title">PERSONAL LIFE STRATEGY MASTERPLAN</h2>
+                  <p class="slide-description">Our most comprehensive consultation featuring advanced Vedic and Jaimini techniques, Argala, Latta, Sarvatobhadra Chakra, Panchanga, remedies, energy balancing and a detailed 5 year transit forecast. Includes one complimentary consultation and one tarot consultation.</p>
+              </div>
+              <div class="mySlides">
+                  <h2 style="font-size: x-large" class="slide-title">ASTROCARTOGRAPHY LIFE ALIGNMENT REPORT</h2>
+                  <p class="slide-description">Discover the best places in the world for career, finances, relationships, education, travel and spiritual growth through a personalized Astrocartography analysis with practical relocation and travel guidance.</p>
+              </div>
+          </div>
+      </section>
 
-<section class="py-16 px-4 bg-beige">
-    <h2 class="text-4xl font-bold text-center mb-12 text-navy">Our Specialized Readings</h2>
-
-    <div class="slideshow-container">
-
-        <div class="mySlides">
-            <h2 style="font-size: x-large" class="slide-title">BIRTHCHART READING</h2>
-            <p class="slide-description">Discover your unique cosmic blueprint through a detailed birth chart analysis. Understand your personality, strengths, relationships, career potential, life purpose and karmic lessons while receiving practical guidance to align with your highest potential.</p>
-        </div>
-
-        <div class="mySlides">
-            <h2 style="font-size: x-large" class="slide-title">TAROT READING</h2>
-            <p class="slide-description">Receive intuitive guidance for your current situation using the wisdom of the Tarot. Gain clarity on love, career, finances, relationships and important decisions with practical insights to help you move forward confidently.</p>
-        </div>
-
-        <div class="mySlides">
-            <h2 style="font-size: x-large" class="slide-title">TRANSIT FORECAST</h2>
-            <p class="slide-description">Understand how current and upcoming planetary movements influence your life. Discover favorable periods for career, relationships, finances and personal growth while preparing confidently for important opportunities and challenges.</p>
-        </div>
-
-        <div class="mySlides">
-            <h2 style="font-size: x-large" class="slide-title">NUMEROLOGY READING</h2>
-            <p class="slide-description">Explore the hidden meaning behind your birth date and name through Numerology. Learn your Life Path, Destiny and Soul Urge numbers to better understand your strengths, purpose and natural abilities.</p>
-        </div>
-
-        <div class="mySlides">
-            <h2 style="font-size: x-large" class="slide-title">SPIRITUAL GUIDANCE</h2>
-            <p class="slide-description">Reconnect with your higher self through personalized spiritual guidance. Receive insights into your soul purpose, current challenges, energy blocks and practical direction for healing, growth and inner peace.</p>
-        </div>
-
-        <div class="mySlides">
-            <h2 style="font-size: x-large" class="slide-title">SYNASTRY & COMPATIBILITY</h2>
-            <p class="slide-description">Understand the unique dynamics between two birth charts. Discover relationship strengths, challenges, emotional compatibility and karmic connections to improve communication and build stronger relationships.</p>
-        </div>
-
-        <div class="mySlides">
-            <h2 style="font-size: x-large" class="slide-title">JAIMINI ASTROLOGY</h2>
-            <p class="slide-description">Gain deeper insight into your destiny using advanced Jaimini astrology techniques. Explore your soul purpose, career direction, important life events and karmic lessons through specialized chart analysis.</p>
-        </div>
-
-        <div class="mySlides">
-            <h2 style="font-size: x-large" class="slide-title">THE PREMIUM STRATEGIC BLUEPRINT</h2>
-            <p class="slide-description">Receive an extensive report combining Vedic and Jaimini astrology, your Solar Return chart and a detailed 2 year transit forecast. Includes one complimentary tarot reading and one private consultation.</p>
-        </div>
-
-        <div class="mySlides">
-            <h2 style="font-size: x-large" class="slide-title">PERSONAL LIFE STRATEGY MASTERPLAN</h2>
-            <p class="slide-description">Our most comprehensive consultation featuring advanced Vedic and Jaimini techniques, Argala, Latta, Sarvatobhadra Chakra, Panchanga, remedies, energy balancing and a detailed 5 year transit forecast. Includes one complimentary consultation and one tarot consultation.</p>
-        </div>
-
-        <div class="mySlides">
-            <h2 style="font-size: x-large" class="slide-title">ASTROCARTOGRAPHY LIFE ALIGNMENT REPORT</h2>
-            <p class="slide-description">Discover the best places in the world for career, finances, relationships, education, travel and spiritual growth through a personalized Astrocartography analysis with practical relocation and travel guidance.</p>
-        </div>
-
-    </div>
-</section>
-
-		
-        <!-- Book A Consultation Section (CONDITIONAL DISPLAY) -->
-
-
-<section id="consultation-section" class="py-20 px-4 bg-navy text-white hidden">
-    <h2 class="text-4xl font-bold text-center mb-12 text-accent">Begin Your Journey</h2>
-    
-    <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-xl shadow-2xl text-navy">
-        <div id="step-1">
-            <h3 class="text-2xl font-semibold mb-6 border-b pb-2 border-navy/20">Step 1: Birth Details & Services</h3>
+        <!-- Book A Consultation Section -->
+        <section id="consultation-section" class="py-20 px-4 bg-navy text-white hidden">
+            <h2 class="text-4xl font-bold text-center mb-12 text-accent">Begin Your Journey</h2>
             
-            <div class="mb-8">
-                <h4 class="text-lg font-bold mb-4">Select Your Readings</h4>
-                <div class="grid sm:grid-cols-2 gap-4 text-sm">
+            <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-xl shadow-2xl text-navy">
+                <div id="step-1">
+                    <h3 class="text-2xl font-semibold mb-6 border-b pb-2 border-navy/20">Step 1: Birth Details & Services</h3>
+                 
+                    <div class="mb-8">
+                        <h4 class="text-lg font-bold mb-4">Select Your Readings</h4>
+                        <p class="text-xs text-gray-500 font-medium mt-0.5 mb-3"><b>Systems available: Western, Vedic (Lahiri, Raman), KP, and Jaimini astrology.</b></p>
+                        
+                        <!-- Main Full-Width Wrapper -->
+                        <div class="w-full col-span-full block" style="width: 100% !important; grid-column: 1 / -1 !important; float: none !important;">
+                            <!-- 2-Column Grid -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full" style="width: 100% !important; display: grid !important;">
+                                
+                                <!-- Box 1 ($25) -->
+                                <label class="p-4 border-2 border-slate-200 rounded-xl flex items-start cursor-pointer bg-white hover:border-accent hover:shadow-sm transition-all w-full group">
+                                    <input type="checkbox" name="reading_type" value="Single_Focused_Inquiry" data-price="25" onchange="calculateTotal()" class="mr-3 mt-1 accent-accent shrink-0 h-4 w-4">
+                                    <div class="w-full">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span class="font-bold text-navy text-sm">🎯 Single Focused Question</span>
+                                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 group-hover:bg-accent/10 group-hover:text-accent transition-colors">$25</span>
+                                        </div>
+                                        <span class="text-xs text-gray-600 block mt-1.5 leading-relaxed">Direct, actionable written clarity on one pressing situation (career, relationships, or timing). Delivered within 24 hours.</span>
+                                    </div>
+                                </label>
 
+                                <!-- Box 2 ($35) -->
+                                <label class="p-4 border-2 border-slate-200 rounded-xl flex items-start cursor-pointer bg-white hover:border-accent hover:shadow-sm transition-all w-full group">
+                                    <input type="checkbox" name="reading_type" value="Career_Wealth_Forecast" data-price="35" onchange="calculateTotal()" class="mr-3 mt-1 accent-accent shrink-0 h-4 w-4">
+                                    <div class="w-full">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span class="font-bold text-navy text-sm">💼 Career & Financial Forecast</span>
+                                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 group-hover:bg-accent/10 group-hover:text-accent transition-colors">$35</span>
+                                        </div>
+                                        <span class="text-xs text-gray-600 block mt-1.5 leading-relaxed">Targeted analysis of your money houses, professional timing, and business growth potential. Delivered within 24 hours.</span>
+                                    </div>
+                                </label>
 
-<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="1 Question Reading" data-price="25" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">1 Question Reading ($25)</span>
-        <span class="text-xs text-gray-600 italic">Receive a detailed, personalized answer to one specific question. Thoughtfully written and delivered directly to your email within 24 hours.</span>
-    </div>
-</label>
+                                <!-- Box 3 ($45) -->
+                                <label class="p-4 border-2 border-slate-200 rounded-xl flex items-start cursor-pointer bg-white hover:border-accent hover:shadow-sm transition-all w-full group">
+                                    <input type="checkbox" name="reading_type" value="Tarot_Reading" data-price="45" onchange="calculateTotal()" class="mr-3 mt-1 accent-accent shrink-0 h-4 w-4">
+                                    <div class="w-full">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span class="font-bold text-navy text-sm">🔮 Intuitive Tarot Reading</span>
+                                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 group-hover:bg-accent/10 group-hover:text-accent transition-colors">$45</span>
+                                        </div>
+                                        <span class="text-xs text-gray-600 block mt-1.5 leading-relaxed">Intuitive clarity for immediate decisions and short-term energetic dynamics. Delivered within 24 hours.</span>
+                                    </div>
+                                </label>
 
-<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="Focused_Inquiry" data-price="35" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">The Personalized Astrological Inquiry ($35)</span>
-        <span class="text-xs text-gray-600 italic">Get clear answers directly from your birth chart regarding your specific life questions. Your detailed report will be mailed within 24 hours.</span>
-    </div>
-</label>
+                                <!-- Box 4 ($50) -->
+                                <label class="p-4 border-2 border-slate-200 rounded-xl flex items-start cursor-pointer bg-white hover:border-accent hover:shadow-sm transition-all w-full group">
+                                    <input type="checkbox" name="reading_type" value="Astrocartography" data-price="50" onchange="calculateTotal()" class="mr-3 mt-1 accent-accent shrink-0 h-4 w-4">
+                                    <div class="w-full">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span class="font-bold text-navy text-sm">🗺️ Astrocartography Relocation Map</span>
+                                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 group-hover:bg-accent/10 group-hover:text-accent transition-colors">$50</span>
+                                        </div>
+                                        <span class="text-xs text-gray-600 block mt-1.5 leading-relaxed">Map your most supportive global locations for career expansion, romance, and personal growth. Delivered within 3-5 business days.</span>
+                                    </div>
+                                </label>
 
-<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="Tarot" data-price="45" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">Tarot Reading ($45)</span>
-        <span class="text-xs text-gray-600 italic">Clear, elite perspective for your most important questions. Delivered directly to your email within 24 hours.</span>
-    </div>
-</label>
+                                <!-- Box 5 ($60) -->
+                                <label class="p-4 border-2 border-slate-200 rounded-xl flex items-start cursor-pointer bg-white hover:border-accent hover:shadow-sm transition-all w-full group">
+                                    <input type="checkbox" name="reading_type" value="5_Question_Reading" data-price="60" onchange="calculateTotal()" class="mr-3 mt-1 accent-accent shrink-0 h-4 w-4">
+                                    <div class="w-full">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span class="font-bold text-navy text-sm">📝 5-Question Written Reading</span>
+                                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 group-hover:bg-accent/10 group-hover:text-accent transition-colors">$60</span>
+                                        </div>
+                                        <span class="text-xs text-gray-600 block mt-1.5 leading-relaxed">Thorough written guidance for up to 5 specific questions across multiple life areas. Delivered within 24 hours.</span>
+                                    </div>
+                                </label>
 
-<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="Astrocartography_Report" data-price="50" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">🗺️ Astrocartography ($50)</span>
-        <span class="text-xs text-gray-600 italic">Find your most supportive locations for career, relationships, finances, and personal growth. Delivered within 3 to 5 business days.</span>
-    </div>
-</label>
+                                <!-- Box 6 ($95) -->
+                                <label class="p-4 border-2 border-slate-200 rounded-xl flex items-start cursor-pointer bg-white hover:border-accent hover:shadow-sm transition-all w-full group">
+                                    <input type="checkbox" name="reading_type" value="Relationship_Synastry_Profile" data-price="95" onchange="calculateTotal()" class="mr-3 mt-1 accent-accent shrink-0 h-4 w-4">
+                                    <div class="w-full">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span class="font-bold text-navy text-sm">💞 Relationship Synastry</span>
+                                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 group-hover:bg-accent/10 group-hover:text-accent transition-colors">$95</span>
+                                        </div>
+                                        <span class="text-xs text-gray-600 block mt-1.5 leading-relaxed">Dual birth chart analysis mapping connection dynamics, mutual karma, and long-term potential with a partner. Delivered within 24 hours.</span>
+                                    </div>
+                                </label>
 
-<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="5 Question Reading" data-price="60" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">5 Question Reading ($60)</span>
-        <span class="text-xs text-gray-600 italic">Comprehensive written guidance answering up to five personal questions with in-depth astrological insights. Delivered directly to your email within 24 hours.</span>
-    </div>
-</label>
+                                <!-- Premium Full-Width Card ($125) -->
+                                <label class="p-5 border-2 border-amber-300 rounded-xl flex items-start cursor-pointer bg-amber-50/40 hover:border-amber-400 hover:shadow-md transition-all md:col-span-2 w-full group" style="grid-column: 1 / -1 !important;">
+                                    <input type="checkbox" name="reading_type" value="Premium_Blueprint" data-price="125" onchange="calculateTotal()" class="mr-3 mt-1 accent-amber-600 shrink-0 h-4 w-4">
+                                    <div class="w-full">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <div class="flex items-center gap-2">
+                                                <span class="font-bold text-navy text-sm">🎁 The Premium Strategic Blueprint: A Celestial Legacy Gift</span>
+                                                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-200 text-amber-900">Most Popular</span>
+                                            </div>
+                                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300">$125</span>
+                                        </div>
+                                        <span class="text-xs text-gray-600 block mt-1">The ultimate lifetime masterplan using advanced Vedic and Jaimini astrology to align with your highest potential.</span>
+                                        <ul class="list-disc ml-5 mt-2.5 text-xs text-gray-600 space-y-1 leading-relaxed">
+                                            <li><strong>In-Depth Analysis:</strong> Career, wealth, marriage, karmic challenges, and hidden strengths.</li>
+                                            <li><strong>5-Year Forecast:</strong> Ideal timing for major life decisions, opportunities, and caution periods.</li>
+                                            <li><strong>Advanced Techniques:</strong> Argala, Sarvatobhadra Chakra, Ashtamatruka Shakti, and personalized remedies.</li>
+                                            <li><strong>Bonuses:</strong> 1 free written follow-up consultation & 1 free tarot reading.</li>
+                                            <li><strong>Delivery:</strong> 5 to 7 business days.</li>
+                                        </ul>
+                                    </div>
+                                </label>
 
-<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="1 Hour Consultation" data-price="90" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">1 Hour Live Consultation ($90)</span>
-        <span class="text-xs text-gray-600 italic">A private one-on-one consultation to explore your questions in depth through astrology and intuitive guidance. Conducted via Google Meet or Zoom by appointment.</span>
-    </div>
-</label>
+                                <!-- Mastery Pass Full-Width Card ($200) -->
+                                <label class="p-5 border-2 border-amber-300 rounded-xl flex items-start cursor-pointer bg-amber-50/40 hover:border-amber-400 hover:shadow-md transition-all md:col-span-2 w-full group" style="grid-column: 1 / -1 !important;">
+                                    <input type="checkbox" name="reading_type" value="Quarterly_Mastery_Package" data-price="200" onchange="calculateTotal()" class="mr-3 mt-1 accent-amber-600 shrink-0 h-4 w-4">
+                                    <div class="w-full">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <div class="flex items-center gap-2">
+                                                <span class="font-bold text-navy text-sm">🌌 The 3-Month Strategic Mastery Pass</span>
+                                                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-200 text-amber-900">VIP Access</span>
+                                            </div>
+                                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300">$200</span>
+                                        </div>
+                                        <span class="text-xs text-gray-600 block mt-1">Complete asynchronous guidance across all life areas, valid for 90 days. No live calls required.</span>
+                                        <ul class="list-disc ml-5 mt-2.5 text-xs text-gray-600 space-y-1 leading-relaxed">
+                                            <li><strong>3 Written Consultations:</strong> Request up to 3 extensive reports over a 3-month period.</li>
+                                            <li><strong>Deep Dives:</strong> Submit up to 20 detailed questions per report.</li>
+                                            <li><strong>Bonuses:</strong> 2 complimentary written tarot readings (use for yourself or gift to a loved one).</li>
+                                            <li><strong>Delivery:</strong> 2 to 3 business days after each question submission.</li>
+                                        </ul>
+                                    </div>
+                                </label>
 
-<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="Synastry_Profile" data-price="95" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">Relationship Synastry Profile ($95)</span>
-        <span class="text-xs text-gray-600 italic">A refined comparison of two birth charts to answer your specific connection questions and map your shared energetic dynamics. Delivered via email within 24 hours.</span>
-    </div>
-</label>
+                            </div>
+                        </div>
+                        <div id="price-summary" class="mt-4 hidden"></div>
+                    </div>
 
-<label class="p-3 border-2 border-accent rounded-lg flex items-center cursor-pointer bg-accent/5 md:col-span-2">
-    <input type="checkbox" name="reading_type" value="Premium_Blueprint" data-price="125" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">🎁 The Premium Strategic Blueprint: A Celestial Legacy Gift ($125)</span>
-        <span class="text-xs text-gray-600 italic">The ultimate lifetime guidance experience, designed for those seeking exceptional clarity, strategic direction, and profound spiritual understanding through advanced Vedic and Jaimini astrology. This comprehensive masterplan includes an extensive analysis of Argala, Virodhargala, Latta, Sarvatobhadra Chakra, Panchanga, Ashtabhairava, and Ashtamatruka Shakti, along with personalized remedies, energy balancing recommendations, spiritual guidance, and karmic insights tailored specifically to your birth chart. Receive an in-depth assessment of your career, finances, relationships, marriage, family, health, higher purpose, hidden strengths, karmic challenges, ideal timing for major life decisions, and a detailed 5-year transit forecast highlighting opportunities, caution periods, and long-term planning. Every recommendation is thoughtfully explained with clear interpretations and practical guidance to help you align with your highest potential and make confident life decisions. Includes one complimentary private consultation and one complimentary tarot consultation, which may be used for yourself or gifted to one of your dear ones. Delivered within 5 to 7 business days.</span>
-    </div>
-</label>
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium mb-1">Full Name *</label>
+                            <input type="text" id="name" required class="w-full p-3 border rounded-lg border-navy/30">
+                        </div>
+                        <div><label class="block text-sm font-medium mb-1">Birth Date *</label><input type="date" id="dob" class="w-full p-3 border rounded-lg border-navy/30"></div>
+                        <div><label class="block text-sm font-medium mb-1">Birth Time *</label><input type="time" id="time" class="w-full p-3 border rounded-lg border-navy/30"></div>
+                        <div class="md:col-span-2"><label class="block text-sm font-medium mb-1">Birth Place *</label><input type="text" id="place" class="w-full p-3 border rounded-lg border-navy/30"></div>
+                        <div class="md:col-span-2"><label class="block text-sm font-medium mb-1">Email *</label><input type="email" id="email" class="w-full p-3 border rounded-lg border-navy/30"></div>
+                        <div class="md:col-span-2"><label class="block text-sm font-medium mb-1">Specific Questions</label><textarea id="questions" rows="2" class="w-full p-3 border rounded-lg border-navy/30"></textarea></div>
+                    </div>
 
-<label class="p-3 border-2 border-accent rounded-lg flex items-center cursor-pointer bg-accent/5 md:col-span-2">
-    <input type="checkbox" name="reading_type" value="Quarterly_Mastery_Package" data-price="200" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">🌌 The 3-Month Strategic Mastery Pass ($200)</span>
-        <span class="text-xs text-gray-600 italic">The ultimate asynchronous guidance experience, designed for ongoing clarity, strategic direction, and profound spiritual understanding across all areas of life without scheduling live calls. This flexible 3-month pass includes three extensive written consultation reports that can be requested anytime within 90 days of purchase. For each report, you may submit up to 20 detailed questions covering career, finances, relationships, hidden strengths, karmic patterns, and major life timing. Every query is thoroughly analyzed and answered with clear interpretations and practical guidance to help you align with your highest potential and make confident life decisions. Includes two complimentary written tarot readings, which may be used for yourself or gifted to one of your dear ones. Delivered to your inbox within 2 to 3 business days after each question submission.</span>
-    </div>
-</label>
+                    <!-- TERMS & DISCLAIMER CONSENT CHECKBOX -->
+                    <div class="mb-6 pt-4 border-t border-navy/10">
+                        <label class="flex items-start gap-2.5 cursor-pointer group">
+                            <input type="checkbox" id="terms-consent" class="mt-0.5 accent-navy h-4 w-4 shrink-0 rounded border-gray-300">
+                            <span class="text-xs text-gray-600 leading-normal">
+                                I confirm I am 18+ years of age and agree to the 
+                                <button type="button" onclick="toggleTermsModal(true)" class="text-navy font-bold underline hover:text-accent inline-block">Terms of Service & Legal Disclaimer</button> 
+                                (all readings are provided for personal self-reflection/entertainment purposes).
+                            </span>
+                        </label>
+                    </div>
+
+                    <button type="button" id="proceed-button" onclick="submitAndProceed()" class="stylish-button bg-navy text-white font-bold py-4 px-8 rounded-full w-full shadow-lg hover:bg-opacity-90 transition-all">
+                        Submit Details & Proceed to Payment
+                    </button>
                 </div>
-                <div id="price-summary" class="mt-4 hidden"></div>
-            </div>
 
-            <div class="grid md:grid-cols-2 gap-6 mb-6">
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-medium mb-1">Full Name *</label>
-                    <input type="text" id="name" required class="w-full p-3 border rounded-lg border-navy/30">
+                <div id="step-2" class="hidden animate-fade-in">
+                    <div class="text-center">
+                        <div class="inline-block p-3 bg-green-100 text-green-700 rounded-full mb-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-2 text-navy">Thank you, <span id="display-user-name" class="text-accent"></span>!</h3>
+                        
+                        <p class="text-gray-600 mb-8 px-4 font-medium" id="personalized-message"></p>
+
+                        <div class="bg-beige/30 p-6 rounded-2xl border border-navy/10 mb-8">
+                            <p class="text-sm uppercase tracking-widest text-gray-500 mb-2">Final Amount</p>
+                            <p class="text-4xl font-extrabold text-navy mb-6" id="final-amount-display">$0.00</p>
+                            
+                            <div class="flex flex-col items-center justify-center space-y-6">
+                                <div class="p-4 bg-white rounded-xl shadow-md border-t-4 border-navy w-48">
+                                    <img src="src/astroreadscharts.png" alt="Payment QR" class="w-full h-auto">
+                                </div><br>or<br>
+                                <a id="dynamic-paypal-link" href="#" target="_blank" class="bg-accent text-navy font-bold py-4 px-10 rounded-full shadow-xl hover:scale-105 transition-transform">
+                                    Pay with PayPal Link
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div><label class="block text-sm font-medium mb-1">Birth Date *</label><input type="date" id="dob" class="w-full p-3 border rounded-lg border-navy/30"></div>
-                <div><label class="block text-sm font-medium mb-1">Birth Time *</label><input type="time" id="time" class="w-full p-3 border rounded-lg border-navy/30"></div>
-                <div class="md:col-span-2"><label class="block text-sm font-medium mb-1">Birth Place *</label><input type="text" id="place" class="w-full p-3 border rounded-lg border-navy/30"></div>
-                <div class="md:col-span-2"><label class="block text-sm font-medium mb-1">Email *</label><input type="email" id="email" class="w-full p-3 border rounded-lg border-navy/30"></div>
-                <div class="md:col-span-2"><label class="block text-sm font-medium mb-1">Specific Questions</label><textarea id="questions" rows="2" class="w-full p-3 border rounded-lg border-navy/30"></textarea></div>
-            </div>
-
-            <button type="button" id="proceed-button" onclick="submitAndProceed()" class="stylish-button bg-navy text-white font-bold py-4 px-8 rounded-full w-full shadow-lg hover:bg-opacity-90 transition-all">
-                Submit Details & Proceed to Payment
-            </button>
-        </div>
-
-        <div id="step-2" class="hidden animate-fade-in">
-    <div class="text-center">
-        <div class="inline-block p-3 bg-green-100 text-green-700 rounded-full mb-4">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
-        </div>
-        <h3 class="text-3xl font-bold mb-2 text-navy">Thank you, <span id="display-user-name" class="text-accent"></span>!</h3>
-        
-        <p class="text-gray-600 mb-8 px-4 font-medium" id="personalized-message"></p>
-
-        <div class="bg-beige/30 p-6 rounded-2xl border border-navy/10 mb-8">
-            <p class="text-sm uppercase tracking-widest text-gray-500 mb-2">Final Amount</p>
-            <p class="text-4xl font-extrabold text-navy mb-6" id="final-amount-display">$0.00</p>
-            
-            <div class="flex flex-col items-center justify-center space-y-6">
-                <div class="p-4 bg-white rounded-xl shadow-md border-t-4 border-navy w-48">
-                    <img src="src/astroreadscharts.png" alt="Payment QR" class="w-full h-auto">
-                </div><br>or<br>
-                <a id="dynamic-paypal-link" href="#" target="_blank" class="bg-accent text-navy font-bold py-4 px-10 rounded-full shadow-xl hover:scale-105 transition-transform">
-                    Pay with PayPal Link
-                </a>
-            </div>
-        </div>
-        </div>
-</div>
                 
             </div>
-        </div>
-    </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </section>
 
-        <!-- Other sections (About, Contact, Donation) remain the same... -->
+        <!-- About Section -->
         <section id="about" class="py-16 px-4">
             <h2 class="text-4xl font-bold text-center mb-12 text-navy">About</h2>
             <div class="max-w-4xl mx-auto text-lg leading-relaxed space-y-6">
@@ -385,6 +404,7 @@
             </div>
         </section>
 
+        <!-- Contact Section -->
         <section id="contact" class="py-16 px-4">
             <h2 class="text-4xl font-bold text-center mb-12 text-navy">Get In Touch</h2>
             <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10">
@@ -408,48 +428,38 @@
                         </a>
                     </div>
                 </div>
-                 <!-- CONTACT FORM (UPDATED FOR AJAX SUBMISSION - NO REDIRECT) -->
-            <div class="pt-10 border-t border-gray-200 mt-10">
-                <div class="bg-white p-8 rounded-xl shadow-2xl border-t-4 border-navy">
-                    <h3 class="text-2xl font-semibold mb-4 text-navy">Send Us a Message</h3>
-                    
-                    <!-- Added ID for JavaScript access -->
-                    <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
 
-                        <!-- Web3Forms Access Key: c3f24206-b0fb-4cfd-8fda-b3e275001b4d -->
-                        <input type="hidden" name="access_key" value="c3f24206-b0fb-4cfd-8fda-b3e275001b4d">
+                <!-- CONTACT FORM -->
+                <div class="pt-10 border-t border-gray-200 mt-10 md:mt-0 md:border-t-0 md:pt-0">
+                    <div class="bg-white p-8 rounded-xl shadow-2xl border-t-4 border-navy">
+                        <h3 class="text-2xl font-semibold mb-4 text-navy">Send Us a Message</h3>
+                        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                            <input type="hidden" name="access_key" value="c3f24206-b0fb-4cfd-8fda-b3e275001b4d">
+                            <input type="hidden" name="subject" value="New Website Contact Message from Astroreadscharts">
+                            <input type="hidden" name="_captcha" value="false">
 
-                        <!-- Web3Forms Subject line -->
-                        <input type="hidden" name="subject" value="New Website Contact Message from Astroreadscharts">
-                        
-                        <!-- REMOVED THE REDIRECT FIELD -->
-                        
-                        <!-- Disable reCAPTCHA (optional) -->
-                        <input type="hidden" name="_captcha" value="false">
-
-                        <div class="mb-4">
-                            <label for="c-name" class="block text-sm font-medium mb-1 text-navy">Name</label>
-                            <input type="text" id="c-name" name="Name" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
-                        </div>
-                        <div class="mb-4">
-                            <label for="c-email" class="block text-sm font-medium mb-1 text-navy">Email *</label>
-                            <input type="email" id="c-email" name="Email" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
-                        </div>
-                        <div class="mb-6">
-                            <label for="c-purpose" class="block text-sm font-medium mb-1 text-navy">Purpose of Contact</label>
-                            <textarea id="c-purpose" name="Message" rows="4" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30"></textarea>
-                        </div>
-                        <!-- Added ID for JavaScript access -->
-                        <button type="submit" id="submitButton" class="stylish-button bg-navy text-white font-bold py-3 px-8 rounded-full w-full hover:bg-navy/90">
-                            Send Message
-                        </button>
-                    </form>
+                            <div class="mb-4">
+                                <label for="c-name" class="block text-sm font-medium mb-1 text-navy">Name</label>
+                                <input type="text" id="c-name" name="Name" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
+                            </div>
+                            <div class="mb-4">
+                                <label for="c-email" class="block text-sm font-medium mb-1 text-navy">Email *</label>
+                                <input type="email" id="c-email" name="Email" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
+                            </div>
+                            <div class="mb-6">
+                                <label for="c-purpose" class="block text-sm font-medium mb-1 text-navy">Purpose of Contact</label>
+                                <textarea id="c-purpose" name="Message" rows="4" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30"></textarea>
+                            </div>
+                            <button type="submit" id="submitButton" class="stylish-button bg-navy text-white font-bold py-3 px-8 rounded-full w-full hover:bg-navy/90">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <!-- END CONTACT FORM -->
-        
         </section>
 
+        <!-- Donation Section -->
         <section id="donation" class="py-16 px-4 text-center">
             <h2 class="text-4xl font-bold mb-6 text-navy">Support Our Work</h2>
             <p class="text-lg text-navy/80 max-w-2xl mx-auto mb-8">
@@ -462,12 +472,17 @@
 
     </main>
 
-    <!-- Footer --><footer class="bg-navy mt-16 py-8 px-4 text-center text-white/70">
+    <!-- Footer -->
+    <footer class="bg-navy mt-16 py-8 px-4 text-center text-white/70">
         <p>&copy; 2026 Astroreadscharts. All rights reserved.</p>
         <p class="text-sm mt-2">Designed with professionalism and precision.</p>
+        <div class="mt-4 text-xs">
+            <button onclick="toggleTermsModal(true)" class="underline text-white/80 hover:text-accent transition-colors">Terms of Service & Disclaimer</button>
+        </div>
     </footer>
 
-    <!-- Custom Modal for Alerts (replacing alert()) --><div id="custom-modal" class="fixed inset-0 bg-black bg-opacity-50 z-[9999] hidden items-center justify-center p-4">
+    <!-- Custom Modal for Alerts -->
+    <div id="custom-modal" class="fixed inset-0 bg-black bg-opacity-50 z-[9999] hidden items-center justify-center p-4">
         <div class="bg-white rounded-xl p-6 w-full max-w-md shadow-2xl border-t-4 border-accent text-navy">
             <h3 class="text-xl font-bold mb-4">Notification</h3>
             <p id="modal-message" class="mb-6"></p>
@@ -477,10 +492,54 @@
         </div>
     </div>
 
-    <script>
-        
+    <!-- TERMS & DISCLAIMER POP-UP MODAL -->
+    <div id="terms-modal" class="fixed inset-0 bg-black bg-opacity-60 z-[9999] hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl border-t-8 border-navy text-navy">
+            
+            <button onclick="toggleTermsModal(false)" class="absolute top-4 right-4 text-gray-400 hover:text-navy font-bold text-2xl p-1 leading-none">&times;</button>
+            
+            <h2 class="text-2xl font-bold text-navy mb-4 border-b pb-2">Terms of Service & Disclaimer</h2>
+            
+            <div class="space-y-5 text-xs text-gray-600 leading-relaxed">
+                <div>
+                    <h3 class="font-bold text-navy text-sm mb-1">1. Entertainment & Personal Reflection Purpose</h3>
+                    <p>All astrology readings, tarot guidance, astrocartography reports, and written analyses provided by Astroreadscharts are offered exclusively for entertainment, educational, and personal self-reflection purposes. Intuitive and astrological interpretations are subjective by nature and do not constitute absolute forecasts or guaranteed outcomes.</p>
+                </div>
 
-// --- 1. GLOBALS & SELECTORS ---
+                <div>
+                    <h3 class="font-bold text-navy text-sm mb-1">2. No Medical, Legal, or Financial Advice</h3>
+                    <p>Our services do not replace professional legal, financial, medical, psychological, or psychiatric advice. Always consult certified professionals (licensed physicians, financial advisors, or attorneys) for any urgent medical concerns, formal legal issues, or major financial commitments.</p>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-navy text-sm mb-1">3. Turnaround Times & Delivery</h3>
+                    <p>All consultations are delivered asynchronously as written reports via email. Timelines begin after complete, accurate birth information is received:</p>
+                    <ul class="list-disc ml-5 mt-1 space-y-0.5">
+                        <li>Standard Written Readings: 24 Hours</li>
+                        <li>Astrocartography Maps: 3 – 5 Business Days</li>
+                        <li>The Premium Strategic Blueprint: 5 – 7 Business Days</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-navy text-sm mb-1">4. Refund & Cancellation Policy</h3>
+                    <p>Due to the personal and time-intensive nature of custom chart calculations and written analyses, completed reports sent via email are non-refundable.</p>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-navy text-sm mb-1">5. Age Requirement</h3>
+                    <p>You must be at least 18 years of age (or the age of majority in your jurisdiction) to book a reading or submit birth details on this platform.</p>
+                </div>
+            </div>
+
+            <button onclick="toggleTermsModal(false)" class="mt-6 w-full py-3 bg-navy text-white text-xs font-bold rounded-xl hover:bg-navy/90 transition-colors">
+                I Understand & Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. GLOBALS & SELECTORS ---
         const consultationSection = document.getElementById('consultation-section');
         const step1 = document.getElementById('step-1');
         const step2 = document.getElementById('step-2');
@@ -496,6 +555,18 @@
             document.getElementById('modal-message').innerText = message;
             document.getElementById('custom-modal').classList.remove('hidden');
             document.getElementById('custom-modal').classList.add('flex');
+        }
+
+        // Terms Modal Toggle
+        function toggleTermsModal(show) {
+            const termsModal = document.getElementById('terms-modal');
+            if (show) {
+                termsModal.classList.remove('hidden');
+                termsModal.classList.add('flex');
+            } else {
+                termsModal.classList.add('hidden');
+                termsModal.classList.remove('flex');
+            }
         }
 
         // --- 2. NAVIGATION & VISIBILITY ---
@@ -517,151 +588,145 @@
              showConsultationForm();
         });
 
-       // --- 3. DYNAMIC PRICING LOGIC ---
-function calculateTotal() {
-    const checkboxes = document.querySelectorAll('input[name="reading_type"]:checked');
-    let subtotal = 0;
-    let discount = 0;
+        // --- 3. DYNAMIC PRICING LOGIC ---
+        function calculateTotal() {
+            const checkboxes = document.querySelectorAll('input[name="reading_type"]:checked');
+            let subtotal = 0;
+            let discount = 0;
 
-    if (checkboxes.length === 0) {
-        finalPrice = 0;
-        priceSummaryDiv.classList.add('hidden');
-        return;
-    }
+            if (checkboxes.length === 0) {
+                finalPrice = 0;
+                priceSummaryDiv.classList.add('hidden');
+                return;
+            }
 
-    checkboxes.forEach(cb => {
-        subtotal += parseFloat(cb.getAttribute('data-price'));
-    });
+            checkboxes.forEach(cb => {
+                subtotal += parseFloat(cb.getAttribute('data-price'));
+            });
 
-    const blueprintSelected = Array.from(checkboxes).some(
-        cb => parseFloat(cb.getAttribute('data-price')) === 125
-    );
+            const blueprintSelected = Array.from(checkboxes).some(
+                cb => parseFloat(cb.getAttribute('data-price')) === 125
+            );
 
-    let discountText = '';
+            let discountText = '';
 
-    if (blueprintSelected) {
+            if (blueprintSelected) {
+                const additionalAmount = subtotal - 125;
+                const additionalReadings = checkboxes.length - 1;
 
-        const additionalAmount = subtotal - 125;
-        const additionalReadings = checkboxes.length - 1;
+                if (additionalReadings >= 6) {
+                    discount = additionalAmount * 0.50;
+                    discountText = '50% Off Additional Readings';
+                } else if (additionalReadings >= 1) {
+                    discount = additionalAmount * 0.25;
+                    discountText = '25% Off Additional Readings';
+                }
+            } else {
+                const totalReadings = checkboxes.length;
 
-        if (additionalReadings >= 6) {
-            discount = additionalAmount * 0.50;
-            discountText = '50% Off Additional Readings';
-        } else if (additionalReadings >= 1) {
-            discount = additionalAmount * 0.25;
-            discountText = '25% Off Additional Readings';
+                if (totalReadings >= 6) {
+                    discount = subtotal * 0.50;
+                    discountText = '50% Bundle Discount';
+                } else if (totalReadings >= 3) {
+                    discount = subtotal * 0.25;
+                    discountText = '25% Bundle Discount';
+                }
+            }
+
+            finalPrice = subtotal - discount;
+
+            priceSummaryDiv.innerHTML = `
+                <div class="p-3 bg-navy/5 rounded border border-navy/10 text-xs">
+                    <div class="flex justify-between">
+                        <span>Subtotal:</span>
+                        <span>$${subtotal.toFixed(2)}</span>
+                    </div>
+
+                    ${discount > 0 ? `
+                        <div class="flex justify-between text-green-600 font-bold">
+                            <span>${discountText}</span>
+                            <span>-$${discount.toFixed(2)}</span>
+                        </div>
+                    ` : ''}
+
+                    <div class="flex justify-between font-bold text-sm mt-1 border-t pt-1 text-navy">
+                        <span>Total Amount Due:</span>
+                        <span>$${finalPrice.toFixed(2)}</span>
+                    </div>
+                </div>`;
+
+            priceSummaryDiv.classList.remove('hidden');
         }
-
-    } else {
-
-        const totalReadings = checkboxes.length;
-
-        if (totalReadings >= 6) {
-            discount = subtotal * 0.50;
-            discountText = '50% Bundle Discount';
-        } else if (totalReadings >= 3) {
-            discount = subtotal * 0.25;
-            discountText = '25% Bundle Discount';
-        }
-
-    }
-
-    finalPrice = subtotal - discount;
-
-    priceSummaryDiv.innerHTML = `
-        <div class="p-3 bg-navy/5 rounded border border-navy/10 text-xs">
-            <div class="flex justify-between">
-                <span>Subtotal:</span>
-                <span>$${subtotal.toFixed(2)}</span>
-            </div>
-
-            ${discount > 0 ? `
-                <div class="flex justify-between text-green-600 font-bold">
-                    <span>${discountText}</span>
-                    <span>-$${discount.toFixed(2)}</span>
-                </div>
-            ` : ''}
-
-            <div class="flex justify-between font-bold text-sm mt-1 border-t pt-1 text-navy">
-                <span>Total Amount Due:</span>
-                <span>$${finalPrice.toFixed(2)}</span>
-            </div>
-        </div>`;
-
-    priceSummaryDiv.classList.remove('hidden');
-}
-
 
         // --- 4. CORE SUBMISSION & TRANSITION ---
         async function submitAndProceed() {
-    const nameInput = document.getElementById('name').value.trim();
-    const fields = ['name', 'dob', 'time', 'place', 'email'];
-    const allFilled = fields.every(id => document.getElementById(id).value.trim() !== "");
-    const selectedReadings = Array.from(document.querySelectorAll('input[name="reading_type"]:checked'));
+            const nameInput = document.getElementById('name').value.trim();
+            const fields = ['name', 'dob', 'time', 'place', 'email'];
+            const allFilled = fields.every(id => document.getElementById(id).value.trim() !== "");
+            const selectedReadings = Array.from(document.querySelectorAll('input[name="reading_type"]:checked'));
+            const termsAgreed = document.getElementById('terms-consent').checked;
 
-    if (!allFilled) return alertCustom('Please provide your full birth details.');
-    if (selectedReadings.length === 0) return alertCustom('Please select at least one reading type.');
+            if (!allFilled) return alertCustom('Please provide your full birth details.');
+            if (selectedReadings.length === 0) return alertCustom('Please select at least one reading type.');
+            if (!termsAgreed) return alertCustom('Please confirm that you agree to the Terms of Service & Legal Disclaimer before proceeding.');
 
-    const btn = document.getElementById('proceed-button');
-    btn.disabled = true;
-    btn.innerText = "Securing your path...";
+            const btn = document.getElementById('proceed-button');
+            btn.disabled = true;
+            btn.innerText = "Securing your path...";
 
-    const readingList = selectedReadings.map(c => c.value);
-    const hasReport = readingList.includes('Detailed Report');
+            const readingList = selectedReadings.map(c => c.value);
+            const hasReport = readingList.includes('Detailed Report');
 
-    const payload = {
-        'Full Name': nameInput,
-        'Email': document.getElementById('email').value,
-        'Birth Info': `${document.getElementById('dob').value} at ${document.getElementById('time').value} (${document.getElementById('place').value})`,
-        'Selected Services': readingList.join(', '),
-        'Total Amount': `$${finalPrice.toFixed(2)}`,
-        'Questions': document.getElementById('questions').value || "No specific questions"
-    };
+            const payload = {
+                'Full Name': nameInput,
+                'Email': document.getElementById('email').value,
+                'Birth Info': `${document.getElementById('dob').value} at ${document.getElementById('time').value} (${document.getElementById('place').value})`,
+                'Selected Services': readingList.join(', '),
+                'Total Amount': `$${finalPrice.toFixed(2)}`,
+                'Questions': document.getElementById('questions').value || "No specific questions"
+            };
 
-    try {
-        const response = await fetch(FORMSPREE_ENDPOINT, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
+            try {
+                const response = await fetch(FORMSPREE_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
 
-        if (response.ok) {
-            // Update Step 2 UI
-            document.getElementById('display-user-name').innerText = nameInput;
-            document.getElementById('final-amount-display').innerText = `$${finalPrice.toFixed(2)}`;
-            document.getElementById('dynamic-paypal-link').href = `https://www.paypal.com/paypalme/mvmahesh888/${finalPrice.toFixed(2)}`;
+                if (response.ok) {
+                    // Update Step 2 UI
+                    document.getElementById('display-user-name').innerText = nameInput;
+                    document.getElementById('final-amount-display').innerText = `$${finalPrice.toFixed(2)}`;
+                    document.getElementById('dynamic-paypal-link').href = `https://www.paypal.com/paypalme/mvmahesh888/${finalPrice.toFixed(2)}`;
 
-            // Set the new requested message logic
-            const msgEl = document.getElementById('personalized-message');
-            if (hasReport) {
-                msgEl.innerText = "Please complete your payment to confirm your booking. Once finished, our experts will begin your celestial analysis, and you'll receive the completed report in your inbox within 1-3 days.";
-            } else {
-                msgEl.innerHTML = `Feel free to follow us on <b><a href="https://instagram.com/astroreadscharts" target="_blank" class="text-accent underline font-bold">Instagram</a></b>. Please do share our website with your near & dear ones 🙏🏻😊`;           
-			}
+                    const msgEl = document.getElementById('personalized-message');
+                    if (hasReport) {
+                        msgEl.innerText = "Please complete your payment to confirm your booking. Once finished, our experts will begin your celestial analysis, and you'll receive the completed report in your inbox within 1-3 days.";
+                    } else {
+                        msgEl.innerHTML = `Feel free to follow us on <b><a href="https://instagram.com/astroreadscharts" target="_blank" class="text-accent underline font-bold">Instagram</a></b>. Please do share our website with your near & dear ones 🙏🏻😊`;           
+                    }
 
-            // Transition to Step 2
-            step1.classList.add('hidden');
-            step2.classList.remove('hidden');
-            consultationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-            throw new Error();
+                    // Transition to Step 2
+                    step1.classList.add('hidden');
+                    step2.classList.remove('hidden');
+                    consultationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    throw new Error();
+                }
+            } catch (error) {
+                alertCustom('There was an error sending your details. Please try again.');
+                btn.disabled = false;
+                btn.innerText = "Submit Details & Proceed to Payment";
+            }
         }
-    } catch (error) {
-        alertCustom('There was an error sending your details. Please try again.');
-        btn.disabled = false;
-        btn.innerText = "Submit Details & Proceed to Payment";
-    }
-}
 
         // --- 5. SECURITY & UI HELPERS ---
-        // Block Keyboard Shortcuts (Ctrl+U, Ctrl+A) and Right-Click
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('keydown', e => {
             if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 'a' || e.key === 'A')) {
                 e.preventDefault();
             }
         });
-        // Block Copy/Paste/Cut
         ['copy', 'cut', 'paste'].forEach(evt => {
             document.addEventListener(evt, e => e.preventDefault());
         });
@@ -692,7 +757,6 @@ function calculateTotal() {
                 showSlides();
             }
         });
-        
     </script>
 </body>
 </html>
