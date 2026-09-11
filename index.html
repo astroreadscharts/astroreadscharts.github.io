@@ -179,29 +179,28 @@
         footer { display: block; width: 100%; margin-bottom: 0 !important; }
 
 
-        /* BLOG SECTION */
        /* BLOG SECTION */
         .blog-search { width: 100%; border: 1px solid rgba(26,47,79,.25); background: white; padding: .9rem 1rem; border-radius: .75rem; outline: none; }
         .blog-search:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(229,184,11,.18); }
         
-        /* CAROUSEL WRAPPER & ARROW POSITIONING */
-        .blog-carousel-wrap { position: relative; padding: 0 3.25rem; }
+        /* CAROUSEL CONTAINER (Padding gives room for absolute arrows) */
+        .blog-carousel-wrap { position: relative; padding: 0 3.5rem; max-width: 1200px; margin: 0 auto; }
 
         /* HORIZONTAL SCROLL CONTAINER */
         .blog-grid { 
-            display: flex; 
-            flex-wrap: nowrap; 
-            overflow-x: hidden; 
+            display: flex !important; 
+            flex-wrap: nowrap !important; 
+            overflow-x: hidden !important; 
             gap: 1.5rem; 
-            padding: 0.25rem 0.25rem 0.75rem; 
+            padding: 0.5rem 0.25rem 1rem; 
             scroll-behavior: smooth; 
-            scrollbar-width: none; /* Hides scrollbar in Firefox */
+            scrollbar-width: none; 
         }
-        .blog-grid::-webkit-scrollbar { display: none; } /* Hides scrollbar in Chrome/Safari/Edge */
+        .blog-grid::-webkit-scrollbar { display: none; }
 
-        /* ARTICLE CARDS - SHOW EXACTLY 3 PER ROW */
+        /* SHOW EXACTLY 3 CARDS PER ROW ON DESKTOP */
         .blog-card { 
-            flex: 0 0 calc((100% - 3rem) / 3); /* 100% minus the two 1.5rem gaps, divided by 3 cards */
+            flex: 0 0 calc((100% - 3rem) / 3) !important; 
             min-width: 0;
             background: white; 
             border: 1px solid rgba(26,47,79,.12); 
@@ -222,14 +221,42 @@
         .blog-article-content p { margin-top: 1.25rem; line-height: 1.85; color: rgba(26,47,79,.86); white-space: pre-wrap; }
         .blog-back { cursor: pointer; color: var(--color-navy); font-weight: 700; margin-bottom: 2rem; display: inline-flex; align-items: center; gap: .5rem; }
 
-        /* RESPONSIVE LAYOUT (2 CARDS ON TABLET, 1 ON MOBILE) */
+        /* ARROW BUTTON STYLES */
+        .blog-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid rgba(26,47,79,.18);
+            color: var(--color-navy, #1a2f4f);
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(26,47,79,.12);
+            transition: all 0.2s ease;
+        }
+        .blog-arrow:hover:not(:disabled) {
+            background: var(--color-navy, #1a2f4f);
+            color: white;
+        }
+        .blog-arrow-left { left: 0; }
+        .blog-arrow-right { right: 0; }
+
+        /* RESPONSIVE LAYOUT */
         @media (max-width: 900px) { 
-            .blog-card { flex: 0 0 calc((100% - 1.5rem) / 2); } 
+            .blog-card { flex: 0 0 calc((100% - 1.5rem) / 2) !important; } 
         }
         @media (max-width: 620px) { 
-            .blog-card { flex: 0 0 100%; } 
+            .blog-card { flex: 0 0 100% !important; } 
             .blog-carousel-wrap { padding: 0 2.5rem; } 
         }
+
     </style>
 </head>
 <body class="antialiased">
@@ -837,21 +864,28 @@
                     <h2 class="text-4xl md:text-5xl font-bold text-navy mb-4">Guidance From The Stars</h2>
                     <p class="text-lg text-navy/70 max-w-2xl mx-auto">Explore thoughtful guidance on astrology, tarot, timing and conscious living.</p>
                 </div>
-                <div id="blog-list-view">
-                    <div class="max-w-xl mx-auto mb-10">
-                        <label for="blog-search" class="sr-only">Search articles</label>
-                        <input id="blog-search" class="blog-search" type="search" placeholder="Search articles" autocomplete="off">
-                    </div>
-                    <div id="blog-status" class="text-center text-navy/60 py-4">Loading articles...</div>
-                    <div id="blog-grid" class="blog-grid" aria-live="polite"></div>
-                </div>
-                <article id="blog-article-view" class="blog-article hidden" aria-live="polite">
-                    <button type="button" id="blog-back" class="blog-back" aria-label="Return to all articles">← All articles</button>
-                    <img id="blog-article-image" class="blog-card-image rounded-xl mb-8 hidden" alt="">
-                    <p id="blog-article-meta" class="blog-card-meta"></p>
-                    <h2 id="blog-article-title" class="text-4xl md:text-5xl font-bold text-navy leading-tight"></h2>
-                    <div id="blog-article-content" class="blog-article-content"></div>
-                </article>
+               <div id="blog-list-view">
+    <div class="max-w-xl mx-auto mb-10">
+        <label for="blog-search" class="sr-only">Search articles</label>
+        <input id="blog-search" class="blog-search" type="search" placeholder="Search articles" autocomplete="off">
+    </div>
+    <div id="blog-status" class="text-center text-navy/60 py-4">Loading articles...</div>
+    
+    <!-- CAROUSEL WRAPPER WITH NAV ARROWS -->
+    <div class="blog-carousel-wrap">
+        <button type="button" class="blog-arrow blog-arrow-left" id="blog-prev" aria-label="Previous articles">&#8249;</button>
+        <div id="blog-grid" class="blog-grid" aria-live="polite"></div>
+        <button type="button" class="blog-arrow blog-arrow-right" id="blog-next" aria-label="Next articles">&#8250;</button>
+    </div>
+</div>
+
+<article id="blog-article-view" class="blog-article hidden" aria-live="polite">
+    <button type="button" id="blog-back" class="blog-back" aria-label="Return to all articles">← All articles</button>
+    <img id="blog-article-image" class="blog-card-image rounded-xl mb-8 hidden" alt="">
+    <p id="blog-article-meta" class="blog-card-meta"></p>
+    <h2 id="blog-article-title" class="text-4xl md:text-5xl font-bold text-navy leading-tight"></h2>
+    <div id="blog-article-content" class="blog-article-content"></div>
+</article>
             </div>
         </section>
 
@@ -1781,7 +1815,7 @@ function calculateTotal() {
     function cardStep() {
         const card = container.querySelector('.blog-card');
         if (!card) return 0;
-        const gap = parseFloat(getComputedStyle(container).gap || 0);
+        const gap = parseFloat(window.getComputedStyle(container).gap) || 0;
         return card.getBoundingClientRect().width + gap;
     }
 
@@ -1800,25 +1834,33 @@ function calculateTotal() {
             prev.style.display = '';
             prev.disabled = atStart;
             prev.style.opacity = atStart ? '0.35' : '1';
+            prev.style.cursor = atStart ? 'default' : 'pointer';
         }
         if (next) {
             next.style.display = '';
             next.disabled = atEnd;
             next.style.opacity = atEnd ? '0.35' : '1';
+            next.style.cursor = atEnd ? 'default' : 'pointer';
         }
     }
 
-    if (prev) prev.onclick = function() {
-        container.scrollBy({ left: -cardStep(), behavior: 'smooth' });
-        setTimeout(updateArrows, 350);
-    };
+    if (prev) {
+        prev.onclick = function() {
+            container.scrollBy({ left: -cardStep(), behavior: 'smooth' });
+        };
+    }
 
-    if (next) next.onclick = function() {
-        container.scrollBy({ left: cardStep(), behavior: 'smooth' });
-        setTimeout(updateArrows, 350);
-    };
+    if (next) {
+        next.onclick = function() {
+            container.scrollBy({ left: cardStep(), behavior: 'smooth' });
+        };
+    }
 
-    container.onscroll = updateArrows;
+    // React to continuous scrolling and window resizing
+    container.addEventListener('scroll', updateArrows, { passive: true });
+    window.addEventListener('resize', updateArrows);
+
+    // Initial check
     updateArrows();
 }
 
