@@ -189,7 +189,6 @@
             max-width: 1200px; 
             margin: 0 auto; 
         }
-
         /* HORIZONTAL SCROLL GRID */
         .blog-grid { 
             display: flex !important; 
@@ -199,8 +198,8 @@
             padding: 0.5rem 0.25rem 1rem; 
             scroll-behavior: smooth; 
             scrollbar-width: none; 
+            scroll-snap-type: x mandatory;
         }
-        .blog-grid::-webkit-scrollbar { display: none; }
 
         /* 3 CARDS VISIBLE PER ROW */
         .blog-card { 
@@ -213,6 +212,7 @@
             box-shadow: 0 8px 24px rgba(26,47,79,.08); 
             display: flex; 
             flex-direction: column; 
+            scroll-snap-align: start;
         }
 
         .blog-card-image { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #e8eaf0; }
@@ -1876,17 +1876,25 @@ function renderBlogPosts(posts) {
     const grid = document.getElementById('blog-grid');
     const status = document.getElementById('blog-status');
     if (!grid || !status) return;
+
+    // Handle empty state (e.g., search returns 0 results)
     if (!posts.length) {
         grid.innerHTML = '';
         status.textContent = 'No articles found.';
         status.classList.remove('hidden');
-        setupBlogCarousel();
+        setupBlogCarousel(); // Hides arrows when no cards exist
         return;
     }
+
     status.classList.add('hidden');
+
+    // Render cards into the grid
     grid.innerHTML = posts.map(function(post) {
-        const image = post.image ? `<img src="${escapeBlogHtml(post.image)}" alt="${escapeBlogHtml(post.title)}" class="blog-card-image" loading="lazy">` : '';
+        const image = post.image 
+            ? `<img src="${escapeBlogHtml(post.image)}" alt="${escapeBlogHtml(post.title)}" class="blog-card-image" loading="lazy">` 
+            : '';
         const details = [post.category, post.date].filter(Boolean).join(' • ');
+
         return `<article class="blog-card">
             ${image}
             <div class="blog-card-body">
@@ -1897,12 +1905,18 @@ function renderBlogPosts(posts) {
             </div>
         </article>`;
     }).join('');
+
+    // Attach click listeners to all "Read article" buttons
     grid.querySelectorAll('[data-blog-slug]').forEach(function(button) {
-        button.addEventListener('click', function() { openBlogPost(button.getAttribute('data-blog-slug')); });
+        button.addEventListener('click', function() {
+            openBlogPost(button.getAttribute('data-blog-slug'));
+        });
     });
+
+    // Reset scroll position to start and recalculate arrow visibility
+    grid.scrollLeft = 0;
     setupBlogCarousel();
 }
-
         function openBlogPost(slug) {
             const post = blogPosts.find(function(item) { return item.slug === slug; });
             if (!post) return;
