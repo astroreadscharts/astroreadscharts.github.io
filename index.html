@@ -1927,12 +1927,26 @@ function renderBlogPosts(posts) {
 
     // Render cards into the grid
     grid.innerHTML = posts.map(function(post) {
+        // Debugging: uncomment the line below to inspect your row data in the browser console (F12)
+        // console.log("Post data:", post);
+
         const image = post.image 
             ? `<img src="${escapeBlogHtml(post.image)}" alt="${escapeBlogHtml(post.title)}" class="blog-card-image" loading="lazy">` 
             : '';
         
-        // Checks capital 'Category' first to match your Google Sheet column, then falls back
-        const categoryText = post.Category || post.category || post.category_name || post.topic || 'General';
+        // Case-insensitive and whitespace-safe lookup for the category key
+        let categoryText = 'General';
+        for (let key in post) {
+            if (key.trim().toLowerCase() === 'category') {
+                categoryText = post[key];
+                break;
+            }
+        }
+        // Fallback checks if nothing matched the loop
+        if (!categoryText || categoryText === 'General') {
+            categoryText = post.Category || post.category || post.topic || 'General';
+        }
+
         const details = [categoryText, post.date].filter(Boolean).join(' • ');
 
         return `<article class="blog-card">
