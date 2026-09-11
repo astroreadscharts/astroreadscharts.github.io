@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astroreadscharts</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   
+    <link href="googleapis.com" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <style>
+        /* Custom colors and configuration */
+        :root {
+            --color-navy: #1A2F4F;
+            --color-beige: #F4F0E4;
+            --color-accent: #E5B80B; /* A subtle gold for highlights */
+        }
+
+
+
+	.nav-link {
+        cursor: pointer;
+    }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-beige);
+            color: var(--color-navy);
+            /* Prevents text from being selected by dragging the mouse */
+            user-select: none;
+            -webkit-user-select: none; 
+            -moz-user-select: none;    
+            -ms-user-select: none;
+        }
+        .bg-navy { background-color: var(--color-navy); }
+        .text-navy { color: var(--color-navy); }
+        .border-navy { border-color: var(--color-navy); }
+        .text-accent { color: var(--color-accent); }
+        .bg-accent { background-color: var(--color-accent); }
+        .hero-title {
+            font-family: 'Playfair Display', serif; 
+            font-weight: 700;
+        }
+        .stylish-button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        /* Consultation Section Transition */
+        #consultation-section.hidden {
+            display: none;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+        }
+        #consultation-section {
+            transition: opacity 0.5s ease-in-out, max-height 0.7s ease-in-out;
+            max-height: 2000px;
+        }
+        /* Slideshow styles (retained for context) */
+        .slideshow-container {
+            position: relative; max-width: 900px; margin: auto; overflow: hidden; height: 180px; border-radius: 1rem; box-shadow: 0 8px 25px rgba(26, 47, 79, 0.1); border: 1px solid #c9d5e3;
+        }
+        .mySlides {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(160deg, var(--color-beige) 0%, #e8eaf0 100%); padding: 1.5rem 1rem; text-align: center; transition: transform 1.0s ease-in-out; opacity: 1;
+        }
+
+        /* CHECK MARK ANIMATION CSS */
+        .checkmark-circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: #4CAF50;
+            fill: none;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .checkmark-check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            stroke: #4CAF50;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+        @keyframes stroke {
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+        .icon-success {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto 20px;
+        }
+
+        /* Client Reviews - carousel: 3 cards desktop, 2 cards tablet/mobile */
+        .reviews-carousel-wrap {
+            position: relative;
+            padding: 0 3.25rem;
+        }
+        #review-display {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: hidden;
+            overflow-y: visible;
+            gap: 1.5rem;
+            padding: 0.25rem 0.25rem 0.75rem;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+        }
+        #review-display::-webkit-scrollbar { display: none; }
+
+        #review-display.single-review .review-card {
+            flex-basis: min(100%, 620px);
+        }
+        #review-display.single-review {
+            justify-content: center;
+        }
+
+        .review-card {
+            flex: 0 0 calc((100% - 3rem) / 3);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-sizing: border-box;
+        }
+        .review-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(26, 47, 79, 0.12); }
+        .review-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            border: 1px solid rgba(26, 47, 79, 0.18);
+            background: white;
+            color: var(--color-navy);
+            box-shadow: 0 5px 16px rgba(26, 47, 79, 0.14);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 5;
+            font-size: 28px;
+            line-height: 1;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .review-arrow:hover {
+            transform: translateY(-50%) scale(1.06);
+            box-shadow: 0 8px 20px rgba(26, 47, 79, 0.2);
+        }
+        .review-arrow-left { left: 0; }
+        .review-arrow-right { right: 0; }
+        @media (max-width: 767px) {
+            .reviews-carousel-wrap { padding: 0 2.75rem; }
+            .review-card { flex-basis: calc((100% - 1.5rem) / 2); }
+            .review-arrow { width: 40px; height: 40px; font-size: 24px; }
+        }
+        @media (max-width: 520px) {
+            .reviews-carousel-wrap { padding: 0 2.5rem; }
+            .review-card { flex-basis: 100%; }
+            .review-arrow { width: 38px; height: 38px; font-size: 22px; }
+        }
+    
+        /* Footer background is limited strictly to the footer itself */
+        body { background-color: var(--color-beige); }
+        main { background-color: transparent; }
+        footer { background-color: var(--color-navy); }
+    
+    
+        html, body { margin: 0; padding: 0; }
+        footer { display: block; width: 100%; margin-bottom: 0 !important; }
+
+
+        /* BLOG SECTION */
+        .blog-search { width: 100%; border: 1px solid rgba(26,47,79,.25); background: white; padding: .9rem 1rem; border-radius: .75rem; outline: none; }
+        .blog-search:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(229,184,11,.18); }
+        .blog-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1.5rem; }
+        .blog-card { background: white; border: 1px solid rgba(26,47,79,.12); border-radius: 1rem; overflow: hidden; box-shadow: 0 8px 24px rgba(26,47,79,.08); display: flex; flex-direction: column; }
+        .blog-card-image { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #e8eaf0; }
+        .blog-card-body { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
+        .blog-card-meta { color: #71620c; font-size: .78rem; font-weight: 700; text-transform: uppercase; margin-bottom: .65rem; }
+        .blog-card-title { font-family: 'Playfair Display', serif; font-size: 1.45rem; line-height: 1.25; font-weight: 700; margin-bottom: .75rem; }
+        .blog-card-summary { color: rgba(26,47,79,.72); line-height: 1.7; margin-bottom: 1.25rem; flex: 1; }
+        .blog-read-button { align-self: flex-start; color: var(--color-navy); font-weight: 700; border-bottom: 2px solid var(--color-accent); padding-bottom: .15rem; cursor: pointer; }
+        .blog-article { max-width: 760px; margin: 0 auto; background: white; padding: clamp(1.5rem,5vw,4rem); border-radius: 1rem; box-shadow: 0 12px 34px rgba(26,47,79,.1); }
+        .blog-article-content p { margin-top: 1.25rem; line-height: 1.85; color: rgba(26,47,79,.86); white-space: pre-wrap; }
+        .blog-back { cursor: pointer; color: var(--color-navy); font-weight: 700; margin-bottom: 2rem; display: inline-flex; align-items: center; gap: .5rem; }
+        @media (max-width: 900px) { .blog-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+        @media (max-width: 620px) { .blog-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation Bar --><header class="sticky top-0 z-50 bg-navy shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="#home" class="text-2xl font-black text-white nav-link tracking-wider rounded-md p-1">
+                    ASTROREADSCHARTS
+                </a>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#home" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Home</a>
+                    <a id="consultation-menu-link" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Book A Consultation</a>
+                    <a href="#reviews" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Reviews</a>
+                    <a href="#blog" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Blog</a>
+                    
+                    <a href="#about" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">About</a>
+                    <a href="#contact" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Contact</a>
+                    <a href="#donation" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md transition-colors">Donation</a>
+                </nav>
+                <button id="mobile-menu-button" class="md:hidden text-white hover:text-accent p-2 rounded-md">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-navy/95 border-t border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block nav-link text-white hover:bg-navy/70 hover:text-accent px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a id="consultation-menu-link-mobile" class="block nav-link text-white hover:bg-navy/70 hover:text-accent px-3 py-2 rounded-md text-base font-medium">Book A Consultation</a>
+                
+                <a href="#reviews" class="block nav-link text-white hover:bg-navy/70 hover:text-accent px-3 py-2 rounded-md text-base font-medium">Reviews</a>
+                <a href="#blog" class="block nav-link text-white hover:bg-navy/70 hover:text-accent px-3 py-2 rounded-md text-base font-medium">Blog</a>
+                <a href="#about" class="block nav-link text-white hover:bg-navy/70 hover:text-accent px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="#contact" class="block nav-link text-white hover:bg-navy/70 hover:text-accent px-3 py-2 rounded-md text-base font-medium">Contact</a>
+                <a href="#donation" class="block nav-link text-white hover:bg-navy/70 hover:text-accent px-3 py-2 rounded-md text-base font-medium">Donation</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto">
+        
+        <!-- Home Section (Hero) --><section id="home" class="min-h-[80vh] flex flex-col justify-center items-center py-24 px-4 text-center">
+            <h1 class="text-5xl md:text-7xl hero-title mb-4 text-navy">
+                Illuminating Your Path
+            </h1>
+            <p class="text-xl md:text-2xl text-navy/70 mb-8 max-w-3xl font-sans">
+                Unlock profound self-knowledge and foresight through professional chart readings rooted in ancient wisdom. We bridge the gap between celestial mechanics and modern life, offering clarity on your deepest potential, innate talents, and ultimate life purpose. Your journey begins with understanding the stars. Every moment in time holds a unique energetic signature. By analyzing the precise position of the Sun, Moon, and planets at your exact time and place of birth, we create a detailed, personalized map: your Natal Chart. This chart is not a prediction of fate, but a sophisticated psychological and spiritual blueprint. It reveals the intrinsic motivations, emotional needs, relational dynamics, and karmic lessons designed for this lifetime, providing you with the ultimate tool for conscious decision-making.
+            </p>
+            <button onclick="showConsultationForm()" class="stylish-button bg-accent text-navy font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all">
+                Book Your Reading Today
+            </button>
+        </section>
+
+
+
+		<div class="flex justify-center py-8">
+  			  <img src="src/Astroreadscharts.jpg" alt="Astroreadscharts" class="max-w-full md:max-w-2xl rounded-xl shadow-lg border border-navy/20">
+		</div>
+		
+        <!-- Services Section (Sliding Animation) --><section class="py-16 px-4 bg-beige">
+            <h2 class="text-4xl font-bold text-center mb-12 text-navy">Our Specialized Readings</h2>
+            
+            <div class="slideshow-container">
+                <!-- Slides... (Content is functional, kept for brevity) -->
+                <div class="mySlides"><h2 style="font-size: x-large" class="slide-title">BIRTHCHART READING</h2><p class="slide-description">A Birth Chart (Natal Chart) maps the exact celestial alignment at your moment of birth, revealing your cosmic blueprint. It defines your intrinsic motivations, emotional needs, core personality, and innate talents that form your life's foundation. Uncover profound self-knowledge and align your life choices with your deepest, most authentic self.</p></div>
+                <div class="mySlides"><h2 style="font-size: x-large" class="slide-title">TAROT READING</h2><p class="slide-description">Tap into the collective unconscious using the ancient, symbolic wisdom of the 78 Tarot cards. This session provides immediate clarity on current challenges and illuminates hidden influences impacting your path forward. Gain fresh perspectives, validate your intuition, and receive strategic advice for navigating immediate decisions.</p></div>
+                <div class="mySlides"><h2 style="font-size: x-large" class="slide-title">TRANSIT FORECAST</h2><p class="slide-description"> Transits track the current movements of the planets against your static Natal Chart to predict energetic shifts. This forecast reveals upcoming favorable windows for action and challenging periods that require rest or inner work. Proactively time your major life decisions to harmonize with celestial cycles, maximizing opportunity and minimizing struggle.</p></div>
+                <div class="mySlides"><h2 style="font-size: x-large" class="slide-title">NUMEROLOGY READING</h2><p class="slide-description">Numerology uses the vibrational essence of numbers derived from your birth date and name to reveal fundamental life patterns. Discover your Life Path Number, Destiny Number, and Soul Urge, which define your ultimate purpose, core strengths, and hidden desires. Utilize the universal language of numbers to gain a holistic view of your unique energetic profile and potential.</p></div>
+           		<div class="mySlides"><h2 style="font-size: x-large" class="slide-title">SPIRITUAL GUIDANCE</h2><p class="slide-description">Connect with your higher self and inner wisdom through a dedicated spiritual guidance session. By exploring your unique soul blueprint, current energetic blocks, and spiritual alignment, this reading offers clarity on your life's purpose. Gain the actionable insights and cosmic perspective needed to navigate transitions, heal past patterns, and confidently step into your truest path.</p></div>
+				<div class="mySlides"><h2 style="font-size: x-large" class="slide-title">SYNASTRY & COMPATIBILITY</h2><p class="slide-description">Synastry explores the intricate cosmic dance between two birth charts to illuminate the unique dynamics of your relationship. By overlaying your planetary placements, this reading uncovers areas of effortless harmony, potential friction, and karmic bonds. Discover how your energies interact to deepen your mutual understanding, strengthen communication, and build a resilient connection.</p></div>
+				<div class="mySlides">
+    <h2 style="font-size: x-large" class="slide-title">JAIMINI ASTROLOGY</h2>
+    <p class="slide-description">Discover your soul's deepest destiny through the precise lens of Jaimini astrology. This calculation uses specialized indicators like Chara Karakas and unique planetary periods to uncover your true purpose, professional milestones and major karmic lessons that standard charts miss.</p>
+</div>
+
+			 	<div class="mySlides">
+    <h2 style="font-size: x-large" class="slide-title">THE PREMIUM STRATEGIC BLUEPRINT</h2>
+    <p class="slide-description">Receive an exhaustive written manual combining your Vedic and Jaimini astrology, solar return birthday chart and a comprehensive 2-year transit forecast. Safely map out your core life lessons, financial blocks and health timing. This ultimate master package includes one free tarot reading and one free consultation follow-up, delivered directly to your email within 72 hours.</p>
+</div>
+
+        </section>
+
+        <!-- Book A Consultation Section (CONDITIONAL DISPLAY) -->
+
+
+
+
+
+
+
+
+
+
+<section id="consultation-section" class="py-20 px-4 bg-navy text-white hidden">
+    <h2 class="text-4xl font-bold text-center mb-12 text-accent">Begin Your Journey</h2>
+    
+    <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-xl shadow-2xl text-navy">
+        <div id="step-1">
+            <h3 class="text-2xl font-semibold mb-6 border-b pb-2 border-navy/20">Step 1: Birth Details & Services</h3>
+            
+            <div class="mb-8">
+                <h4 class="text-lg font-bold mb-4">Select Your Readings</h4>
+                <div class="grid sm:grid-cols-2 gap-4 text-sm">
+
+
+
+
+
+
+
+
+<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+    <input type="checkbox" name="reading_type" value="Tarot" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+    <div>
+        <span class="font-bold block text-navy">Tarot Reading ($20)</span>
+        <span class="text-xs text-gray-600 italic">Clear, elite perspective for your most important questions. Delivered directly to your email within 24 hours.</span>
+    </div>
+</label>
+
+<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+    <input type="checkbox" name="reading_type" value="Focused_Inquiry" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+    <div>
+        <span class="font-bold block text-navy">The Personalized Astrological Inquiry ($20)</span>
+        <span class="text-xs text-gray-600 italic">Get clear answers directly from your birth chart regarding your specific life questions. Your detailed report will be mailed within 24 hours.</span>
+    </div>
+</label>
+
+<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+    <input type="checkbox" name="reading_type" value="Synastry_Profile" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+    <div>
+        <span class="font-bold block text-navy">Relationship Synastry Profile ($20)</span>
+        <span class="text-xs text-gray-600 italic">A refined comparison of two birth charts to answer your specific connection questions and map your shared energetic dynamics. Delivered via email within 24 hours.</span>
+    </div>
+</label>
+
+<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+    <input type="checkbox" name="reading_type" value="Transit_Forecast_Solo" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+    <div>
+        <span class="font-bold block text-navy">1-Year Transit Forecast ($20)</span>
+        <span class="text-xs text-gray-600 italic">An exceptional timeline mapping out your most supportive and favourable cosmic periods over the next 12 months. Delivered within 24 hours.</span>
+    </div>
+</label>
+
+<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+    <input type="checkbox" name="reading_type" value="Solar_Return" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+    <div>
+        <span class="font-bold block text-navy">Solar Return Forecast ($20)</span>
+        <span class="text-xs text-gray-600 italic">Your personal year-ahead birthday map, highlighting major energetic themes and your most aligned areas of growth. Delivered within 24 hours.</span>
+    </div>
+</label>
+
+<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+    <input type="checkbox" name="reading_type" value="Ultimate_Three_In_One_Combo" data-price="45" onchange="calculateTotal()" class="mr-3 accent-accent">
+    <div>
+        <span class="font-bold block text-navy">The All-In-One Cosmic Bundle ($45)</span>
+        <span class="text-xs text-gray-600 italic">A complete, high-level overview featuring your Natal Chart, a 1-Year Transit Forecast of favourable times, a Numerology Profile and Tarot Alignment. Delivered within 24 hours.</span>
+    </div>
+</label>
+
+<label class="p-3 border-2 border-accent rounded-lg flex items-center cursor-pointer bg-accent/5 md:col-span-2">
+    <input type="checkbox" name="reading_type" value="Premium_Blueprint" data-price="125" onchange="calculateTotal()" class="mr-3 accent-accent">
+    <div>
+        <span class="font-bold block text-navy">🎁 The Premium Strategic Blueprint: A Celestial Legacy Gift ($125)</span>
+        <span class="text-xs text-gray-600 italic">Our most prestigious, masterfully crafted guide. This deep-dive master manual maps out your soul destiny, alignment with material abundance, solar return, a 2-year transit forecast of ideal timing and spiritual wisdom using Vedic and Jaimini astrology. A beautiful, high-value gift to honor yourself or someone special. Includes a complimentary tarot reading and a private follow-up consultation. Delivered within 72 hours.</span>
+    </div>
+</label>
+
+
+
+
+
+
+
+                </div>
+                <div id="price-summary" class="mt-4 hidden"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium mb-1">Full Name *</label>
+                    <input type="text" id="name" required class="w-full p-3 border rounded-lg border-navy/30">
+                </div>
+                <div>
+                    <label for="birth-year" class="block text-sm font-medium mb-1">Birth Date *</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <select id="birth-year" class="w-full p-3 border rounded-lg border-navy/30 bg-white" aria-label="Birth year">
+                            <option value="">Year</option>
+                            <option value="2026">2026</option>
+<option value="2025">2025</option>
+<option value="2024">2024</option>
+<option value="2023">2023</option>
+<option value="2022">2022</option>
+<option value="2021">2021</option>
+<option value="2020">2020</option>
+<option value="2019">2019</option>
+<option value="2018">2018</option>
+<option value="2017">2017</option>
+<option value="2016">2016</option>
+<option value="2015">2015</option>
+<option value="2014">2014</option>
+<option value="2013">2013</option>
+<option value="2012">2012</option>
+<option value="2011">2011</option>
+<option value="2010">2010</option>
+<option value="2009">2009</option>
+<option value="2008">2008</option>
+<option value="2007">2007</option>
+<option value="2006">2006</option>
+<option value="2005">2005</option>
+<option value="2004">2004</option>
+<option value="2003">2003</option>
+<option value="2002">2002</option>
+<option value="2001">2001</option>
+<option value="2000">2000</option>
+<option value="1999">1999</option>
+<option value="1998">1998</option>
+<option value="1997">1997</option>
+<option value="1996">1996</option>
+<option value="1995">1995</option>
+<option value="1994">1994</option>
+<option value="1993">1993</option>
+<option value="1992">1992</option>
+<option value="1991">1991</option>
+<option value="1990">1990</option>
+<option value="1989">1989</option>
+<option value="1988">1988</option>
+<option value="1987">1987</option>
+<option value="1986">1986</option>
+<option value="1985">1985</option>
+<option value="1984">1984</option>
+<option value="1983">1983</option>
+<option value="1982">1982</option>
+<option value="1981">1981</option>
+<option value="1980">1980</option>
+<option value="1979">1979</option>
+<option value="1978">1978</option>
+<option value="1977">1977</option>
+<option value="1976">1976</option>
+<option value="1975">1975</option>
+<option value="1974">1974</option>
+<option value="1973">1973</option>
+<option value="1972">1972</option>
+<option value="1971">1971</option>
+<option value="1970">1970</option>
+<option value="1969">1969</option>
+<option value="1968">1968</option>
+<option value="1967">1967</option>
+<option value="1966">1966</option>
+<option value="1965">1965</option>
+<option value="1964">1964</option>
+<option value="1963">1963</option>
+<option value="1962">1962</option>
+<option value="1961">1961</option>
+<option value="1960">1960</option>
+<option value="1959">1959</option>
+<option value="1958">1958</option>
+<option value="1957">1957</option>
+<option value="1956">1956</option>
+<option value="1955">1955</option>
+<option value="1954">1954</option>
+<option value="1953">1953</option>
+<option value="1952">1952</option>
+<option value="1951">1951</option>
+<option value="1950">1950</option>
+<option value="1949">1949</option>
+<option value="1948">1948</option>
+<option value="1947">1947</option>
+<option value="1946">1946</option>
+<option value="1945">1945</option>
+<option value="1944">1944</option>
+<option value="1943">1943</option>
+<option value="1942">1942</option>
+<option value="1941">1941</option>
+<option value="1940">1940</option>
+<option value="1939">1939</option>
+<option value="1938">1938</option>
+<option value="1937">1937</option>
+<option value="1936">1936</option>
+<option value="1935">1935</option>
+<option value="1934">1934</option>
+<option value="1933">1933</option>
+<option value="1932">1932</option>
+<option value="1931">1931</option>
+<option value="1930">1930</option>
+<option value="1929">1929</option>
+<option value="1928">1928</option>
+<option value="1927">1927</option>
+<option value="1926">1926</option>
+<option value="1925">1925</option>
+<option value="1924">1924</option>
+<option value="1923">1923</option>
+<option value="1922">1922</option>
+<option value="1921">1921</option>
+<option value="1920">1920</option>
+<option value="1919">1919</option>
+<option value="1918">1918</option>
+<option value="1917">1917</option>
+<option value="1916">1916</option>
+<option value="1915">1915</option>
+<option value="1914">1914</option>
+<option value="1913">1913</option>
+<option value="1912">1912</option>
+<option value="1911">1911</option>
+<option value="1910">1910</option>
+<option value="1909">1909</option>
+<option value="1908">1908</option>
+<option value="1907">1907</option>
+<option value="1906">1906</option>
+<option value="1905">1905</option>
+<option value="1904">1904</option>
+<option value="1903">1903</option>
+<option value="1902">1902</option>
+<option value="1901">1901</option>
+<option value="1900">1900</option>
+                        </select>
+                        <select id="birth-month" class="w-full p-3 border rounded-lg border-navy/30 bg-white" aria-label="Birth month">
+                            <option value="">Month</option>
+                            <option value="01">01</option>
+<option value="02">02</option>
+<option value="03">03</option>
+<option value="04">04</option>
+<option value="05">05</option>
+<option value="06">06</option>
+<option value="07">07</option>
+<option value="08">08</option>
+<option value="09">09</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+                        </select>
+                        <select id="birth-day" class="w-full p-3 border rounded-lg border-navy/30 bg-white" aria-label="Birth day">
+                            <option value="">Day</option>
+                            <option value="01">01</option>
+<option value="02">02</option>
+<option value="03">03</option>
+<option value="04">04</option>
+<option value="05">05</option>
+<option value="06">06</option>
+<option value="07">07</option>
+<option value="08">08</option>
+<option value="09">09</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+<option value="21">21</option>
+<option value="22">22</option>
+<option value="23">23</option>
+<option value="24">24</option>
+<option value="25">25</option>
+<option value="26">26</option>
+<option value="27">27</option>
+<option value="28">28</option>
+<option value="29">29</option>
+<option value="30">30</option>
+<option value="31">31</option>
+                        </select>
+                    </div>
+                    <input type="hidden" id="dob" name="dob" value="">
+                    <p id="dob-error" class="text-red-600 text-sm mt-1 hidden"></p>
+                </div>
+                <div>
+                    <label for="birth-hour" class="block text-sm font-medium mb-1">Birth Time *</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <select id="birth-hour" class="w-full p-3 border rounded-lg border-navy/30 bg-white" aria-label="Birth hour">
+                            <option value="">Hour</option>
+                            <option value="01">01</option>
+<option value="02">02</option>
+<option value="03">03</option>
+<option value="04">04</option>
+<option value="05">05</option>
+<option value="06">06</option>
+<option value="07">07</option>
+<option value="08">08</option>
+<option value="09">09</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+                        </select>
+                        <select id="birth-minute" class="w-full p-3 border rounded-lg border-navy/30 bg-white" aria-label="Birth minute">
+                            <option value="">Minute</option>
+                            <option value="00">00</option>
+<option value="01">01</option>
+<option value="02">02</option>
+<option value="03">03</option>
+<option value="04">04</option>
+<option value="05">05</option>
+<option value="06">06</option>
+<option value="07">07</option>
+<option value="08">08</option>
+<option value="09">09</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+<option value="21">21</option>
+<option value="22">22</option>
+<option value="23">23</option>
+<option value="24">24</option>
+<option value="25">25</option>
+<option value="26">26</option>
+<option value="27">27</option>
+<option value="28">28</option>
+<option value="29">29</option>
+<option value="30">30</option>
+<option value="31">31</option>
+<option value="32">32</option>
+<option value="33">33</option>
+<option value="34">34</option>
+<option value="35">35</option>
+<option value="36">36</option>
+<option value="37">37</option>
+<option value="38">38</option>
+<option value="39">39</option>
+<option value="40">40</option>
+<option value="41">41</option>
+<option value="42">42</option>
+<option value="43">43</option>
+<option value="44">44</option>
+<option value="45">45</option>
+<option value="46">46</option>
+<option value="47">47</option>
+<option value="48">48</option>
+<option value="49">49</option>
+<option value="50">50</option>
+<option value="51">51</option>
+<option value="52">52</option>
+<option value="53">53</option>
+<option value="54">54</option>
+<option value="55">55</option>
+<option value="56">56</option>
+<option value="57">57</option>
+<option value="58">58</option>
+<option value="59">59</option>
+                        </select>
+                        <select id="birth-meridiem" class="w-full p-3 border rounded-lg border-navy/30 bg-white" aria-label="AM or PM">
+                            <option value="">AM/PM</option>
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                        </select>
+                    </div>
+                    <input type="hidden" id="time" name="time" value="">
+                    <p id="time-error" class="text-red-600 text-sm mt-1 hidden"></p>
+                </div>
+
+                <div class="md:col-span-2"><label class="block text-sm font-medium mb-1">Birth Place *</label><input type="text" id="place" class="w-full p-3 border rounded-lg border-navy/30" placeholder="City, State, Country"></div>
+                <div class="md:col-span-2"><label class="block text-sm font-medium mb-1">Email *</label><input type="email" id="email" class="w-full p-3 border rounded-lg border-navy/30"></div>
+                <div class="md:col-span-2"><label class="block text-sm font-medium mb-1">Specific Questions</label><textarea id="questions" rows="2" class="w-full p-3 border rounded-lg border-navy/30"></textarea></div>
+            </div>
+
+<!-- TERMS & DISCLAIMER CONSENT CHECKBOX -->
+<div class="mb-6 pt-4 border-t border-navy/10">
+    <label class="flex items-start gap-2.5 cursor-pointer group">
+        <input 
+            type="checkbox" 
+            id="terms-consent" 
+            required 
+            onclick="this.setCustomValidity('')"
+            oninvalid="alert('Please confirm before proceeding to payment'); this.setCustomValidity(' ');" 
+            class="mt-0.5 accent-navy h-4 w-4 shrink-0 rounded border-gray-300"
+        >
+        <span class="text-xs text-gray-600 leading-normal">
+            <span class="text-red-500 font-bold">*</span> I confirm I am 18+ years of age and agree to the 
+            <button type="button" onclick="toggleTermsModal(true)" class="text-navy font-bold underline hover:text-accent inline-block">Terms of Service & Legal Disclaimer</button> 
+            (all readings are provided for personal self-reflection/entertainment purposes).
+        </span>
+    </label>
+</div>
+
+            <button type="button" id="proceed-button" onclick="submitAndProceed()" class="stylish-button bg-navy text-white font-bold py-4 px-8 rounded-full w-full shadow-lg hover:bg-opacity-90 transition-all">
+                Submit Details & Proceed to Payment
+            </button>
+        </div>
+
+        <div id="step-2" class="hidden animate-fade-in">
+    <div class="text-center">
+        <div class="inline-block p-3 bg-green-100 text-green-700 rounded-full mb-4">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+        </div>
+        <h3 class="text-3xl font-bold mb-2 text-navy">Thank you, <span id="display-user-name" class="text-accent"></span>!</h3>
+        
+        <p class="text-gray-600 mb-8 px-4 font-medium" id="personalized-message"></p>
+
+        <div class="bg-beige/30 p-6 rounded-2xl border border-navy/10 mb-8">
+            <p class="text-sm uppercase tracking-widest text-gray-500 mb-2">Final Amount</p>
+            <p class="text-4xl font-extrabold text-navy mb-6" id="final-amount-display">$0.00</p>
+            
+            <div class="flex flex-col items-center justify-center space-y-6">
+                <div class="p-4 bg-white rounded-xl shadow-md border-t-4 border-navy w-48">
+                    <img src="src/astroreadscharts.png" alt="Payment QR" class="w-full h-auto">
+                </div><br>or<br>
+                <a id="dynamic-paypal-link" href="#" target="_blank" class="bg-accent text-navy font-bold py-4 px-10 rounded-full shadow-xl hover:scale-105 transition-transform">
+                    Pay with PayPal Link
+                </a>
+            </div>
+        </div>
+        </div>
+</div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </section>
+
+        <!-- Other sections (About, Contact, Donation) remain the same... -->
+        <!-- CLIENT REVIEWS SECTION -->
+        <section id="reviews" class="py-20 px-4 bg-white">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <p class="text-accent font-semibold uppercase tracking-widest text-sm mb-3">Client Experiences</p>
+                    <h2 class="text-4xl md:text-5xl font-bold text-navy mb-4">What Clients Say</h2>
+                    <p class="text-lg text-navy/70 max-w-2xl mx-auto">
+                        Had a reading with Astroreadscharts? Share your experience and help others understand what they can expect.
+                    </p>
+                </div>
+
+                <div class="reviews-carousel-wrap mb-12">
+                    <button type="button" class="review-arrow review-arrow-left" id="review-prev" aria-label="Previous reviews">&#8249;</button>
+                    <div id="review-display">
+                        <div class="review-placeholder text-center py-8 text-navy/60" style="min-width:100%;">
+                            Client reviews will appear here.
+                        </div>
+                    </div>
+                    <button type="button" class="review-arrow review-arrow-right" id="review-next" aria-label="Next reviews">&#8250;</button>
+                </div>
+
+                <div class="max-w-3xl mx-auto bg-beige rounded-2xl p-6 md:p-10 shadow-lg border border-navy/10">
+                    <div class="text-center mb-8">
+                        <h3 class="text-3xl font-bold text-navy mb-2">Leave a Review</h3>
+                        <p class="text-navy/70">Your name and review are required.</p>
+                    </div>
+
+                    <form id="reviewForm">
+                        <div class="mb-5">
+                            <label for="review-name" class="block text-sm font-medium mb-1 text-navy">Your Name *</label>
+                            <input type="text" id="review-name" name="name" maxlength="100" required
+                                class="w-full p-3 border rounded-lg border-navy/30 focus:ring-accent focus:border-accent"
+                                placeholder="Enter your name">
+                        </div>
+
+                        <div class="mb-5">
+                            <label for="review-message" class="block text-sm font-medium mb-1 text-navy">Your Review *</label>
+                            <textarea id="review-message" name="review" rows="6" maxlength="1500" required
+                                class="w-full p-3 border rounded-lg border-navy/30 focus:ring-accent focus:border-accent"
+                                placeholder="Tell us about your experience with your reading..."></textarea>
+                        </div>
+
+                        <div class="flex items-start gap-3 mb-6">
+                            <input type="checkbox" id="review-permission" required aria-required="true" class="mt-1 accent-accent">
+                            <label for="review-permission" class="text-sm text-navy/75 cursor-pointer">
+                                <span class="font-semibold">I give Astroreadscharts permission to publish my name and review on this website.</span>
+                                <span class="block text-xs text-navy/60 mt-1">This permission is required to submit your review.</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" id="review-submit"
+                            class="stylish-button bg-navy text-white font-bold py-3 px-8 rounded-full w-full shadow-lg">
+                            Submit Review
+                        </button>
+
+                        <p id="review-success" class="hidden mt-5 text-center text-green-700 font-medium"></p>
+                        <p id="review-error" class="hidden mt-5 text-center text-red-600 font-medium" aria-live="polite"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- BLOG SECTION -->
+        <section id="blog" class="py-20 px-4 bg-beige">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-10">
+                    <p class="text-accent font-semibold uppercase tracking-widest text-sm mb-3">Astrological Journal</p>
+                    <h2 class="text-4xl md:text-5xl font-bold text-navy mb-4">Guidance From The Stars</h2>
+                    <p class="text-lg text-navy/70 max-w-2xl mx-auto">Explore thoughtful guidance on astrology, tarot, timing and conscious living.</p>
+                </div>
+                <div id="blog-list-view">
+                    <div class="max-w-xl mx-auto mb-10">
+                        <label for="blog-search" class="sr-only">Search articles</label>
+                        <input id="blog-search" class="blog-search" type="search" placeholder="Search articles" autocomplete="off">
+                    </div>
+                    <div id="blog-status" class="text-center text-navy/60 py-4">Loading articles...</div>
+                    <div id="blog-grid" class="blog-grid" aria-live="polite"></div>
+                </div>
+                <article id="blog-article-view" class="blog-article hidden" aria-live="polite">
+                    <button type="button" id="blog-back" class="blog-back" aria-label="Return to all articles">← All articles</button>
+                    <img id="blog-article-image" class="blog-card-image rounded-xl mb-8 hidden" alt="">
+                    <p id="blog-article-meta" class="blog-card-meta"></p>
+                    <h2 id="blog-article-title" class="text-4xl md:text-5xl font-bold text-navy leading-tight"></h2>
+                    <div id="blog-article-content" class="blog-article-content"></div>
+                </article>
+            </div>
+        </section>
+
+        <section id="about" class="py-16 px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-navy">About</h2>
+            <div class="max-w-4xl mx-auto text-lg leading-relaxed space-y-6">
+                <p>Astroreadscharts was founded on the principle that ancient astrological and metaphysical knowledge should be accessible, practical, and delivered with professional precision. We believe the stars offer more than just prediction they provide a powerful framework for self-understanding and conscious decision-making.</p>
+                <p>Our mission is to help you navigate life's cycles, clarify your purpose, and harness your innate potential. We blend traditional techniques with modern, empathetic guidance to ensure every consultation is not only insightful but deeply empowering. Trust us to be your dedicated guide on your journey through the cosmos.</p>
+            </div>
+        </section>
+
+        <section id="contact" class="py-16 px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-navy">Get In Touch</h2>
+            <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10">
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-semibold mb-4 text-navy">Our Location (Vijayawada)</h3>
+                    <div class="w-full aspect-video rounded-xl overflow-hidden shadow-lg border border-navy/20">
+                        <iframe 
+                            src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Vijayawada,%20Andhra%20Pradesh,%20India&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" 
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    <div class="flex justify-start space-x-6 pt-4">
+                        <a href="https://www.facebook.com/astroreadscharts" target="_blank" class="text-navy hover:text-accent transition duration-300">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.04c-5.54 0-10 4.46-10 10 0 5.54 4.46 10 10 10 5.54 0 10-4.46 10-10 0-5.54-4.46-10-10-10zm2.22 6.64h-1.89c-.19 0-.32.06-.32.4v1.51h2.24l-.3 2.15h-1.94v6.2h-2.22v-6.2h-1.7v-2.15h1.7v-1.28c0-1.87 1.14-2.88 2.81-2.88h1.86v2.15z"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/astroreadscharts/" target="_blank" class="text-navy hover:text-accent transition duration-300">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M7.8 2c-2.71 0-4.8 2.1-4.8 4.8v10.4c0 2.7 2.09 4.8 4.8 4.8h8.4c2.7 0 4.8-2.1 4.8-4.8V6.8c0-2.7-2.1-4.8-4.8-4.8H7.8zm0 2h8.4c1.65 0 2.8 1.15 2.8 2.8v10.4c0 1.65-1.15 2.8-2.8 2.8H7.8c-1.65 0-2.8-1.15-2.8-2.8V6.8c0-1.65 1.15-2.8 2.8-2.8zm8.6 2.4c-.66 0-1.2.54-1.2 1.2s.54 1.2 1.2 1.2 1.2-.54 1.2-1.2-.54-1.2-1.2-1.2zM12 9.2c-2.64 0-4.8 2.16-4.8 4.8s2.16 4.8 4.8 4.8 4.8-2.16 4.8-4.8-2.16-4.8-4.8-4.8zm0 2c1.54 0 2.8 1.26 2.8 2.8s-1.26 2.8-2.8 2.8-2.8-1.26-2.8-2.8 1.26-2.8 2.8-2.8z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                 <!-- CONTACT FORM (UPDATED FOR AJAX SUBMISSION - NO REDIRECT) -->
+            <div class="pt-10 border-t border-gray-200 mt-10">
+                <div class="bg-white p-8 rounded-xl shadow-2xl border-t-4 border-navy">
+                    <h3 class="text-2xl font-semibold mb-4 text-navy">Send Us a Message</h3>
+                    
+                    <!-- Added ID for JavaScript access -->
+                    <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+
+                        <!-- Web3Forms Access Key: c3f24206-b0fb-4cfd-8fda-b3e275001b4d -->
+                        <input type="hidden" name="access_key" value="c3f24206-b0fb-4cfd-8fda-b3e275001b4d">
+
+                        <!-- Web3Forms Subject line -->
+                        <input type="hidden" name="subject" value="New Website Contact Message from Astroreadscharts">
+                        
+                        <!-- REMOVED THE REDIRECT FIELD -->
+                        
+                        <!-- Disable reCAPTCHA (optional) -->
+                        <input type="hidden" name="_captcha" value="false">
+
+                        <div class="mb-4">
+                            <label for="c-name" class="block text-sm font-medium mb-1 text-navy">Name</label>
+                            <input type="text" id="c-name" name="Name" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
+                        </div>
+                        <div class="mb-4">
+                            <label for="c-email" class="block text-sm font-medium mb-1 text-navy">Email *</label>
+                            <input type="email" id="c-email" name="Email" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30">
+                        </div>
+                        <div class="mb-6">
+                            <label for="c-purpose" class="block text-sm font-medium mb-1 text-navy">Purpose of Contact</label>
+                            <textarea id="c-purpose" name="Message" rows="4" required class="w-full p-3 border rounded-lg focus:ring-accent focus:border-accent border-navy/30"></textarea>
+                        </div>
+                        <!-- Added ID for JavaScript access -->
+                        <button type="submit" id="submitButton" class="stylish-button bg-navy text-white font-bold py-3 px-8 rounded-full w-full hover:bg-navy/90">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <!-- END CONTACT FORM -->
+        
+        </section>
+
+        <section id="donation" class="py-16 px-4 text-center">
+            <h2 class="text-4xl font-bold mb-6 text-navy">Support Our Work</h2>
+            <p class="text-lg text-navy/80 max-w-2xl mx-auto mb-8">
+                If you have found value in our free content and guidance, your generous support allows us to continue providing high-quality astrological insights and maintaining this platform.
+            </p>
+            <a href="https://www.paypal.com/paypalme/mvmahesh888" target="_blank" class="stylish-button bg-accent text-navy font-bold text-lg py-3 px-12 rounded-full shadow-lg hover:shadow-xl transition-all inline-block">
+                Donate Now
+            </a>
+        </section>
+
+    </main>
+
+    <!-- Footer --><footer class="bg-navy w-full mt-16 py-8 px-4 text-center text-white/70">
+        <p>&copy; 2026 Astroreadscharts. All rights reserved.</p>
+        <p class="text-sm mt-2">Designed with professionalism and precision.</p>
+        <div class="mt-4 text-xs">
+            <button type="button" onclick="toggleTermsModal(true)" class="underline text-white/80 hover:text-accent transition-colors">
+                Terms of Service &amp; Disclaimer
+            </button>
+        </div>
+    </footer>
+
+    <!-- Custom Modal for Alerts (replacing alert()) --><div id="custom-modal" class="fixed inset-0 bg-black bg-opacity-50 z-[9999] hidden items-center justify-center p-4">
+        <div class="bg-white rounded-xl p-6 w-full max-w-md shadow-2xl border-t-4 border-accent text-navy">
+            <h3 class="text-xl font-bold mb-4">Notification</h3>
+            <p id="modal-message" class="mb-6"></p>
+            <button onclick="document.getElementById('custom-modal').classList.add('hidden'); document.getElementById('custom-modal').classList.remove('flex');" class="bg-navy text-white font-medium py-2 px-4 rounded-full float-right">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- TERMS & DISCLAIMER POP-UP MODAL -->
+    <div id="terms-modal" class="fixed inset-0 bg-black bg-opacity-60 z-[9999] hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl border-t-8 border-navy text-navy">
+
+            <button type="button" onclick="toggleTermsModal(false)" class="absolute top-4 right-4 text-gray-400 hover:text-navy font-bold text-2xl p-1 leading-none" aria-label="Close">&times;</button>
+
+            <h2 class="text-2xl font-bold text-navy mb-4 border-b pb-2">Terms of Service &amp; Disclaimer</h2>
+
+            <div class="space-y-5 text-xs text-gray-600 leading-relaxed">
+
+                <div>
+                    <h3 class="font-bold text-navy text-sm mb-1">1. Entertainment &amp; Personal Reflection Purpose</h3>
+                    <p>All astrology readings, tarot guidance, astrocartography reports, and written analyses provided by Astroreadscharts are offered exclusively for entertainment, educational, and personal self-reflection purposes. Intuitive and astrological interpretations are subjective by nature and do not constitute absolute forecasts or guaranteed outcomes.</p>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-navy text-sm mb-1">2. No Medical, Legal, or Financial Advice</h3>
+                    <p>Our services do not replace professional legal, financial, medical, psychological, or psychiatric advice. Always consult certified professionals (licensed physicians, financial advisors, or attorneys) for any urgent medical concerns, formal legal issues, or major financial commitments.</p>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-navy text-sm mb-1">3. Turnaround Times &amp; Delivery</h3>
+                    <p>All consultations are delivered asynchronously as written reports via email. Timelines begin after complete, accurate birth information is received:</p>
+                    <ul class="list-disc ml-5 mt-1 space-y-0.5">
+                        <li>Standard Written Readings: 24 Hours</li>
+                        <li>Astrocartography Maps: 3 – 5 Business Days</li>
+                        <li>The Premium Strategic Blueprint: 5 – 7 Business Days</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-navy text-sm mb-1">4. Refund &amp; Cancellation Policy</h3>
+                    <p>Due to the personal and time-intensive nature of custom chart calculations and written analyses, completed reports sent via email are non-refundable.</p>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-navy text-sm mb-1">5. Age Requirement</h3>
+                    <p>You must be at least 18 years of age (or the age of majority in your jurisdiction) to book a reading or submit birth details on this platform.</p>
+                </div>
+
+            </div>
+
+            <button type="button" onclick="toggleTermsModal(false)" class="mt-6 w-full py-3 bg-navy text-white text-xs font-bold rounded-xl hover:bg-navy/90 transition-colors">
+                I Understand &amp; Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        
+
+// --- 1. GLOBALS & SELECTORS ---
+        const consultationSection = document.getElementById('consultation-section');
+        const step1 = document.getElementById('step-1');
+        const step2 = document.getElementById('step-2');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const priceSummaryDiv = document.getElementById('price-summary');
+        
+        const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xnnlbrak';
+        let finalPrice = 0; 
+
+        // Custom Modal Alert
+        function alertCustom(message) {
+            document.getElementById('modal-message').innerText = message;
+            document.getElementById('custom-modal').classList.remove('hidden');
+            document.getElementById('custom-modal').classList.add('flex');
+        }
+
+        // Terms & Disclaimer Modal
+        function toggleTermsModal(show) {
+            const termsModal = document.getElementById('terms-modal');
+            if (show) {
+                termsModal.classList.remove('hidden');
+                termsModal.classList.add('flex');
+            } else {
+                termsModal.classList.add('hidden');
+                termsModal.classList.remove('flex');
+            }
+        }
+
+        // --- 2. NAVIGATION & VISIBILITY ---
+        function showConsultationForm() {
+            if (consultationSection.classList.contains('hidden')) {
+                consultationSection.classList.remove('hidden');
+                setTimeout(() => {
+                    calculateTotal();
+                    consultationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 50);
+            } else {
+                consultationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        document.getElementById('consultation-menu-link').addEventListener('click', showConsultationForm);
+        document.getElementById('consultation-menu-link-mobile').addEventListener('click', () => {
+             mobileMenu.classList.add('hidden');
+             showConsultationForm();
+        });
+
+      // --- 3. DYNAMIC PRICING LOGIC ---
+function calculateTotal() {
+    const checkboxes = document.querySelectorAll('input[name="reading_type"]:checked');
+    let subtotal = 0;
+    let discount = 0;
+
+    if (checkboxes.length === 0) {
+        finalPrice = 0;
+        priceSummaryDiv.classList.add('hidden');
+        return;
+    }
+
+    checkboxes.forEach(cb => {
+        subtotal += parseFloat(cb.getAttribute('data-price'));
+    });
+
+    const blueprintSelected = Array.from(checkboxes).some(
+        cb => parseFloat(cb.getAttribute('data-price')) === 125
+    );
+
+    let discountText = '';
+
+    if (blueprintSelected) {
+
+        const additionalAmount = subtotal - 125;
+        const additionalReadings = checkboxes.length - 1;
+
+        if (additionalReadings >= 6) {
+            discount = additionalAmount * 0.50;
+            discountText = '50% Off Additional Readings';
+        } else if (additionalReadings >= 1) {
+            discount = additionalAmount * 0.25;
+            discountText = '25% Off Additional Readings';
+        }
+
+    } else {
+
+        const totalReadings = checkboxes.length;
+
+        if (totalReadings >= 6) {
+            discount = subtotal * 0.50;
+            discountText = '50% Bundle Discount';
+        } else if (totalReadings >= 3) {
+            discount = subtotal * 0.25;
+            discountText = '25% Bundle Discount';
+        }
+
+    }
+
+    finalPrice = subtotal - discount;
+
+    priceSummaryDiv.innerHTML = `
+        <div class="p-3 bg-navy/5 rounded border border-navy/10 text-xs">
+            <div class="flex justify-between">
+                <span>Subtotal:</span>
+                <span>$${subtotal.toFixed(2)}</span>
+            </div>
+
+            ${discount > 0 ? `
+                <div class="flex justify-between text-green-600 font-bold">
+                    <span>${discountText}</span>
+                    <span>-$${discount.toFixed(2)}</span>
+                </div>
+            ` : ''}
+
+            <div class="flex justify-between font-bold text-sm mt-1 border-t pt-1 text-navy">
+                <span>Total Amount Due:</span>
+                <span>$${finalPrice.toFixed(2)}</span>
+            </div>
+        </div>`;
+
+    priceSummaryDiv.classList.remove('hidden');
+}
+
+
+        // --- BIRTH DATE / TIME VALIDATION ---
+        // Birth date must be YYYY-MM-DD, with a real calendar date.
+        // This includes month-specific day limits and leap-year handling.
+        function isLeapYear(year) {
+            return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+        }
+
+        function getDaysInMonth(year, month) {
+            const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            if (month === 2 && isLeapYear(year)) return 29;
+            return days[month - 1];
+        }
+
+        function isValidBirthDate(value) {
+            const match = value.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/);
+            if (!match) return false;
+
+            const year = Number(match[1]);
+            const month = Number(match[2]);
+            const day = Number(match[3]);
+
+            if (year < 1900 || year > new Date().getFullYear()) return false;
+            if (month < 1 || month > 12) return false;
+
+            const maxDay = getDaysInMonth(year, month);
+            return day >= 1 && day <= maxDay;
+        }
+
+        // Birth time must be exactly HH:MM in 24-hour format.
+        function isValidBirthTime(value) {
+            return /^(0[1-9]|1[0-2]):([0-5][0-9]) (AM|PM)$/.test(value);
+        }
+
+        function setupBirthDateTimeInputs() {
+            const dob = document.getElementById('dob');
+            const year = document.getElementById('birth-year');
+            const month = document.getElementById('birth-month');
+            const day = document.getElementById('birth-day');
+
+            const time = document.getElementById('time');
+            const hour = document.getElementById('birth-hour');
+            const minute = document.getElementById('birth-minute');
+            const meridiem = document.getElementById('birth-meridiem');
+
+            function updateDayOptions() {
+                const selectedYear = Number(year.value);
+                const selectedMonth = Number(month.value);
+                const currentDay = day.value;
+
+                let maxDay = 31;
+                if (selectedYear && selectedMonth) {
+                    maxDay = getDaysInMonth(selectedYear, selectedMonth);
+                }
+
+                day.innerHTML = '<option value="">Day</option>';
+                for (let d = 1; d <= maxDay; d++) {
+                    const option = document.createElement('option');
+                    option.value = String(d).padStart(2, '0');
+                    option.textContent = String(d).padStart(2, '0');
+                    day.appendChild(option);
+                }
+
+                if (currentDay && Number(currentDay) <= maxDay) {
+                    day.value = currentDay;
+                }
+            }
+
+            function updateDateValue() {
+                dob.value = (year.value && month.value && day.value)
+                    ? year.value + '-' + month.value + '-' + day.value
+                    : '';
+            }
+
+            year.addEventListener('change', function () {
+                updateDayOptions();
+                updateDateValue();
+            });
+
+            month.addEventListener('change', function () {
+                updateDayOptions();
+                updateDateValue();
+            });
+
+            day.addEventListener('change', updateDateValue);
+
+            function updateTimeValue() {
+                time.value = (hour.value && minute.value && meridiem.value)
+                    ? hour.value + ':' + minute.value + ' ' + meridiem.value
+                    : '';
+            }
+
+            hour.addEventListener('change', updateTimeValue);
+            minute.addEventListener('change', updateTimeValue);
+            meridiem.addEventListener('change', updateTimeValue);
+        }
+
+        setupBirthDateTimeInputs();
+        function clearBirthFieldError(fieldId, errorId) {
+            const field = document.getElementById(fieldId);
+            const error = document.getElementById(errorId);
+            if (!field || !error) return;
+            field.addEventListener('input', function () {
+                error.classList.add('hidden');
+                field.classList.remove('border-red-500');
+            });
+        }
+
+        ['birth-year', 'birth-month', 'birth-day'].forEach(function (id) {
+            const field = document.getElementById(id);
+            if (field) {
+                field.addEventListener('change', function () {
+                    document.getElementById('dob-error').classList.add('hidden');
+                    ['birth-year', 'birth-month', 'birth-day'].forEach(function (fieldId) {
+                        const f = document.getElementById(fieldId);
+                        if (f) f.classList.remove('border-red-500');
+                    });
+                });
+            }
+        });
+        ['birth-hour', 'birth-minute', 'birth-meridiem'].forEach(function (id) {
+            const field = document.getElementById(id);
+            if (field) {
+                field.addEventListener('change', function () {
+                    const error = document.getElementById('time-error');
+                    error.classList.add('hidden');
+                    field.classList.remove('border-red-500');
+                });
+            }
+        });
+
+
+        // --- 4. CORE SUBMISSION & TRANSITION ---
+        async function submitAndProceed() {
+    const nameInput = document.getElementById('name').value.trim();
+    const fields = ['name', 'dob', 'time', 'place', 'email'];
+    const allFilled = fields.every(id => document.getElementById(id).value.trim() !== "");
+    const selectedReadings = Array.from(document.querySelectorAll('input[name="reading_type"]:checked'));
+
+    if (!allFilled) return alertCustom('Please provide your full birth details.');
+
+    const dobEl = document.getElementById('dob');
+    const timeEl = document.getElementById('time');
+    const dobError = document.getElementById('dob-error');
+    const timeError = document.getElementById('time-error');
+
+    const dobValue = dobEl.value.trim();
+    const timeValue = timeEl.value.trim();
+
+    // No popup for date/time. Only stop progression when the entered value is invalid,
+    // and show a small inline message beside the relevant field.
+    dobError.classList.add('hidden');
+    timeError.classList.add('hidden');
+    dobEl.classList.remove('border-red-500');
+    timeEl.classList.remove('border-red-500');
+
+    let invalidBirthDetails = false;
+
+    if (!isValidBirthDate(dobValue)) {
+        dobError.textContent = 'Please select a valid year, month and day.';
+        dobError.classList.remove('hidden');
+        ['birth-year', 'birth-month', 'birth-day'].forEach(function (id) {
+            const field = document.getElementById(id);
+            if (field) field.classList.add('border-red-500');
+        });
+        invalidBirthDetails = true;
+    }
+
+    if (!isValidBirthTime(timeValue)) {
+        timeError.textContent = 'Please select hour, minute and AM/PM.';
+        timeError.classList.remove('hidden');
+        ['birth-hour', 'birth-minute', 'birth-meridiem'].forEach(function (id) {
+            const field = document.getElementById(id);
+            if (field) field.classList.add('border-red-500');
+        });
+        invalidBirthDetails = true;
+    }
+
+    if (invalidBirthDetails) return;
+
+    if (selectedReadings.length === 0) return alertCustom('Please select at least one reading type.');
+
+    const btn = document.getElementById('proceed-button');
+    btn.disabled = true;
+    btn.innerText = "Securing your path...";
+
+    const readingList = selectedReadings.map(c => c.value);
+    const hasReport = readingList.includes('Detailed Report');
+
+    const payload = {
+        'Full Name': nameInput,
+        'Email': document.getElementById('email').value,
+        'Birth Info': `${document.getElementById('dob').value} at ${document.getElementById('time').value} (${document.getElementById('place').value})`,
+        'Selected Services': readingList.join(', '),
+        'Total Amount': `$${finalPrice.toFixed(2)}`,
+        'Questions': document.getElementById('questions').value || "No specific questions"
+    };
+
+    try {
+        const response = await fetch(FORMSPREE_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            // Update Step 2 UI
+            document.getElementById('display-user-name').innerText = nameInput;
+            document.getElementById('final-amount-display').innerText = `$${finalPrice.toFixed(2)}`;
+            document.getElementById('dynamic-paypal-link').href = `https://www.paypal.com/paypalme/mvmahesh888/${finalPrice.toFixed(2)}`;
+
+            // Set the new requested message logic
+            const msgEl = document.getElementById('personalized-message');
+            if (hasReport) {
+                msgEl.innerText = "Once payment is received, your reading will be blocked in and our experts will begin crafting your celestial analysis.";
+            } else {
+                msgEl.innerHTML = `Once payment is received, your reading will be blocked in. Please message us on the FB Profile - <a href="https://www.facebook.com/vardhan.astro" target="_blank" class="text-accent underline font-bold">Vardhan Astro</a> profile to finalize your session time.`;            }
+
+            // Transition to Step 2
+            step1.classList.add('hidden');
+            step2.classList.remove('hidden');
+            consultationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            throw new Error();
+        }
+    } catch (error) {
+        alertCustom('There was an error sending your details. Please try again.');
+        btn.disabled = false;
+        btn.innerText = "Submit Details & Proceed to Payment";
+    }
+}
+
+        // --- 5. SECURITY & UI HELPERS ---
+        // Block Keyboard Shortcuts (Ctrl+U, Ctrl+A) and Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 'a' || e.key === 'A')) {
+                e.preventDefault();
+            }
+        });
+        // Block Copy/Paste/Cut
+        ['copy', 'cut', 'paste'].forEach(evt => {
+            document.addEventListener(evt, e => e.preventDefault());
+        });
+
+        // Mobile Menu Toggle
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Slideshow Logic
+        let slideIndex = 0; 
+        const slides = document.getElementsByClassName("mySlides");
+        function showSlides() {
+            if (slides.length < 2) return; 
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.transform = `translateX(${(i - slideIndex) * 100}%)`;
+            }
+            slideIndex = (slideIndex + 1) % slides.length;
+            setTimeout(showSlides, 5000);
+        }
+
+
+        // --- CLIENT REVIEWS / GOOGLE APPS SCRIPT ---
+        const REVIEWS_API_URL = 'https://script.google.com/macros/s/AKfycbzi_ZA8njSIrMEuBVsg-RYmqm8yXPJ8fR4s_bEOIvdCmXxc_fbuarBLB61UQqmIXTCl/exec';
+
+        function escapeReviewHtml(value) {
+            const div = document.createElement('div');
+            div.textContent = value || '';
+            return div.innerHTML;
+        }
+
+        // Reviews are loaded through a script tag (JSONP) so the public GitHub
+        // Pages site does not need CORS permission from Google Apps Script.
+        function loadPublishedReviews(attempt = 0) {
+            const container = document.getElementById('review-display');
+            if (!container) return;
+
+            if (attempt === 0) {
+                container.innerHTML = '<div class="md:col-span-2 lg:col-span-3 text-center py-8 text-navy/60">Loading client reviews...</div>';
+            }
+
+            const callbackName = 'astroReviewsCallback_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+            const script = document.createElement('script');
+            let finished = false;
+
+            const cleanup = function() {
+                delete window[callbackName];
+                if (script.parentNode) script.parentNode.removeChild(script);
+            };
+
+            const retry = function() {
+                cleanup();
+                if (attempt < 2) {
+                    setTimeout(function() { loadPublishedReviews(attempt + 1); }, 1200);
+                } else {
+                    container.innerHTML = '<div class="review-placeholder text-center py-8 text-navy/60" style="min-width:100%;">No published client reviews yet.</div>';
+                }
+            };
+
+            window[callbackName] = function(data) {
+                if (finished) return;
+                finished = true;
+
+                if (!data || data.success !== true || !Array.isArray(data.reviews)) {
+                    retry();
+                    return;
+                }
+
+                if (data.reviews.length === 0) {
+                    container.innerHTML = '<div class="md:col-span-2 lg:col-span-3 text-center py-8 text-navy/60">No published client reviews yet.</div>';
+                    cleanup();
+                    return;
+                }
+
+                // Remove accidental duplicate records before displaying reviews.
+                const uniqueReviews = [];
+                const seenReviews = new Set();
+
+                data.reviews.forEach(function(review) {
+                    const name = String(review.name || '').trim();
+                    const text = String(review.text || review.review || '').trim();
+                    const id = String(review.id || '').trim();
+                    const key = id || (name.toLowerCase() + '|' + text.toLowerCase());
+
+                    if (!key || seenReviews.has(key)) return;
+                    seenReviews.add(key);
+
+                    uniqueReviews.push({
+                        id: id,
+                        name: name,
+                        text: text
+                    });
+                });
+
+                if (uniqueReviews.length === 0) {
+                    container.innerHTML = '<div class="review-placeholder text-center py-8 text-navy/60" style="min-width:100%;">No published client reviews yet.</div>';
+                    cleanup();
+                    return;
+                }
+
+                const reviewHtml = uniqueReviews.map(function(review) {
+                    return `
+                        <article class="review-card bg-beige px-6 pb-6 pt-2 rounded-2xl border border-navy/10">
+                            <div class="text-2xl text-accent mb-1 leading-none">“</div>
+                            <p class="text-navy/80 leading-relaxed mb-5">${escapeReviewHtml(review.text)}</p>
+                            <p class="font-bold text-navy">${escapeReviewHtml(review.name)}</p>
+                        </article>
+                    `;
+                }).join('');
+
+                // Render each review only once. No duplicated cards.
+                container.innerHTML = reviewHtml;
+                container.classList.toggle('single-review', uniqueReviews.length === 1);
+                setupReviewCarousel(uniqueReviews.length);
+                cleanup();
+            };
+
+            script.onerror = function() {
+                if (finished) return;
+                finished = true;
+                retry();
+            };
+
+            script.src = REVIEWS_API_URL + '?action=published&callback=' + encodeURIComponent(callbackName) + '&_=' + Date.now();
+            document.body.appendChild(script);
+
+            setTimeout(function() {
+                if (finished) return;
+                finished = true;
+                retry();
+            }, 10000);
+        }
+
+        let reviewCarouselTimer = null;
+        let reviewCarouselPaused = false;
+
+        function setupReviewCarousel(originalCount) {
+            const container = document.getElementById('review-display');
+            const prev = document.getElementById('review-prev');
+            const next = document.getElementById('review-next');
+            if (!container || !originalCount) return;
+
+            container.scrollLeft = 0;
+
+            function cardStep() {
+                const card = container.querySelector('.review-card');
+                if (!card) return 0;
+                const styles = getComputedStyle(container);
+                const gap = parseFloat(styles.columnGap || styles.gap || 0);
+                return card.getBoundingClientRect().width + gap;
+            }
+
+            function updateArrows() {
+                const maxScroll = Math.max(0, container.scrollWidth - container.clientWidth);
+                const atStart = container.scrollLeft <= 2;
+                const atEnd = container.scrollLeft >= maxScroll - 2;
+
+                // With one review there is nothing to slide, so hide both arrows.
+                if (originalCount <= 1 || maxScroll <= 2) {
+                    if (prev) prev.style.display = 'none';
+                    if (next) next.style.display = 'none';
+                    return;
+                }
+
+                if (prev) {
+                    prev.style.display = '';
+                    prev.disabled = atStart;
+                    prev.style.opacity = atStart ? '0.35' : '1';
+                }
+                if (next) {
+                    next.style.display = '';
+                    next.disabled = atEnd;
+                    next.style.opacity = atEnd ? '0.35' : '1';
+                }
+            }
+
+            function move(direction) {
+                const step = cardStep();
+                if (!step) return;
+
+                const maxScroll = Math.max(0, container.scrollWidth - container.clientWidth);
+                const target = Math.max(0, Math.min(maxScroll, container.scrollLeft + direction * step));
+
+                container.scrollTo({ left: target, behavior: 'smooth' });
+                setTimeout(updateArrows, 350);
+            }
+
+            if (prev) prev.onclick = function() {
+                move(-1);
+                resetReviewTimer();
+            };
+
+            if (next) next.onclick = function() {
+                move(1);
+                resetReviewTimer();
+            };
+
+            container.onscroll = updateArrows;
+            updateArrows();
+
+            // Auto-slide only when there is more than one review.
+            if (reviewCarouselTimer) clearInterval(reviewCarouselTimer);
+            reviewCarouselTimer = null;
+
+            if (originalCount > 1) {
+                reviewCarouselTimer = setInterval(function() {
+                    if (reviewCarouselPaused) return;
+
+                    const maxScroll = Math.max(0, container.scrollWidth - container.clientWidth);
+                    const step = cardStep();
+                    if (!step || container.scrollLeft >= maxScroll - 2) {
+                        container.scrollTo({ left: 0, behavior: 'smooth' });
+                    } else {
+                        container.scrollBy({ left: step, behavior: 'smooth' });
+                    }
+                }, 6000);
+            }
+
+            container.onmouseenter = function() { reviewCarouselPaused = true; };
+            container.onmouseleave = function() { reviewCarouselPaused = false; };
+            container.ontouchstart = function() { reviewCarouselPaused = true; };
+            container.ontouchend = function() {
+                setTimeout(function() { reviewCarouselPaused = false; }, 1200);
+            };
+        }
+
+        function resetReviewTimer() {
+            if (reviewCarouselTimer) clearInterval(reviewCarouselTimer);
+            reviewCarouselTimer = setInterval(function() {
+                if (!reviewCarouselPaused) {
+                    const container = document.getElementById('review-display');
+                    const card = container && container.querySelector('.review-card');
+                    if (container && card) {
+                        const gap = parseFloat(getComputedStyle(container).columnGap || getComputedStyle(container).gap || 0);
+                        container.scrollBy({ left: card.getBoundingClientRect().width + gap, behavior: 'smooth' });
+                    }
+                }
+            }, 6000);
+        }
+
+        // IMPORTANT: Do not use fetch() for submission. GitHub Pages/ChatGPT
+        // Preview can block cross-origin fetches to Google Apps Script and show
+        // a network permission popup. A normal HTML form POST works without a
+        // CORS preflight and submits into a hidden iframe.
+        const reviewForm = document.getElementById('reviewForm');
+        if (reviewForm) {
+            const submitButton = document.getElementById('review-submit');
+            const successMessage = document.getElementById('review-success');
+            const errorMessage = document.getElementById('review-error');
+
+            // Always start with a clean form state.
+            successMessage.classList.add('hidden');
+            errorMessage.classList.add('hidden');
+            successMessage.textContent = '';
+            errorMessage.textContent = '';
+
+            const iframe = document.getElementById('review-submit-frame');
+
+            reviewForm.method = 'POST';
+            reviewForm.action = REVIEWS_API_URL;
+            reviewForm.target = 'review-submit-frame';
+            reviewForm.enctype = 'application/x-www-form-urlencoded';
+
+            // Create hidden iframe if it is not already in the page.
+            if (!iframe) {
+                const hiddenFrame = document.createElement('iframe');
+                hiddenFrame.name = 'review-submit-frame';
+                hiddenFrame.id = 'review-submit-frame';
+                hiddenFrame.title = 'Review submission';
+                hiddenFrame.style.display = 'none';
+                document.body.appendChild(hiddenFrame);
+            }
+
+            // Hidden action field required by Apps Script doPost().
+            let actionField = reviewForm.querySelector('input[name="action"]');
+            if (!actionField) {
+                actionField = document.createElement('input');
+                actionField.type = 'hidden';
+                actionField.name = 'action';
+                actionField.value = 'submitReview';
+                reviewForm.appendChild(actionField);
+            }
+
+            let permissionSubmitField = reviewForm.querySelector('input[name="permissionToPublish"]');
+            if (!permissionSubmitField) {
+                permissionSubmitField = document.createElement('input');
+                permissionSubmitField.type = 'hidden';
+                permissionSubmitField.name = 'permissionToPublish';
+                permissionSubmitField.value = 'true';
+                reviewForm.appendChild(permissionSubmitField);
+            }
+
+            ['review-name', 'review-message'].forEach(function(id) {
+                const field = document.getElementById(id);
+                if (field) {
+                    field.addEventListener('input', function() {
+                        successMessage.classList.add('hidden');
+                        successMessage.textContent = '';
+                    });
+                }
+            });
+
+            reviewForm.addEventListener('submit', function(event) {
+                const nameField = document.getElementById('review-name');
+                const reviewField = document.getElementById('review-message');
+                const permissionField = document.getElementById('review-permission');
+
+                successMessage.classList.add('hidden');
+                errorMessage.classList.add('hidden');
+
+                if (!nameField.value.trim()) {
+                    event.preventDefault();
+                    errorMessage.textContent = 'Please enter your name.';
+                    errorMessage.classList.remove('hidden');
+                    nameField.focus();
+                    return;
+                }
+
+                if (!reviewField.value.trim()) {
+                    event.preventDefault();
+                    errorMessage.textContent = 'Please enter your review.';
+                    errorMessage.classList.remove('hidden');
+                    reviewField.focus();
+                    return;
+                }
+
+                if (!permissionField.checked) {
+                    event.preventDefault();
+                    errorMessage.textContent = 'Please tick the permission box to allow Astroreadscharts to publish your name and review.';
+                    errorMessage.classList.remove('hidden');
+                    permissionField.focus();
+                    return;
+                }
+
+                permissionSubmitField.value = 'true';
+                submitButton.disabled = true;
+                submitButton.innerText = 'Submitting Review...';
+
+                // The form itself performs the network request. We deliberately
+                // do not inspect the iframe response, because Apps Script may
+                // redirect and browsers can block reading that cross-origin page.
+                // The review is written to Google Sheets by the backend.
+                successMessage.textContent = 'Thank you! Your review has been submitted successfully.';
+                successMessage.classList.remove('hidden');
+                errorMessage.classList.add('hidden');
+
+                // Reset after the browser has captured the form fields for POST.
+                setTimeout(function() {
+                    reviewForm.reset();
+                    permissionSubmitField.value = 'true';
+                    submitButton.disabled = false;
+                    submitButton.innerText = 'Submit Review';
+                }, 800);
+            });
+        }
+
+
+
+        // BLOG CONTENT FROM GOOGLE SHEETS
+        // Replace the address below with your deployed Google Apps Script web app address.
+        // The Sheet columns are Title, Date, Category, Summary, Content, Image, Status, Author and Slug.
+        // Only rows whose Status is Published will appear.
+        const BLOG_API_URL = 'https://script.google.com/macros/s/AKfycbwU5Q0-MR1f9N6XpAytl2LBxY_3T-ysdRUMJRXl1OUQw83IaTHNWfH9YY1Z6ReuulOg4A/exec';
+        const SAMPLE_BLOG_POSTS = [];
+        let blogPosts = [];
+
+        function escapeBlogHtml(value) {
+            const div = document.createElement('div');
+            div.textContent = String(value || '');
+            return div.innerHTML;
+        }
+
+        function blogSlug(value) {
+            return String(value || '').toLowerCase().trim().replace(/[^a-z0-9 ]/g, '').replace(/ +/g, '_');
+        }
+
+        function safeBlogImage(value) {
+            const image = String(value || '').trim();
+            return /^https:\/\//i.test(image) ? image : '';
+        }
+
+        function normalizeBlogPosts(data) {
+            const rows = Array.isArray(data) ? data : (data && Array.isArray(data.posts) ? data.posts : []);
+            return rows.filter(function(post) {
+                return String(post.status || 'Published').toLowerCase() === 'published' && String(post.title || '').trim();
+            }).map(function(post) {
+                return {
+                    title: String(post.title || '').trim(),
+                    date: String(post.date || '').trim(),
+                    category: String(post.category || 'Astrology').trim(),
+                    summary: String(post.summary || '').trim(),
+                    content: String(post.content || '').trim(),
+                    image: safeBlogImage(post.image),
+                    status: 'Published',
+                    author: String(post.author || 'Astroreadscharts').trim(),
+                    slug: blogSlug(post.slug || post.title)
+                };
+            });
+        }
+
+        function renderBlogPosts(posts) {
+            const grid = document.getElementById('blog-grid');
+            const status = document.getElementById('blog-status');
+            if (!grid || !status) return;
+            if (!posts.length) {
+                grid.innerHTML = '';
+                status.textContent = 'No articles found.';
+                status.classList.remove('hidden');
+                return;
+            }
+            status.classList.add('hidden');
+            grid.innerHTML = posts.map(function(post) {
+                const image = post.image ? `<img src="${escapeBlogHtml(post.image)}" alt="${escapeBlogHtml(post.title)}" class="blog-card-image" loading="lazy">` : '';
+                const details = [post.category, post.date].filter(Boolean).join(' • ');
+                return `<article class="blog-card">
+                    ${image}
+                    <div class="blog-card-body">
+                        <p class="blog-card-meta">${escapeBlogHtml(details)}</p>
+                        <h3 class="blog-card-title">${escapeBlogHtml(post.title)}</h3>
+                        <p class="blog-card-summary">${escapeBlogHtml(post.summary)}</p>
+                        <button type="button" class="blog-read-button" data-blog-slug="${escapeBlogHtml(post.slug)}">Read article</button>
+                    </div>
+                </article>`;
+            }).join('');
+            grid.querySelectorAll('[data-blog-slug]').forEach(function(button) {
+                button.addEventListener('click', function() { openBlogPost(button.getAttribute('data-blog-slug')); });
+            });
+        }
+
+        function openBlogPost(slug) {
+            const post = blogPosts.find(function(item) { return item.slug === slug; });
+            if (!post) return;
+            document.getElementById('blog-list-view').classList.add('hidden');
+            document.getElementById('blog-article-view').classList.remove('hidden');
+            document.getElementById('blog-article-title').textContent = post.title;
+            document.getElementById('blog-article-meta').textContent = [post.category, post.date, post.author].filter(Boolean).join(' • ');
+            const content = document.getElementById('blog-article-content');
+            content.innerHTML = post.content.split(/\n\s*\n/).filter(Boolean).map(function(paragraph) {
+                return '<p>' + escapeBlogHtml(paragraph) + '</p>';
+            }).join('');
+            const image = document.getElementById('blog-article-image');
+            if (post.image) {
+                image.src = post.image;
+                image.alt = post.title;
+                image.classList.remove('hidden');
+            } else {
+                image.removeAttribute('src');
+                image.classList.add('hidden');
+            }
+            history.replaceState(null, '', '#blog=' + encodeURIComponent(post.slug));
+            document.getElementById('blog').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function closeBlogPost() {
+            document.getElementById('blog-article-view').classList.add('hidden');
+            document.getElementById('blog-list-view').classList.remove('hidden');
+            history.replaceState(null, '', '#blog');
+            document.getElementById('blog').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        function loadBlogPosts() {
+            const status = document.getElementById('blog-status');
+            if (!BLOG_API_URL) {
+                blogPosts = normalizeBlogPosts(SAMPLE_BLOG_POSTS);
+                renderBlogPosts(blogPosts);
+                openBlogPostFromHash();
+                return;
+            }
+            const callbackName = 'astroBlogCallback_' + Date.now();
+            const script = document.createElement('script');
+            let completed = false;
+            window[callbackName] = function(data) {
+                if (completed) return;
+                completed = true;
+                blogPosts = normalizeBlogPosts(data);
+                renderBlogPosts(blogPosts);
+                openBlogPostFromHash();
+                delete window[callbackName];
+                if (script.parentNode) script.parentNode.removeChild(script);
+            };
+            script.onerror = function() {
+                if (completed) return;
+                completed = true;
+                blogPosts = normalizeBlogPosts(SAMPLE_BLOG_POSTS);
+                renderBlogPosts(blogPosts);
+                status.textContent = 'Showing journal selections while new articles become available.';
+                delete window[callbackName];
+                if (script.parentNode) script.parentNode.removeChild(script);
+            };
+            script.src = 'https://script.google.com/macros/s/AKfycbwU5Q0-MR1f9N6XpAytl2LBxY_3T-ysdRUMJRXl1OUQw83IaTHNWfH9YY1Z6ReuulOg4A/exec' + '?action=publishedBlogs&callback=' + encodeURIComponent(callbackName) + '&time=' + Date.now();
+            document.body.appendChild(script);
+        }
+
+        function openBlogPostFromHash() {
+            const match = location.hash.match(/^#blog=(.+)$/);
+            if (match) openBlogPost(decodeURIComponent(match[1]));
+        }
+
+        document.getElementById('blog-back').addEventListener('click', closeBlogPost);
+        document.getElementById('blog-search').addEventListener('input', function(event) {
+            const query = event.target.value.toLowerCase().trim();
+            renderBlogPosts(blogPosts.filter(function(post) {
+                return [post.title, post.category, post.summary, post.content].join(' ').toLowerCase().includes(query);
+            }));
+        });
+        window.addEventListener('hashchange', openBlogPostFromHash);
+
+        // Initializer
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPublishedReviews();
+            loadBlogPosts();
+            if (slides.length > 0) {
+                for (let i = 0; i < slides.length; i++) {
+                    slides[i].style.transform = `translateX(${i * 100}%)`;
+                }
+                showSlides();
+            }
+        });
+        
+    </script>
+
+
+
+
+</body>
+</html>
