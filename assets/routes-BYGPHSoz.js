@@ -1,1 +1,0 @@
-import{t as e}from"./index-CyRaJvwK.js";var t=e();function n(){return(0,t.jsx)(`main`,{className:`h-screen overflow-hidden bg-background`,children:(0,t.jsx)(`iframe`,{title:`Astroreadscharts website`,src:`/astroreadscharts.html`,className:`h-full w-full border-0`})})}export{n as component};
