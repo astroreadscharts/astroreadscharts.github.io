@@ -178,19 +178,23 @@
         html, body { margin: 0; padding: 0; }
         footer { display: block; width: 100%; margin-bottom: 0 !important; }
 
-
-       /* BLOG SECTION */
+        /* BLOG SECTION */
         .blog-search { width: 100%; border: 1px solid rgba(26,47,79,.25); background: white; padding: .9rem 1rem; border-radius: .75rem; outline: none; }
         .blog-search:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(229,184,11,.18); }
         
-        /* CAROUSEL CONTAINER (Padding gives room for absolute arrows) */
-        .blog-carousel-wrap { position: relative; padding: 0 3.5rem; max-width: 1200px; margin: 0 auto; }
+        /* CAROUSEL WRAPPER */
+        .blog-carousel-wrap { 
+            position: relative; 
+            padding: 0 3.5rem; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
 
-        /* HORIZONTAL SCROLL CONTAINER */
+        /* HORIZONTAL SCROLL GRID */
         .blog-grid { 
             display: flex !important; 
             flex-wrap: nowrap !important; 
-            overflow-x: hidden !important; 
+            overflow-x: auto !important; 
             gap: 1.5rem; 
             padding: 0.5rem 0.25rem 1rem; 
             scroll-behavior: smooth; 
@@ -198,7 +202,7 @@
         }
         .blog-grid::-webkit-scrollbar { display: none; }
 
-        /* SHOW EXACTLY 3 CARDS PER ROW ON DESKTOP */
+        /* 3 CARDS VISIBLE PER ROW */
         .blog-card { 
             flex: 0 0 calc((100% - 3rem) / 3) !important; 
             min-width: 0;
@@ -221,32 +225,33 @@
         .blog-article-content p { margin-top: 1.25rem; line-height: 1.85; color: rgba(26,47,79,.86); white-space: pre-wrap; }
         .blog-back { cursor: pointer; color: var(--color-navy); font-weight: 700; margin-bottom: 2rem; display: inline-flex; align-items: center; gap: .5rem; }
 
-        /* ARROW BUTTON STYLES */
+        /* ARROWS (MATCHES HTML class="blog-arrow") */
         .blog-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 2.75rem;
-            height: 2.75rem;
-            border-radius: 50%;
-            background: white;
-            border: 1px solid rgba(26,47,79,.18);
-            color: var(--color-navy, #1a2f4f);
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            box-shadow: 0 4px 12px rgba(26,47,79,.12);
-            transition: all 0.2s ease;
+            position: absolute !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            width: 2.75rem !important;
+            height: 2.75rem !important;
+            border-radius: 50% !important;
+            background: #ffffff !important;
+            border: 1px solid rgba(26,47,79,.2) !important;
+            color: #1a2f4f !important;
+            font-size: 1.75rem !important;
+            line-height: 1 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+            z-index: 50 !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,.15) !important;
+            transition: all 0.2s ease !important;
         }
         .blog-arrow:hover:not(:disabled) {
-            background: var(--color-navy, #1a2f4f);
-            color: white;
+            background: #1a2f4f !important;
+            color: #ffffff !important;
         }
-        .blog-arrow-left { left: 0; }
-        .blog-arrow-right { right: 0; }
+        .blog-arrow-left { left: 0.25rem !important; }
+        .blog-arrow-right { right: 0.25rem !important; }
 
         /* RESPONSIVE LAYOUT */
         @media (max-width: 900px) { 
@@ -256,6 +261,9 @@
             .blog-card { flex: 0 0 100% !important; } 
             .blog-carousel-wrap { padding: 0 2.5rem; } 
         }
+       
+
+
 
     </style>
 </head>
