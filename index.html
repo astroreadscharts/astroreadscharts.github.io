@@ -1930,7 +1930,10 @@ function renderBlogPosts(posts) {
         const image = post.image 
             ? `<img src="${escapeBlogHtml(post.image)}" alt="${escapeBlogHtml(post.title)}" class="blog-card-image" loading="lazy">` 
             : '';
-        const details = [post.category, post.date].filter(Boolean).join(' • ');
+        
+        // Checks capital 'Category' first to match your Google Sheet column, then falls back
+        const categoryText = post.Category || post.category || post.category_name || post.topic || 'General';
+        const details = [categoryText, post.date].filter(Boolean).join(' • ');
 
         return `<article class="blog-card">
             ${image}
