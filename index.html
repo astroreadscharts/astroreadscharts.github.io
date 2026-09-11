@@ -226,26 +226,27 @@
         .blog-back { cursor: pointer; color: var(--color-navy); font-weight: 700; margin-bottom: 2rem; display: inline-flex; align-items: center; gap: .5rem; }
 
         /* ARROWS (MATCHES HTML class="blog-arrow") */
-        .blog-arrow {
-            position: absolute !important;
-            top: 50% !important;
-            transform: translateY(-50%) !important;
-            width: 2.75rem !important;
-            height: 2.75rem !important;
-            border-radius: 50% !important;
-            background: #ffffff !important;
-            border: 1px solid rgba(26,47,79,.2) !important;
-            color: #1a2f4f !important;
-            font-size: 1.75rem !important;
-            line-height: 1 !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            cursor: pointer !important;
-            z-index: 50 !important;
-            box-shadow: 0 4px 12px rgba(0,0,0,.15) !important;
-            transition: all 0.2s ease !important;
-        }
+        /* ARROWS */
+.blog-arrow {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 2.75rem !important;
+    height: 2.75rem !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(26,47,79,.2) !important;
+    color: #1a2f4f !important;
+    font-size: 1.75rem !important;
+    line-height: 1 !important;
+    display: flex; /* <-- REMOVE !important HERE SO JS CAN HIDE IT */
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    z-index: 50 !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,.15) !important;
+    transition: all 0.2s ease !important;
+}
         .blog-arrow:hover:not(:disabled) {
             background: #1a2f4f !important;
             color: #ffffff !important;
@@ -1827,35 +1828,51 @@ function calculateTotal() {
         return card.getBoundingClientRect().width + gap;
     }
 
+    function hideArrow(btn) {
+        if (!btn) return;
+        btn.style.setProperty('display', 'none', 'important');
+    }
+
+    function showArrow(btn) {
+        if (!btn) return;
+        btn.style.setProperty('display', 'flex', 'important');
+    }
+
     function updateArrows() {
         const cards = container.querySelectorAll('.blog-card');
-        const maxScroll = container.scrollWidth - container.clientWidth;
+        const step = cardStep();
 
-        // Hide both arrows if 3 or fewer cards exist on desktop
-        if (cards.length <= 3 && window.innerWidth > 900) {
-            if (prev) prev.style.display = 'none';
-            if (next) next.style.display = 'none';
+        // 1. Force hide if no cards exist
+        if (cards.length === 0) {
+            hideArrow(prev);
+            hideArrow(next);
             return;
         }
 
-        // Hide both arrows if the content fits without horizontal scroll
-        if (maxScroll <= 5) {
-            if (prev) prev.style.display = 'none';
-            if (next) next.style.display = 'none';
+        // 2. Hide both arrows if total cards fit visible container width
+        const totalCardsWidth = cards.length * step;
+        const containerWidth = container.clientWidth;
+
+        if (totalCardsWidth <= containerWidth + 10) {
+            hideArrow(prev);
+            hideArrow(next);
             return;
         }
 
+        // 3. Otherwise calculate scroll position boundaries
+        const maxScroll = Math.max(0, container.scrollWidth - containerWidth);
         const atStart = container.scrollLeft <= 5;
         const atEnd = container.scrollLeft >= maxScroll - 5;
 
+        showArrow(prev);
+        showArrow(next);
+
         if (prev) {
-            prev.style.display = 'flex';
             prev.disabled = atStart;
             prev.style.opacity = atStart ? '0.35' : '1';
             prev.style.cursor = atStart ? 'default' : 'pointer';
         }
         if (next) {
-            next.style.display = 'flex';
             next.disabled = atEnd;
             next.style.opacity = atEnd ? '0.35' : '1';
             next.style.cursor = atEnd ? 'default' : 'pointer';
@@ -1877,7 +1894,7 @@ function calculateTotal() {
     container.addEventListener('scroll', updateArrows, { passive: true });
     window.addEventListener('resize', updateArrows);
 
-    // Double frame buffer ensures layout measurements settle before checking visibility
+    // Run layout updates across double frame buffer to allow DOM measurement to settle
     requestAnimationFrame(function() {
         requestAnimationFrame(updateArrows);
     });
