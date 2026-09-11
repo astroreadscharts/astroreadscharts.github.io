@@ -227,7 +227,7 @@
 
         /* ARROWS (MATCHES HTML class="blog-arrow") */
         /* ARROWS */
-.blog-arrow {
+        .blog-arrow {
     position: absolute !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
@@ -239,7 +239,7 @@
     color: #1a2f4f !important;
     font-size: 1.75rem !important;
     line-height: 1 !important;
-    display: flex; /* <-- REMOVE !important HERE SO JS CAN HIDE IT */
+    display: flex;
     align-items: center !important;
     justify-content: center !important;
     cursor: pointer !important;
@@ -247,12 +247,21 @@
     box-shadow: 0 4px 12px rgba(0,0,0,.15) !important;
     transition: all 0.2s ease !important;
 }
-        .blog-arrow:hover:not(:disabled) {
-            background: #1a2f4f !important;
-            color: #ffffff !important;
-        }
-        .blog-arrow-left { left: 0.25rem !important; }
-        .blog-arrow-right { right: 0.25rem !important; }
+
+.blog-arrow:hover:not(:disabled) {
+    background: #1a2f4f !important;
+    color: #ffffff !important;
+}
+
+.blog-arrow-left { left: 0.25rem !important; }
+.blog-arrow-right { right: 0.25rem !important; }
+
+
+
+
+
+
+
 
         /* RESPONSIVE LAYOUT */
         @media (max-width: 900px) { 
