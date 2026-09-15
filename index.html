@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    
     <link href="googleapis.com" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
     <style>
         /* Custom colors and configuration */
@@ -178,43 +178,12 @@
         html, body { margin: 0; padding: 0; }
         footer { display: block; width: 100%; margin-bottom: 0 !important; }
 
+
         /* BLOG SECTION */
         .blog-search { width: 100%; border: 1px solid rgba(26,47,79,.25); background: white; padding: .9rem 1rem; border-radius: .75rem; outline: none; }
         .blog-search:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(229,184,11,.18); }
-        
-        /* CAROUSEL WRAPPER */
-        .blog-carousel-wrap { 
-            position: relative; 
-            padding: 0 3.5rem; 
-            max-width: 1200px; 
-            margin: 0 auto; 
-        }
-        /* HORIZONTAL SCROLL GRID */
-        .blog-grid { 
-            display: flex !important; 
-            flex-wrap: nowrap !important; 
-            overflow-x: auto !important; 
-            gap: 1.5rem; 
-            padding: 0.5rem 0.25rem 1rem; 
-            scroll-behavior: smooth; 
-            scrollbar-width: none; 
-            scroll-snap-type: x mandatory;
-        }
-
-        /* 3 CARDS VISIBLE PER ROW */
-        .blog-card { 
-            flex: 0 0 calc((100% - 3rem) / 3) !important; 
-            min-width: 0;
-            background: white; 
-            border: 1px solid rgba(26,47,79,.12); 
-            border-radius: 1rem; 
-            overflow: hidden; 
-            box-shadow: 0 8px 24px rgba(26,47,79,.08); 
-            display: flex; 
-            flex-direction: column; 
-            scroll-snap-align: start;
-        }
-
+        .blog-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1.5rem; }
+        .blog-card { background: white; border: 1px solid rgba(26,47,79,.12); border-radius: 1rem; overflow: hidden; box-shadow: 0 8px 24px rgba(26,47,79,.08); display: flex; flex-direction: column; }
         .blog-card-image { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #e8eaf0; }
         .blog-card-body { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
         .blog-card-meta { color: #71620c; font-size: .78rem; font-weight: 700; text-transform: uppercase; margin-bottom: .65rem; }
@@ -224,57 +193,8 @@
         .blog-article { max-width: 760px; margin: 0 auto; background: white; padding: clamp(1.5rem,5vw,4rem); border-radius: 1rem; box-shadow: 0 12px 34px rgba(26,47,79,.1); }
         .blog-article-content p { margin-top: 1.25rem; line-height: 1.85; color: rgba(26,47,79,.86); white-space: pre-wrap; }
         .blog-back { cursor: pointer; color: var(--color-navy); font-weight: 700; margin-bottom: 2rem; display: inline-flex; align-items: center; gap: .5rem; }
-
-        /* ARROWS (MATCHES HTML class="blog-arrow") */
-        /* ARROWS */
-        .blog-arrow {
-    position: absolute !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    width: 2.75rem !important;
-    height: 2.75rem !important;
-    border-radius: 50% !important;
-    background: #ffffff !important;
-    border: 1px solid rgba(26,47,79,.2) !important;
-    color: #1a2f4f !important;
-    font-size: 1.75rem !important;
-    line-height: 1 !important;
-    display: flex;
-    align-items: center !important;
-    justify-content: center !important;
-    cursor: pointer !important;
-    z-index: 50 !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,.15) !important;
-    transition: all 0.2s ease !important;
-}
-
-.blog-arrow:hover:not(:disabled) {
-    background: #1a2f4f !important;
-    color: #ffffff !important;
-}
-
-.blog-arrow-left { left: 0.25rem !important; }
-.blog-arrow-right { right: 0.25rem !important; }
-
-
-
-
-
-
-
-
-        /* RESPONSIVE LAYOUT */
-        @media (max-width: 900px) { 
-            .blog-card { flex: 0 0 calc((100% - 1.5rem) / 2) !important; } 
-        }
-        @media (max-width: 620px) { 
-            .blog-card { flex: 0 0 100% !important; } 
-            .blog-carousel-wrap { padding: 0 2.5rem; } 
-        }
-       
-
-
-
+        @media (max-width: 900px) { .blog-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+        @media (max-width: 620px) { .blog-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body class="antialiased">
@@ -331,7 +251,7 @@
 
 
 		<div class="flex justify-center py-8">
-  			  <img src="astroreadscharts.jpg" alt="Astroreadscharts" class="max-w-full md:max-w-2xl rounded-xl shadow-lg border border-navy/20">
+  			  <img src="src/Astroreadscharts.jpg" alt="Astroreadscharts" class="max-w-full md:max-w-2xl rounded-xl shadow-lg border border-navy/20">
 		</div>
 		
         <!-- Services Section (Sliding Animation) --><section class="py-16 px-4 bg-beige">
@@ -375,82 +295,86 @@
         <div id="step-1">
             <h3 class="text-2xl font-semibold mb-6 border-b pb-2 border-navy/20">Step 1: Birth Details & Services</h3>
             
-            <div class="mb-8">
-                <h4 class="text-lg font-bold mb-4">Select Your Readings</h4>
-                <div class="grid sm:grid-cols-2 gap-4 text-sm">
+         <div class="mb-8">
+    <h4 class="text-lg font-bold mb-4">Select Your Readings</h4>
+    <div class="grid sm:grid-cols-2 gap-4 text-sm">
 
-
-
-
-
-
-
-
-<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="Tarot" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">Tarot Reading ($20)</span>
-        <span class="text-xs text-gray-600 italic">Clear, elite perspective for your most important questions. Delivered directly to your email within 24 hours.</span>
-    </div>
-</label>
-
-<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="Focused_Inquiry" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">The Personalized Astrological Inquiry ($20)</span>
-        <span class="text-xs text-gray-600 italic">Get clear answers directly from your birth chart regarding your specific life questions. Your detailed report will be mailed within 24 hours.</span>
-    </div>
-</label>
-
-<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="Synastry_Profile" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">Relationship Synastry Profile ($20)</span>
-        <span class="text-xs text-gray-600 italic">A refined comparison of two birth charts to answer your specific connection questions and map your shared energetic dynamics. Delivered via email within 24 hours.</span>
-    </div>
-</label>
-
-<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="Transit_Forecast_Solo" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">1-Year Transit Forecast ($20)</span>
-        <span class="text-xs text-gray-600 italic">An exceptional timeline mapping out your most supportive and favourable cosmic periods over the next 12 months. Delivered within 24 hours.</span>
-    </div>
-</label>
-
-<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="Solar_Return" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">Solar Return Forecast ($20)</span>
-        <span class="text-xs text-gray-600 italic">Your personal year-ahead birthday map, highlighting major energetic themes and your most aligned areas of growth. Delivered within 24 hours.</span>
-    </div>
-</label>
-
-<label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
-    <input type="checkbox" name="reading_type" value="Ultimate_Three_In_One_Combo" data-price="45" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">The All-In-One Cosmic Bundle ($45)</span>
-        <span class="text-xs text-gray-600 italic">A complete, high-level overview featuring your Natal Chart, a 1-Year Transit Forecast of favourable times, a Numerology Profile and Tarot Alignment. Delivered within 24 hours.</span>
-    </div>
-</label>
-
-<label class="p-3 border-2 border-accent rounded-lg flex items-center cursor-pointer bg-accent/5 md:col-span-2">
-    <input type="checkbox" name="reading_type" value="Premium_Blueprint" data-price="125" onchange="calculateTotal()" class="mr-3 accent-accent">
-    <div>
-        <span class="font-bold block text-navy">🎁 The Premium Strategic Blueprint: A Celestial Legacy Gift ($125)</span>
-        <span class="text-xs text-gray-600 italic">Our most prestigious, masterfully crafted guide. This deep-dive master manual maps out your soul destiny, alignment with material abundance, solar return, a 2-year transit forecast of ideal timing and spiritual wisdom using Vedic and Jaimini astrology. A beautiful, high-value gift to honor yourself or someone special. Includes a complimentary tarot reading and a private follow-up consultation. Delivered within 72 hours.</span>
-    </div>
-</label>
-
-
-
-
-
-
-
-                </div>
-                <div id="price-summary" class="mt-4 hidden"></div>
+        <label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+            <input type="checkbox" name="reading_type" value="Tarot" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+            <div>
+                <span class="font-bold block text-navy">Tarot Reading ($20)</span>
+                <span class="text-xs text-gray-600 italic">Clear, elite perspective for your most important questions. Delivered directly to your email within 24 hours.</span>
             </div>
+        </label>
+
+        <label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+            <input type="checkbox" name="reading_type" value="Focused_Inquiry" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+            <div>
+                <span class="font-bold block text-navy">The Personalized Astrological Inquiry ($20)</span>
+                <span class="text-xs text-gray-600 italic">A focused astrology reading for 1 to 2 specific personal questions based on your birth chart. Ideal for gaining clear insight into a particular situation, decision, relationship, career matter, or personal concern. Your personalized written interpretation will be delivered by email within 24 hours.</span>
+            </div>
+        </label>
+
+        <label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+            <input type="checkbox" name="reading_type" value="Synastry_Profile" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+            <div>
+                <span class="font-bold block text-navy">Relationship Synastry Profile ($20)</span>
+                <span class="text-xs text-gray-600 italic">A personalized comparison of two birth charts exploring relationship dynamics, compatibility, strengths, challenges, communication patterns, and the deeper energetic connection between two people. Delivered via email within 24 hours.</span>
+            </div>
+        </label>
+
+        <label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+            <input type="checkbox" name="reading_type" value="Transit_Forecast_Solo" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+            <div>
+                <span class="font-bold block text-navy">1-Year Transit Forecast ($20)</span>
+                <span class="text-xs text-gray-600 italic">A personalized timeline mapping the major planetary influences and important periods across the next 12 months. Designed to help you understand significant phases for career, relationships, personal development, decisions, and major life changes. Delivered within 24 hours.</span>
+            </div>
+        </label>
+
+        <label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+            <input type="checkbox" name="reading_type" value="Solar_Return" data-price="20" onchange="calculateTotal()" class="mr-3 accent-accent">
+            <div>
+                <span class="font-bold block text-navy">Solar Return Forecast ($20)</span>
+                <span class="text-xs text-gray-600 italic">Your personalized year-ahead Solar Return reading highlighting the major themes, opportunities, areas of growth, important developments, and energetic focus of your new solar year. Delivered within 24 hours.</span>
+            </div>
+        </label>
+
+        <label class="p-3 border border-navy/30 rounded-lg flex items-center cursor-pointer hover:border-accent">
+            <input type="checkbox" name="reading_type" value="Ultimate_Three_In_One_Combo" data-price="45" onchange="calculateTotal()" class="mr-3 accent-accent">
+            <div>
+                <span class="font-bold block text-navy">The All-In-One Cosmic Bundle ($45)</span>
+                <span class="text-xs text-gray-600 italic">A complete, high-level overview featuring your Natal Chart, a 1-Year Transit Forecast of favourable times, a Numerology Profile and Tarot Alignment. Delivered within 24 hours.</span>
+            </div>
+        </label>
+
+        <label class="p-3 border-2 border-accent rounded-lg flex items-center cursor-pointer bg-accent/5 md:col-span-2">
+            <input type="checkbox" name="reading_type" value="Personal_Cosmic_Clarity" data-price="99" onchange="calculateTotal()" class="mr-3 accent-accent">
+            <div>
+                <span class="font-bold block text-navy">The Personal Cosmic Clarity Reading ($99)</span>
+                <span class="text-xs text-gray-600 italic">A deeply personalized Astrology and Tarot consultation combining birth chart analysis, current planetary influences, personalized timing guidance, tarot insight, and up to 5 important personal questions. Designed for clients seeking deeper clarity around relationships, career, finances, major decisions, personal growth, and important life themes. Includes one private follow-up consultation and personalized written guidance. Delivered within 72 hours.</span>
+            </div>
+        </label>
+
+        <label class="p-3 border-2 border-accent rounded-lg flex items-center cursor-pointer bg-accent/5 md:col-span-2">
+            <input type="checkbox" name="reading_type" value="Two_Month_Celestial_Guidance" data-price="150" onchange="calculateTotal()" class="mr-3 accent-accent">
+            <div>
+                <span class="font-bold block text-navy">The Two-Month Celestial Guidance Experience ($150)</span>
+                <span class="text-xs text-gray-600 italic">A private two-month guidance experience combining personalized astrology and tarot consultation. Includes 2 private Astrology and Tarot consultations and up to 10 personal questions across the two-month period. The first consultation focuses on your present circumstances, priorities, and immediate guidance, while the second provides fresh guidance on developing situations, upcoming influences, and next steps. Questions may cover relationships, career, finances, major decisions, personal growth, timing, and important life transitions. Includes personalized written guidance following each consultation.</span>
+            </div>
+        </label>
+
+        <label class="p-3 border-2 border-accent rounded-lg flex items-center cursor-pointer bg-accent/5 md:col-span-2">
+            <input type="checkbox" name="reading_type" value="Elite_Three_Month_Guidance" data-price="250" onchange="calculateTotal()" class="mr-3 accent-accent">
+            <div>
+                <span class="font-bold block text-navy">The Elite Three-Month Celestial Roadmap ($250)</span>
+                <span class="text-xs text-gray-600 italic">A comprehensive three month personal guidance experience combining Astrology and Tarot for clients seeking deeper support through significant life decisions, transitions, relationships, career developments, and long-term goals. Includes 3 private Astrology and Tarot consultations and up to 15 personal questions across the three-month period. Each consultation builds upon the previous one, allowing for progressive guidance throughout the three months. Includes detailed natal and transit analysis, personalized timing guidance, written guidance following each consultation, and a final forward-looking roadmap tailored to your individual circumstances.</span>
+            </div>
+        </label>
+
+    </div>
+
+    <div id="price-summary" class="mt-4 hidden"></div>
+</div>
 
             <div class="grid md:grid-cols-2 gap-6 mb-6">
                 <div class="md:col-span-2">
@@ -882,28 +806,21 @@
                     <h2 class="text-4xl md:text-5xl font-bold text-navy mb-4">Guidance From The Stars</h2>
                     <p class="text-lg text-navy/70 max-w-2xl mx-auto">Explore thoughtful guidance on astrology, tarot, timing and conscious living.</p>
                 </div>
-               <div id="blog-list-view">
-    <div class="max-w-xl mx-auto mb-10">
-        <label for="blog-search" class="sr-only">Search articles</label>
-        <input id="blog-search" class="blog-search" type="search" placeholder="Search articles" autocomplete="off">
-    </div>
-    <div id="blog-status" class="text-center text-navy/60 py-4">Loading articles...</div>
-    
-    <!-- CAROUSEL WRAPPER WITH NAV ARROWS -->
-    <div class="blog-carousel-wrap">
-        <button type="button" class="blog-arrow blog-arrow-left" id="blog-prev" aria-label="Previous articles">&#8249;</button>
-        <div id="blog-grid" class="blog-grid" aria-live="polite"></div>
-        <button type="button" class="blog-arrow blog-arrow-right" id="blog-next" aria-label="Next articles">&#8250;</button>
-    </div>
-</div>
-
-<article id="blog-article-view" class="blog-article hidden" aria-live="polite">
-    <button type="button" id="blog-back" class="blog-back" aria-label="Return to all articles">← All articles</button>
-    <img id="blog-article-image" class="blog-card-image rounded-xl mb-8 hidden" alt="">
-    <p id="blog-article-meta" class="blog-card-meta"></p>
-    <h2 id="blog-article-title" class="text-4xl md:text-5xl font-bold text-navy leading-tight"></h2>
-    <div id="blog-article-content" class="blog-article-content"></div>
-</article>
+                <div id="blog-list-view">
+                    <div class="max-w-xl mx-auto mb-10">
+                        <label for="blog-search" class="sr-only">Search articles</label>
+                        <input id="blog-search" class="blog-search" type="search" placeholder="Search articles" autocomplete="off">
+                    </div>
+                    <div id="blog-status" class="text-center text-navy/60 py-4">Loading articles...</div>
+                    <div id="blog-grid" class="blog-grid" aria-live="polite"></div>
+                </div>
+                <article id="blog-article-view" class="blog-article hidden" aria-live="polite">
+                    <button type="button" id="blog-back" class="blog-back" aria-label="Return to all articles">← All articles</button>
+                    <img id="blog-article-image" class="blog-card-image rounded-xl mb-8 hidden" alt="">
+                    <p id="blog-article-meta" class="blog-card-meta"></p>
+                    <h2 id="blog-article-title" class="text-4xl md:text-5xl font-bold text-navy leading-tight"></h2>
+                    <div id="blog-article-content" class="blog-article-content"></div>
+                </article>
             </div>
         </section>
 
@@ -927,13 +844,36 @@
                         </iframe>
                     </div>
                     <div class="flex justify-start space-x-6 pt-4">
-                        <a href="https://www.facebook.com/astroreadscharts" target="_blank" class="text-navy hover:text-accent transition duration-300">
-                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.04c-5.54 0-10 4.46-10 10 0 5.54 4.46 10 10 10 5.54 0 10-4.46 10-10 0-5.54-4.46-10-10-10zm2.22 6.64h-1.89c-.19 0-.32.06-.32.4v1.51h2.24l-.3 2.15h-1.94v6.2h-2.22v-6.2h-1.7v-2.15h1.7v-1.28c0-1.87 1.14-2.88 2.81-2.88h1.86v2.15z"/></svg>
-                        </a>
-                        <a href="https://www.instagram.com/astroreadscharts/" target="_blank" class="text-navy hover:text-accent transition duration-300">
-                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M7.8 2c-2.71 0-4.8 2.1-4.8 4.8v10.4c0 2.7 2.09 4.8 4.8 4.8h8.4c2.7 0 4.8-2.1 4.8-4.8V6.8c0-2.7-2.1-4.8-4.8-4.8H7.8zm0 2h8.4c1.65 0 2.8 1.15 2.8 2.8v10.4c0 1.65-1.15 2.8-2.8 2.8H7.8c-1.65 0-2.8-1.15-2.8-2.8V6.8c0-1.65 1.15-2.8 2.8-2.8zm8.6 2.4c-.66 0-1.2.54-1.2 1.2s.54 1.2 1.2 1.2 1.2-.54 1.2-1.2-.54-1.2-1.2-1.2zM12 9.2c-2.64 0-4.8 2.16-4.8 4.8s2.16 4.8 4.8 4.8 4.8-2.16 4.8-4.8-2.16-4.8-4.8-4.8zm0 2c1.54 0 2.8 1.26 2.8 2.8s-1.26 2.8-2.8 2.8-2.8-1.26-2.8-2.8 1.26-2.8 2.8-2.8z"/></svg>
-                        </a>
-                    </div>
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/profile.php?id=61594013631935" target="_blank" rel="noopener noreferrer" class="text-navy hover:text-accent transition duration-300">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2.04c-5.54 0-10 4.46-10 10 0 5.54 4.46 10 10 10 5.54 0 10-4.46 10-10 0-5.54-4.46-10-10-10zm2.22 6.64h-1.89c-.19 0-.32.06-.32.4v1.51h2.24l-.3 2.15h-1.94v6.2h-2.22v-6.2h-1.7v-2.15h1.7v-1.28c0-1.87 1.14-2.88 2.81-2.88h1.86v2.15z"/>
+        </svg>
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/astroreadscharts/" target="_blank" rel="noopener noreferrer" class="text-navy hover:text-accent transition duration-300">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M7.8 2c-2.71 0-4.8 2.1-4.8 4.8v10.4c0 2.7 2.09 4.8 4.8 4.8h8.4c2.7 0 4.8-2.1 4.8-4.8V6.8c0-2.7-2.1-4.8-4.8-4.8H7.8zm0 2h8.4c1.65 0 2.8 1.15 2.8 2.8v10.4c0 1.65-1.15 2.8-2.8 2.8H7.8c-1.65 0-2.8-1.15-2.8-2.8V6.8c0-1.65 1.15-2.8 2.8-2.8zm8.6 2.4c-.66 0-1.2.54-1.2 1.2s.54 1.2 1.2 1.2 1.2-.54 1.2-1.2-.54-1.2-1.2-1.2zM12 9.2c-2.64 0-4.8 2.16-4.8 4.8s2.16 4.8 4.8 4.8 4.8-2.16 4.8-4.8-2.16-4.8-4.8-4.8zm0 2c1.54 0 2.8 1.26 2.8 2.8s-1.26 2.8-2.8 2.8-2.8-1.26-2.8-2.8 1.26-2.8 2.8-2.8z"/>
+        </svg>
+    </a>
+
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/in/astroreadscharts/" target="_blank" rel="noopener noreferrer" class="text-navy hover:text-accent transition duration-300">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V8.99h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.29zM5.32 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM3.54 8.99h3.56v11.46H3.54V8.99z"/>
+        </svg>
+    </a>
+
+    <!-- Gmail -->
+    <a href="mailto:astroreadshere@gmail.com" class="text-navy hover:text-accent transition duration-300">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+    </a>
+
+</div>
                 </div>
                  <!-- CONTACT FORM (UPDATED FOR AJAX SUBMISSION - NO REDIRECT) -->
             <div class="pt-10 border-t border-gray-200 mt-10">
@@ -1824,153 +1764,35 @@ function calculateTotal() {
             });
         }
 
-        function setupBlogCarousel() {
-    const container = document.getElementById('blog-grid');
-    const prev = document.getElementById('blog-prev');
-    const next = document.getElementById('blog-next');
-    if (!container) return;
-
-    function cardStep() {
-        const card = container.querySelector('.blog-card');
-        if (!card) return 0;
-        const gap = parseFloat(window.getComputedStyle(container).gap) || 0;
-        return card.getBoundingClientRect().width + gap;
-    }
-
-    function hideArrow(btn) {
-        if (!btn) return;
-        btn.style.setProperty('display', 'none', 'important');
-    }
-
-    function showArrow(btn) {
-        if (!btn) return;
-        btn.style.setProperty('display', 'flex', 'important');
-    }
-
-    function updateArrows() {
-        const cards = container.querySelectorAll('.blog-card');
-        const step = cardStep();
-
-        // 1. Force hide if no cards exist
-        if (cards.length === 0) {
-            hideArrow(prev);
-            hideArrow(next);
-            return;
-        }
-
-        // 2. Hide both arrows if total cards fit visible container width
-        const totalCardsWidth = cards.length * step;
-        const containerWidth = container.clientWidth;
-
-        if (totalCardsWidth <= containerWidth + 10) {
-            hideArrow(prev);
-            hideArrow(next);
-            return;
-        }
-
-        // 3. Otherwise calculate scroll position boundaries
-        const maxScroll = Math.max(0, container.scrollWidth - containerWidth);
-        const atStart = container.scrollLeft <= 5;
-        const atEnd = container.scrollLeft >= maxScroll - 5;
-
-        showArrow(prev);
-        showArrow(next);
-
-        if (prev) {
-            prev.disabled = atStart;
-            prev.style.opacity = atStart ? '0.35' : '1';
-            prev.style.cursor = atStart ? 'default' : 'pointer';
-        }
-        if (next) {
-            next.disabled = atEnd;
-            next.style.opacity = atEnd ? '0.35' : '1';
-            next.style.cursor = atEnd ? 'default' : 'pointer';
-        }
-    }
-
-    if (prev) {
-        prev.onclick = function() {
-            container.scrollBy({ left: -cardStep(), behavior: 'smooth' });
-        };
-    }
-
-    if (next) {
-        next.onclick = function() {
-            container.scrollBy({ left: cardStep(), behavior: 'smooth' });
-        };
-    }
-
-    container.addEventListener('scroll', updateArrows, { passive: true });
-    window.addEventListener('resize', updateArrows);
-
-    // Run layout updates across double frame buffer to allow DOM measurement to settle
-    requestAnimationFrame(function() {
-        requestAnimationFrame(updateArrows);
-    });
-}
-
-function renderBlogPosts(posts) {
-    const grid = document.getElementById('blog-grid');
-    const status = document.getElementById('blog-status');
-    if (!grid || !status) return;
-
-    // Handle empty state (e.g., search returns 0 results)
-    if (!posts.length) {
-        grid.innerHTML = '';
-        status.textContent = 'No articles found.';
-        status.classList.remove('hidden');
-        setupBlogCarousel(); // Hides arrows when no cards exist
-        return;
-    }
-
-    status.classList.add('hidden');
-
-    // Render cards into the grid
-    grid.innerHTML = posts.map(function(post) {
-        // Debugging: uncomment the line below to inspect your row data in the browser console (F12)
-        // console.log("Post data:", post);
-
-        const image = post.image 
-            ? `<img src="${escapeBlogHtml(post.image)}" alt="${escapeBlogHtml(post.title)}" class="blog-card-image" loading="lazy">` 
-            : '';
-        
-        // Case-insensitive and whitespace-safe lookup for the category key
-        let categoryText = 'General';
-        for (let key in post) {
-            if (key.trim().toLowerCase() === 'category') {
-                categoryText = post[key];
-                break;
+        function renderBlogPosts(posts) {
+            const grid = document.getElementById('blog-grid');
+            const status = document.getElementById('blog-status');
+            if (!grid || !status) return;
+            if (!posts.length) {
+                grid.innerHTML = '';
+                status.textContent = 'No articles found.';
+                status.classList.remove('hidden');
+                return;
             }
+            status.classList.add('hidden');
+            grid.innerHTML = posts.map(function(post) {
+                const image = post.image ? `<img src="${escapeBlogHtml(post.image)}" alt="${escapeBlogHtml(post.title)}" class="blog-card-image" loading="lazy">` : '';
+                const details = [post.category, post.date].filter(Boolean).join(' • ');
+                return `<article class="blog-card">
+                    ${image}
+                    <div class="blog-card-body">
+                        <p class="blog-card-meta">${escapeBlogHtml(details)}</p>
+                        <h3 class="blog-card-title">${escapeBlogHtml(post.title)}</h3>
+                        <p class="blog-card-summary">${escapeBlogHtml(post.summary)}</p>
+                        <button type="button" class="blog-read-button" data-blog-slug="${escapeBlogHtml(post.slug)}">Read article</button>
+                    </div>
+                </article>`;
+            }).join('');
+            grid.querySelectorAll('[data-blog-slug]').forEach(function(button) {
+                button.addEventListener('click', function() { openBlogPost(button.getAttribute('data-blog-slug')); });
+            });
         }
-        // Fallback checks if nothing matched the loop
-        if (!categoryText || categoryText === 'General') {
-            categoryText = post.Category || post.category || post.topic || 'General';
-        }
 
-        const details = [categoryText, post.date].filter(Boolean).join(' • ');
-
-        return `<article class="blog-card">
-            ${image}
-            <div class="blog-card-body">
-                <p class="blog-card-meta">${escapeBlogHtml(details)}</p>
-                <h3 class="blog-card-title">${escapeBlogHtml(post.title)}</h3>
-                <p class="blog-card-summary">${escapeBlogHtml(post.summary)}</p>
-                <button type="button" class="blog-read-button" data-blog-slug="${escapeBlogHtml(post.slug)}">Read article</button>
-            </div>
-        </article>`;
-    }).join('');
-
-    // Attach click listeners to all "Read article" buttons
-    grid.querySelectorAll('[data-blog-slug]').forEach(function(button) {
-        button.addEventListener('click', function() {
-            openBlogPost(button.getAttribute('data-blog-slug'));
-        });
-    });
-
-    // Reset scroll position to start and recalculate arrow visibility
-    grid.scrollLeft = 0;
-    setupBlogCarousel();
-}
         function openBlogPost(slug) {
             const post = blogPosts.find(function(item) { return item.slug === slug; });
             if (!post) return;
