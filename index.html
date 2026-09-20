@@ -350,7 +350,7 @@
 
 
 		<div class="flex justify-center py-8">
-  			  <img src="/Astroreadscharts.jpg" alt="Astroreadscharts" class="max-w-full md:max-w-2xl rounded-xl shadow-lg border border-navy/20">
+  			  <img src="src/Astroreadscharts.jpg" alt="Astroreadscharts" class="max-w-full md:max-w-2xl rounded-xl shadow-lg border border-navy/20">
 		</div>
 		
         <!-- Services Section (Sliding Animation) --><section class="py-16 px-4 bg-beige">
@@ -1901,34 +1901,232 @@ function setupReviewCarousel(originalCount) {
             });
         }
 
-        function renderBlogPosts(posts) {
-            const grid = document.getElementById('blog-grid');
-            const status = document.getElementById('blog-status');
-            if (!grid || !status) return;
-            if (!posts.length) {
-                grid.innerHTML = '';
-                status.textContent = 'No articles found.';
-                status.classList.remove('hidden');
-                return;
-            }
-            status.classList.add('hidden');
-            grid.innerHTML = posts.map(function(post) {
-                const image = post.image ? `<img src="${escapeBlogHtml(post.image)}" alt="${escapeBlogHtml(post.title)}" class="blog-card-image" loading="lazy">` : '';
-                const details = [post.category, post.date].filter(Boolean).join(' • ');
-                return `<article class="blog-card">
-                    ${image}
-                    <div class="blog-card-body">
-                        <p class="blog-card-meta">${escapeBlogHtml(details)}</p>
-                        <h3 class="blog-card-title">${escapeBlogHtml(post.title)}</h3>
-                        <p class="blog-card-summary">${escapeBlogHtml(post.summary)}</p>
-                        <button type="button" class="blog-read-button" data-blog-slug="${escapeBlogHtml(post.slug)}">Read article</button>
-                    </div>
-                </article>`;
-            }).join('');
-            grid.querySelectorAll('[data-blog-slug]').forEach(function(button) {
-                button.addEventListener('click', function() { openBlogPost(button.getAttribute('data-blog-slug')); });
-            });
+
+
+
+
+
+
+function renderBlogPosts(posts) {
+
+    const grid = document.getElementById('blog-grid');
+    const status = document.getElementById('blog-status');
+
+    if (!grid || !status) return;
+
+    if (!posts.length) {
+        grid.innerHTML = '';
+        status.textContent = 'No articles found.';
+        status.classList.remove('hidden');
+        return;
+    }
+
+    status.classList.add('hidden');
+
+    grid.innerHTML = posts.map(function(post) {
+
+        const image = post.image
+            ? `<img src="${escapeBlogHtml(post.image)}" alt="${escapeBlogHtml(post.title)}" class="blog-card-image" loading="lazy">`
+            : '';
+
+        const details = [post.category, post.date]
+            .filter(Boolean)
+            .join(' • ');
+
+        return `
+            <article class="blog-card">
+                ${image}
+                <div class="blog-card-body">
+                    <p class="blog-card-meta">${escapeBlogHtml(details)}</p>
+                    <h3 class="blog-card-title">${escapeBlogHtml(post.title)}</h3>
+                    <p class="blog-card-summary">${escapeBlogHtml(post.summary || post.excerpt || '')}</p>
+                    <button type="button" class="blog-read-button" data-blog-slug="${escapeBlogHtml(post.slug)}">
+                        Read article
+                    </button>
+                </div>
+            </article>
+        `;
+
+    }).join('');
+
+    grid.querySelectorAll('[data-blog-slug]').forEach(function(button) {
+        button.addEventListener('click', function() {
+            openBlogPost(button.getAttribute('data-blog-slug'));
+        });
+    });
+
+    setupBlogCarousel();
+}
+
+
+
+
+
+function renderBlogPosts(posts) {
+    const grid = document.getElementById('blog-grid');
+    const status = document.getElementById('blog-status');
+
+    if (!grid || !status) return;
+
+    if (!posts || !posts.length) {
+        grid.innerHTML = '';
+        status.textContent = 'No articles found.';
+        status.classList.remove('hidden');
+        return;
+    }
+
+    status.classList.add('hidden');
+
+    grid.innerHTML = posts.map(function(post) {
+        const image = post.image
+            ? `<img src="${escapeBlogHtml(post.image)}" alt="${escapeBlogHtml(post.title)}" class="blog-card-image" loading="lazy">`
+            : '';
+
+        const details = [post.category, post.date]
+            .filter(Boolean)
+            .join(' • ');
+
+        return `
+            <article class="blog-card">
+                ${image}
+
+                <div class="blog-card-body">
+                    <p class="blog-card-meta">${escapeBlogHtml(details)}</p>
+
+                    <h3 class="blog-card-title">
+                        ${escapeBlogHtml(post.title)}
+                    </h3>
+
+                    <p class="blog-card-summary">
+                        ${escapeBlogHtml(post.summary || post.excerpt || '')}
+                    </p>
+
+                    <button
+                        type="button"
+                        class="blog-read-button"
+                        data-blog-slug="${escapeBlogHtml(post.slug)}">
+                        Read article
+                    </button>
+                </div>
+            </article>
+        `;
+    }).join('');
+
+    grid.querySelectorAll('[data-blog-slug]').forEach(function(button) {
+        button.addEventListener('click', function() {
+            openBlogPost(button.getAttribute('data-blog-slug'));
+        });
+    });
+
+    setupBlogCarousel();
+}
+
+
+
+
+
+
+
+
+        let blogCurrentPage = 0;
+let blogTotalPages = 0;
+
+function setupBlogCarousel() {
+
+    const grid = document.getElementById('blog-grid');
+    const prev = document.getElementById('blog-prev');
+    const next = document.getElementById('blog-next');
+
+    if (!grid || !prev || !next) return;
+
+    const cards = grid.querySelectorAll('.blog-card');
+
+    if (!cards.length) {
+        prev.style.display = 'none';
+        next.style.display = 'none';
+        return;
+    }
+
+    const cardsPerPage =
+        window.innerWidth <= 620 ? 1 :
+        window.innerWidth <= 900 ? 2 :
+        3;
+
+    blogTotalPages =
+        Math.ceil(cards.length / cardsPerPage);
+
+    blogCurrentPage = 0;
+
+    function updateBlogCarousel() {
+
+        const card = grid.querySelector('.blog-card');
+
+        if (!card) return;
+
+        const cardWidth =
+            card.getBoundingClientRect().width;
+
+        const gap =
+            parseFloat(
+                getComputedStyle(grid).gap
+            ) || 0;
+
+        const step =
+            (cardWidth + gap) * cardsPerPage;
+
+        grid.scrollTo({
+            left: step * blogCurrentPage,
+            behavior: 'smooth'
+        });
+
+        prev.disabled =
+            blogCurrentPage === 0;
+
+        next.disabled =
+            blogCurrentPage >=
+            blogTotalPages - 1;
+
+        prev.style.opacity =
+            prev.disabled ? '0.35' : '1';
+
+        next.style.opacity =
+            next.disabled ? '0.35' : '1';
+
+        if (blogTotalPages <= 1) {
+            prev.style.display = 'none';
+            next.style.display = 'none';
+        } else {
+            prev.style.display = 'flex';
+            next.style.display = 'flex';
         }
+    }
+
+    prev.onclick = function() {
+
+        if (blogCurrentPage > 0) {
+            blogCurrentPage--;
+            updateBlogCarousel();
+        }
+    };
+
+    next.onclick = function() {
+
+        if (blogCurrentPage < blogTotalPages - 1) {
+            blogCurrentPage++;
+            updateBlogCarousel();
+        }
+    };
+
+    updateBlogCarousel();
+
+    window.addEventListener('resize', function() {
+
+        blogCurrentPage = 0;
+
+        updateBlogCarousel();
+
+    });
+}
 
         function openBlogPost(slug) {
             const post = blogPosts.find(function(item) { return item.slug === slug; });
@@ -1961,39 +2159,95 @@ function setupReviewCarousel(originalCount) {
             document.getElementById('blog').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
         
-        function loadBlogPosts() {
-            const status = document.getElementById('blog-status');
-            if (!BLOG_API_URL) {
-                blogPosts = normalizeBlogPosts(SAMPLE_BLOG_POSTS);
-                renderBlogPosts(blogPosts);
-                openBlogPostFromHash();
-                return;
-            }
-            const callbackName = 'astroBlogCallback_' + Date.now();
-            const script = document.createElement('script');
-            let completed = false;
-            window[callbackName] = function(data) {
-                if (completed) return;
-                completed = true;
-                blogPosts = normalizeBlogPosts(data);
-                renderBlogPosts(blogPosts);
-                openBlogPostFromHash();
-                delete window[callbackName];
-                if (script.parentNode) script.parentNode.removeChild(script);
-            };
-            script.onerror = function() {
-                if (completed) return;
-                completed = true;
-                blogPosts = normalizeBlogPosts(SAMPLE_BLOG_POSTS);
-                renderBlogPosts(blogPosts);
-                status.textContent = 'Showing journal selections while new articles become available.';
-                delete window[callbackName];
-                if (script.parentNode) script.parentNode.removeChild(script);
-            };
-            script.src = 'https://script.google.com/macros/s/AKfycbwU5Q0-MR1f9N6XpAytl2LBxY_3T-ysdRUMJRXl1OUQw83IaTHNWfH9YY1Z6ReuulOg4A/exec' + '?action=publishedBlogs&callback=' + encodeURIComponent(callbackName) + '&time=' + Date.now();
-            document.body.appendChild(script);
-        }
+       function loadBlogPosts() {
 
+    const status = document.getElementById('blog-status');
+
+    if (!BLOG_API_URL) {
+        blogPosts = normalizeBlogPosts(SAMPLE_BLOG_POSTS);
+        renderBlogPosts(blogPosts);
+        openBlogPostFromHash();
+        return;
+    }
+
+    const callbackName =
+        'astroBlogCallback_' +
+        Date.now() +
+        '_' +
+        Math.floor(Math.random() * 100000);
+
+    const script = document.createElement('script');
+
+    let completed = false;
+
+    function cleanup() {
+        delete window[callbackName];
+
+        if (script.parentNode) {
+            script.parentNode.removeChild(script);
+        }
+    }
+
+    window[callbackName] = function(data) {
+
+        if (completed) return;
+
+        completed = true;
+
+        console.log('BLOG DATA RECEIVED:', data);
+
+        blogPosts = normalizeBlogPosts(data);
+
+        console.log('BLOG POSTS AFTER NORMALIZE:', blogPosts);
+
+        renderBlogPosts(blogPosts);
+
+        openBlogPostFromHash();
+
+        cleanup();
+    };
+
+    script.onerror = function() {
+
+        if (completed) return;
+
+        completed = true;
+
+        console.error('BLOG APPS SCRIPT REQUEST FAILED');
+
+        status.textContent =
+            'Unable to load articles right now.';
+
+        cleanup();
+    };
+
+    script.src =
+        BLOG_API_URL +
+        '?action=publishedBlogs' +
+        '&callback=' +
+        encodeURIComponent(callbackName) +
+        '&time=' +
+        Date.now();
+
+    console.log('BLOG REQUEST:', script.src);
+
+    document.body.appendChild(script);
+
+    setTimeout(function() {
+
+        if (completed) return;
+
+        completed = true;
+
+        console.error('BLOG REQUEST TIMED OUT');
+
+        status.textContent =
+            'Unable to load articles right now.';
+
+        cleanup();
+
+    }, 15000);
+}
         function openBlogPostFromHash() {
             const match = location.hash.match(/^#blog=(.+)$/);
             if (match) openBlogPost(decodeURIComponent(match[1]));
