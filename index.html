@@ -182,8 +182,31 @@
         /* BLOG SECTION */
         .blog-search { width: 100%; border: 1px solid rgba(26,47,79,.25); background: white; padding: .9rem 1rem; border-radius: .75rem; outline: none; }
         .blog-search:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(229,184,11,.18); }
-        .blog-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1.5rem; }
-        .blog-card { background: white; border: 1px solid rgba(26,47,79,.12); border-radius: 1rem; overflow: hidden; box-shadow: 0 8px 24px rgba(26,47,79,.08); display: flex; flex-direction: column; }
+.blog-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1.5rem;
+    overflow-x: hidden;
+    overflow-y: visible;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+
+.blog-grid::-webkit-scrollbar {
+    display: none;
+}        
+
+.blog-card {
+    background: white;
+    border: 1px solid rgba(26,47,79,.12);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(26,47,79,.08);
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 calc((100% - 3rem) / 3);
+    box-sizing: border-box;
+}
         .blog-card-image { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #e8eaf0; }
         .blog-card-body { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
         .blog-card-meta { color: #71620c; font-size: .78rem; font-weight: 700; text-transform: uppercase; margin-bottom: .65rem; }
@@ -193,8 +216,84 @@
         .blog-article { max-width: 760px; margin: 0 auto; background: white; padding: clamp(1.5rem,5vw,4rem); border-radius: 1rem; box-shadow: 0 12px 34px rgba(26,47,79,.1); }
         .blog-article-content p { margin-top: 1.25rem; line-height: 1.85; color: rgba(26,47,79,.86); white-space: pre-wrap; }
         .blog-back { cursor: pointer; color: var(--color-navy); font-weight: 700; margin-bottom: 2rem; display: inline-flex; align-items: center; gap: .5rem; }
-        @media (max-width: 900px) { .blog-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
-        @media (max-width: 620px) { .blog-grid { grid-template-columns: 1fr; } }
+        
+	
+
+	@media (max-width: 900px) {
+    .blog-card {
+        flex: 0 0 calc((100% - 1.5rem) / 2);
+    }
+}
+
+@media (max-width: 620px) {
+    .blog-card {
+        flex: 0 0 100%;
+    }
+}
+
+	
+
+.blog-carousel-wrap {
+    position: relative;
+    padding: 0 3.25rem;
+}
+
+.blog-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid rgba(26,47,79,.18);
+    background: white;
+    color: var(--color-navy);
+    box-shadow: 0 5px 16px rgba(26,47,79,.14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    font-size: 28px;
+    line-height: 1;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.blog-arrow:hover:not(:disabled) {
+    transform: translateY(-50%) scale(1.06);
+    box-shadow: 0 8px 20px rgba(26,47,79,.2);
+}
+
+.blog-arrow:disabled {
+    cursor: default;
+}
+
+.blog-arrow-left {
+    left: 0;
+}
+
+.blog-arrow-right {
+    right: 0;
+}
+
+@media (max-width: 620px) {
+    .blog-carousel-wrap {
+        padding: 0 2.5rem;
+    }
+
+    .blog-arrow {
+        width: 38px;
+        height: 38px;
+        font-size: 22px;
+    }
+}
+
+
+
+
+
+
+
     </style>
 </head>
 <body class="antialiased">
@@ -251,7 +350,7 @@
 
 
 		<div class="flex justify-center py-8">
-  			  <img src="src/Astroreadscharts.jpg" alt="Astroreadscharts" class="max-w-full md:max-w-2xl rounded-xl shadow-lg border border-navy/20">
+  			  <img src="/Astroreadscharts.jpg" alt="Astroreadscharts" class="max-w-full md:max-w-2xl rounded-xl shadow-lg border border-navy/20">
 		</div>
 		
         <!-- Services Section (Sliding Animation) --><section class="py-16 px-4 bg-beige">
@@ -812,7 +911,35 @@
                         <input id="blog-search" class="blog-search" type="search" placeholder="Search articles" autocomplete="off">
                     </div>
                     <div id="blog-status" class="text-center text-navy/60 py-4">Loading articles...</div>
-                    <div id="blog-grid" class="blog-grid" aria-live="polite"></div>
+
+		<div class="blog-carousel-wrap">
+
+    <button
+        type="button"
+        class="blog-arrow blog-arrow-left"
+        id="blog-prev"
+        aria-label="Previous articles"
+    >
+        &#8249;
+    </button>
+
+    <div
+        id="blog-grid"
+        class="blog-grid"
+        aria-live="polite"
+    ></div>
+
+    <button
+        type="button"
+        class="blog-arrow blog-arrow-right"
+        id="blog-next"
+        aria-label="Next articles"
+    >
+        &#8250;
+    </button>
+
+</div>
+
                 </div>
                 <article id="blog-article-view" class="blog-article hidden" aria-live="polite">
                     <button type="button" id="blog-back" class="blog-back" aria-label="Return to all articles">← All articles</button>
@@ -1497,112 +1624,122 @@ function calculateTotal() {
             }, 10000);
         }
 
-        let reviewCarouselTimer = null;
-        let reviewCarouselPaused = false;
+         let reviewCurrentPage = 0;
+let reviewTotalPages = 0;
 
-        function setupReviewCarousel(originalCount) {
-            const container = document.getElementById('review-display');
-            const prev = document.getElementById('review-prev');
-            const next = document.getElementById('review-next');
-            if (!container || !originalCount) return;
+function setupReviewCarousel(originalCount) {
 
-            container.scrollLeft = 0;
+    const container = document.getElementById('review-display');
+    const prev = document.getElementById('review-prev');
+    const next = document.getElementById('review-next');
 
-            function cardStep() {
-                const card = container.querySelector('.review-card');
-                if (!card) return 0;
-                const styles = getComputedStyle(container);
-                const gap = parseFloat(styles.columnGap || styles.gap || 0);
-                return card.getBoundingClientRect().width + gap;
-            }
+    if (!container || !originalCount) return;
 
-            function updateArrows() {
-                const maxScroll = Math.max(0, container.scrollWidth - container.clientWidth);
-                const atStart = container.scrollLeft <= 2;
-                const atEnd = container.scrollLeft >= maxScroll - 2;
+    const cards = Array.from(
+        container.querySelectorAll('.review-card')
+    );
 
-                // With one review there is nothing to slide, so hide both arrows.
-                if (originalCount <= 1 || maxScroll <= 2) {
-                    if (prev) prev.style.display = 'none';
-                    if (next) next.style.display = 'none';
-                    return;
-                }
+    if (!cards.length) return;
 
-                if (prev) {
-                    prev.style.display = '';
-                    prev.disabled = atStart;
-                    prev.style.opacity = atStart ? '0.35' : '1';
-                }
-                if (next) {
-                    next.style.display = '';
-                    next.disabled = atEnd;
-                    next.style.opacity = atEnd ? '0.35' : '1';
-                }
-            }
+    reviewTotalPages = Math.ceil(cards.length / 3);
+    reviewCurrentPage = 0;
 
-            function move(direction) {
-                const step = cardStep();
-                if (!step) return;
+    function updateReviewCarousel() {
 
-                const maxScroll = Math.max(0, container.scrollWidth - container.clientWidth);
-                const target = Math.max(0, Math.min(maxScroll, container.scrollLeft + direction * step));
+        const card = container.querySelector('.review-card');
 
-                container.scrollTo({ left: target, behavior: 'smooth' });
-                setTimeout(updateArrows, 350);
-            }
+        if (!card) return;
 
-            if (prev) prev.onclick = function() {
-                move(-1);
-                resetReviewTimer();
-            };
+        const cardWidth = card.getBoundingClientRect().width;
 
-            if (next) next.onclick = function() {
-                move(1);
-                resetReviewTimer();
-            };
+        const styles = getComputedStyle(container);
 
-            container.onscroll = updateArrows;
-            updateArrows();
+        const gap = parseFloat(
+            styles.columnGap ||
+            styles.gap ||
+            0
+        );
 
-            // Auto-slide only when there is more than one review.
-            if (reviewCarouselTimer) clearInterval(reviewCarouselTimer);
-            reviewCarouselTimer = null;
+        const step = (cardWidth + gap) * 3;
 
-            if (originalCount > 1) {
-                reviewCarouselTimer = setInterval(function() {
-                    if (reviewCarouselPaused) return;
+        container.scrollTo({
+            left: step * reviewCurrentPage,
+            behavior: 'smooth'
+        });
 
-                    const maxScroll = Math.max(0, container.scrollWidth - container.clientWidth);
-                    const step = cardStep();
-                    if (!step || container.scrollLeft >= maxScroll - 2) {
-                        container.scrollTo({ left: 0, behavior: 'smooth' });
-                    } else {
-                        container.scrollBy({ left: step, behavior: 'smooth' });
-                    }
-                }, 6000);
-            }
+        if (prev) {
 
-            container.onmouseenter = function() { reviewCarouselPaused = true; };
-            container.onmouseleave = function() { reviewCarouselPaused = false; };
-            container.ontouchstart = function() { reviewCarouselPaused = true; };
-            container.ontouchend = function() {
-                setTimeout(function() { reviewCarouselPaused = false; }, 1200);
-            };
+            prev.disabled =
+                reviewCurrentPage === 0;
+
+            prev.style.opacity =
+                reviewCurrentPage === 0
+                    ? '0.35'
+                    : '1';
         }
 
-        function resetReviewTimer() {
-            if (reviewCarouselTimer) clearInterval(reviewCarouselTimer);
-            reviewCarouselTimer = setInterval(function() {
-                if (!reviewCarouselPaused) {
-                    const container = document.getElementById('review-display');
-                    const card = container && container.querySelector('.review-card');
-                    if (container && card) {
-                        const gap = parseFloat(getComputedStyle(container).columnGap || getComputedStyle(container).gap || 0);
-                        container.scrollBy({ left: card.getBoundingClientRect().width + gap, behavior: 'smooth' });
-                    }
-                }
-            }, 6000);
+        if (next) {
+
+            next.disabled =
+                reviewCurrentPage >=
+                reviewTotalPages - 1;
+
+            next.style.opacity =
+                reviewCurrentPage >=
+                reviewTotalPages - 1
+                    ? '0.35'
+                    : '1';
         }
+
+        if (reviewTotalPages <= 1) {
+
+            if (prev) prev.style.display = 'none';
+            if (next) next.style.display = 'none';
+
+        } else {
+
+            if (prev) prev.style.display = 'flex';
+            if (next) next.style.display = 'flex';
+        }
+    }
+
+    if (prev) {
+
+        prev.onclick = function() {
+
+            if (reviewCurrentPage > 0) {
+
+                reviewCurrentPage--;
+
+                updateReviewCarousel();
+            }
+        };
+    }
+
+    if (next) {
+
+        next.onclick = function() {
+
+            if (
+                reviewCurrentPage <
+                reviewTotalPages - 1
+            ) {
+
+                reviewCurrentPage++;
+
+                updateReviewCarousel();
+            }
+        };
+    }
+
+    updateReviewCarousel();
+
+    window.addEventListener('resize', function() {
+
+        updateReviewCarousel();
+
+    });
+}
 
         // IMPORTANT: Do not use fetch() for submission. GitHub Pages/ChatGPT
         // Preview can block cross-origin fetches to Google Apps Script and show
